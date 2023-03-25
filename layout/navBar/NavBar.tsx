@@ -26,6 +26,7 @@ export default function NavBar() {
                   key={item.id}
                   objMenuItem={item}
                   isActive={checkIsActive(item.path, router.pathname)}
+                  onClick={() => setIsOpen(false)}
                 />
               ))}
             </ul>
