@@ -7,7 +7,7 @@ export default function ServicesRow() {
   return (
     <ContainerWrapper>
       <Title title="Our Services" />
-      <div className="grid xs:grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {lstServices.map((item) => (
           <ServiceCard key={item.id} objService={item} />
         ))}

@@ -7,7 +7,7 @@ export default function TestimonialsRow() {
   return (
     <ContainerWrapper containerClassName="bg-gray-50">
       <Title title="What Our Clients Have to Say" />
-      <div className="grid xs: grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {lstTestimonials.map((item) => (
           <TestimonialCard key={item.id} objTestimonial={item} />
         ))}
