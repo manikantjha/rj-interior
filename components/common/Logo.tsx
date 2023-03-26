@@ -2,7 +2,7 @@
 
 export default function Logo() {
   return (
-    <div className="flex items-center">
+    <div className="flex items-center w-full">
       <img
         src="/assets/logo.svg"
         className="md:h-12 mr-3 h-10"
