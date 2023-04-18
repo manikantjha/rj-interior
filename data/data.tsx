@@ -19,7 +19,7 @@ export const lstFeatures = [
     id: 1,
     icon: (
       <svg
-        className="w-10 h-10 mb-2 text-primary dark:text-primary"
+        className="w-10 h-10 mb-2 text-primary"
         aria-hidden="true"
         fill="currentColor"
         viewBox="0 0 20 20"
@@ -41,7 +41,7 @@ export const lstFeatures = [
     id: 2,
     icon: (
       <svg
-        className="w-10 h-10 mb-2 text-primary dark:text-primary"
+        className="w-10 h-10 mb-2 text-primary"
         aria-hidden="true"
         fill="currentColor"
         viewBox="0 0 20 20"
@@ -63,7 +63,7 @@ export const lstFeatures = [
     id: 3,
     icon: (
       <svg
-        className="w-10 h-10 mb-2 text-primary dark:text-primary"
+        className="w-10 h-10 mb-2 text-primary"
         aria-hidden="true"
         fill="currentColor"
         viewBox="0 0 20 20"
@@ -85,7 +85,7 @@ export const lstFeatures = [
     id: 4,
     icon: (
       <svg
-        className="w-10 h-10 mb-2 text-primary dark:text-primary"
+        className="w-10 h-10 mb-2 text-primary"
         aria-hidden="true"
         fill="currentColor"
         viewBox="0 0 20 20"
@@ -225,10 +225,20 @@ export const objHowItStartedInfo = {
 };
 
 export const objFounderInfo = {
-  imgSrc: "/assets/avatar_male.svg",
-  name: "Raja Singh",
-  description:
-    "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos explicabo quibusdam doloremque  oluptates libero odit non praesentium  repellendus magni aliquid vel, possimus odio expedita obcaecati! Fugiat perferendis minima corporis mollitia perspiciatis, placeat accusantium nesciunt commodi dolores et sint quae sit? Sapiente, ducimus quaerat. Cupiditate repellendus nemo animi numquam hic velit.",
+  raja: {
+    imgSrc: "/assets/avatar_male.svg",
+    name: "Raja Singh",
+    designation: "Founder",
+    description:
+      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos explicabo quibusdam doloremque  oluptates libero odit non praesentium  repellendus magni aliquid vel, possimus odio expedita obcaecati! Fugiat perferendis minima corporis mollitia perspiciatis, placeat accusantium nesciunt commodi dolores et sint quae sit? Sapiente, ducimus quaerat. Cupiditate repellendus nemo animi numquam hic velit.",
+  },
+  ghanshyam: {
+    imgSrc: "/assets/avatar_male.svg",
+    name: "Ghanshyam Parmar",
+    designation: "Co-Founder",
+    description:
+      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos explicabo quibusdam doloremque  oluptates libero odit non praesentium  repellendus magni aliquid vel, possimus odio expedita obcaecati! Fugiat perferendis minima corporis mollitia perspiciatis, placeat accusantium nesciunt commodi dolores et sint quae sit? Sapiente, ducimus quaerat. Cupiditate repellendus nemo animi numquam hic velit.",
+  },
 };
 
 export const lstTeamMembers = [
@@ -242,28 +252,28 @@ export const lstTeamMembers = [
   {
     id: 2,
     imgSrc: "/assets/avatar_female.svg",
-    name: "John Snow",
+    name: "John Doe",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, officiis.",
   },
   {
     id: 3,
     imgSrc: "/assets/avatar_female.svg",
-    name: "John Wick",
+    name: "John Doe",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, officiis.",
   },
   {
     id: 4,
     imgSrc: "/assets/avatar_male.svg",
-    name: "John Cena",
+    name: "John Doe",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, officiis.",
   },
   {
     id: 5,
     imgSrc: "/assets/avatar_male.svg",
-    name: "John Abrahim",
+    name: "John Doe",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, officiis.",
   },

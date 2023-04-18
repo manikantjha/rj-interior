@@ -6,7 +6,7 @@ export default function ServiceChecklistItem(props: IServiceChecklistItem) {
   return (
     <li className="flex space-x-2 items-center">
       <svg
-        className="flex-shrink-0 w-4 h-4 text-primary dark:text-primary"
+        className="flex-shrink-0 w-4 h-4 text-primary"
         fill="currentColor"
         viewBox="0 0 20 20"
         xmlns="http://www.w3.org/2000/svg"
@@ -17,7 +17,7 @@ export default function ServiceChecklistItem(props: IServiceChecklistItem) {
           clipRule="evenodd"
         ></path>
       </svg>
-      <span className="font-light leading-tight">{props.checklistItem}</span>
+      <span className="text-base text-gray-500">{props.checklistItem}</span>
     </li>
   );
 }

@@ -12,7 +12,7 @@ export default function LeftColumn(props: ILeftCoumn) {
     return <>{props.renderLeftColumn()} </>;
   }
   return (
-    <div className="w-full h-full overflow-hidden">
+    <div className="w-full h-[300px] md:h-[500px] rounded-xl overflow-hidden">
       <img
         src={props.imgSrc}
         alt={props.imgAlt}

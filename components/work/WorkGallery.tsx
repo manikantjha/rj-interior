@@ -1,103 +1,103 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useState, useCallback } from "react";
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+import ImageViewer from "react-simple-image-viewer";
+
+export const photos = [
+  {
+    src: "./assets/interior/01.jpg",
+    width: 2,
+    height: 2,
+  },
+  {
+    src: "./assets/interior/02.jpg",
+    width: 1,
+    height: 1,
+  },
+  {
+    src: "./assets/interior/03.jpg",
+    width: 3,
+    height: 4,
+  },
+  {
+    src: "./assets/interior/04.jpg",
+    width: 3,
+    height: 4,
+  },
+  {
+    src: "./assets/interior/05.jpg",
+    width: 3,
+    height: 4,
+  },
+  {
+    src: "./assets/interior/06.jpg",
+    width: 4,
+    height: 3,
+  },
+  {
+    src: "./assets/interior/07.jpg",
+    width: 3,
+    height: 4,
+  },
+  {
+    src: "./assets/interior/08.jpg",
+    width: 4,
+    height: 3,
+  },
+  {
+    src: "./assets/interior/09.jpg",
+    width: 4,
+    height: 3,
+  },
+];
+
+export const images = photos.map((photo) => photo.src);
 
 export default function WorkGallery() {
+  const [currentImage, setCurrentImage] = useState(0);
+  const [isViewerOpen, setIsViewerOpen] = useState(false);
+
+  const openImageViewer = useCallback((index: number) => {
+    setCurrentImage(index);
+    setIsViewerOpen(true);
+  }, []);
+
+  const closeImageViewer = () => {
+    setCurrentImage(0);
+    setIsViewerOpen(false);
+  };
+
   return (
-    <div className="p-4">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="grid gap-4">
-          <div>
-            <img
-              className="h-auto max-w-full rounded-lg"
-              src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image.jpg"
-              alt=""
-            />
-          </div>
-          <div>
-            <img
-              className="h-auto max-w-full rounded-lg"
-              src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-1.jpg"
-              alt=""
-            />
-          </div>
-          <div>
-            <img
-              className="h-auto max-w-full rounded-lg"
-              src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-2.jpg"
-              alt=""
-            />
-          </div>
-        </div>
-        <div className="grid gap-4">
-          <div>
-            <img
-              className="h-auto max-w-full rounded-lg"
-              src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-3.jpg"
-              alt=""
-            />
-          </div>
-          <div>
-            <img
-              className="h-auto max-w-full rounded-lg"
-              src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-4.jpg"
-              alt=""
-            />
-          </div>
-          <div>
-            <img
-              className="h-auto max-w-full rounded-lg"
-              src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-5.jpg"
-              alt=""
-            />
-          </div>
-        </div>
-        <div className="grid gap-4">
-          <div>
-            <img
-              className="h-auto max-w-full rounded-lg"
-              src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-6.jpg"
-              alt=""
-            />
-          </div>
-          <div>
-            <img
-              className="h-auto max-w-full rounded-lg"
-              src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-7.jpg"
-              alt=""
-            />
-          </div>
-          <div>
-            <img
-              className="h-auto max-w-full rounded-lg"
-              src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-8.jpg"
-              alt=""
-            />
-          </div>
-        </div>
-        <div className="grid gap-4">
-          <div>
-            <img
-              className="h-auto max-w-full rounded-lg"
-              src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-9.jpg"
-              alt=""
-            />
-          </div>
-          <div>
-            <img
-              className="h-auto max-w-full rounded-lg"
-              src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-10.jpg"
-              alt=""
-            />
-          </div>
-          <div>
-            <img
-              className="h-auto max-w-full rounded-lg"
-              src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-11.jpg"
-              alt=""
-            />
-          </div>
-        </div>
-      </div>
+    <div className="p-1 lg:p-2">
+      <ResponsiveMasonry columnsCountBreakPoints={{ 350: 2, 750: 3, 900: 4 }}>
+        <Masonry>
+          {images.map((image, index) => (
+            <div key={index} className="cursor-pointer overflow-hidden">
+              <div className="cursor-pointer w-full h-auto overflow-hidden p-1 md:p-2">
+                <img
+                  src={image}
+                  className="w-full h-full rounded lg:rounded-xl"
+                  alt=""
+                  onClick={() => openImageViewer(index)}
+                />
+              </div>
+            </div>
+          ))}
+        </Masonry>
+      </ResponsiveMasonry>
+      {isViewerOpen && (
+        <ImageViewer
+          src={images}
+          currentIndex={currentImage}
+          onClose={closeImageViewer}
+          disableScroll={false}
+          backgroundStyle={{
+            backgroundColor: "rgba(0,0,0,0.9)",
+            zIndex: 1000,
+          }}
+          closeOnClickOutside={true}
+        />
+      )}
     </div>
   );
 }

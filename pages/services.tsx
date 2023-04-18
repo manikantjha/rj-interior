@@ -1,8 +1,10 @@
 import Hero from "@/components/common/Hero";
+import ContactMain from "@/components/contact/ContactMain";
 import ServicesRow from "@/components/home/servicesRow/ServicesRow";
 import PackagesRow from "@/components/services/packagesRow/PackagesRow";
 import MainLayout from "@/layout/MainLayout";
 import Head from "next/head";
+import ScrollAnimation from "react-animate-on-scroll";
 
 export default function Services() {
   return (
@@ -22,9 +24,15 @@ export default function Services() {
             description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum, iure?"
             hasContent={true}
           />
-
-          <ServicesRow />
-          <PackagesRow />
+          <ScrollAnimation animateIn="fadeIn">
+            <ServicesRow />
+          </ScrollAnimation>
+          <ScrollAnimation animateIn="fadeIn">
+            <PackagesRow />
+          </ScrollAnimation>
+          <ScrollAnimation animateIn="fadeIn">
+            <ContactMain containerClassName="bg-gray-50" />
+          </ScrollAnimation>
         </main>
       </MainLayout>
     </>

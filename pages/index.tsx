@@ -5,7 +5,9 @@ import FiguresRow from "@/components/home/figuresRow/FiguresRow";
 import ServicesRow from "@/components/home/servicesRow/ServicesRow";
 import TestimonialsRow from "@/components/home/testimonialsRow/TestimonialsRow";
 import MainLayout from "@/layout/MainLayout";
+import "animate.css/animate.min.css";
 import Head from "next/head";
+import ScrollAnimation from "react-animate-on-scroll";
 
 export default function Home() {
   return (
@@ -25,12 +27,21 @@ export default function Home() {
             title="RJ Interior"
             description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corporis, nihil!"
           />
-
-          <FeaturesRow />
-          <FiguresRow />
-          <TestimonialsRow />
-          <ServicesRow />
-          <ContactRow />
+          <ScrollAnimation animateIn="fadeIn">
+            <FeaturesRow />
+          </ScrollAnimation>
+          <ScrollAnimation animateIn="fadeIn">
+            <FiguresRow />
+          </ScrollAnimation>
+          <ScrollAnimation animateIn="fadeIn">
+            <TestimonialsRow />
+          </ScrollAnimation>
+          <ScrollAnimation animateIn="fadeIn">
+            <ServicesRow containerClassName="bg-white" showButton />
+          </ScrollAnimation>
+          <ScrollAnimation animateIn="fadeIn">
+            <ContactRow />
+          </ScrollAnimation>
         </main>
       </MainLayout>
     </>

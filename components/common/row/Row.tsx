@@ -46,7 +46,9 @@ export default function Row(props: IRow) {
   return (
     <div>
       <ContainerWrapper>
-        <div className="grid grid-cols-2 gap-4">{renderColumns()}</div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {renderColumns()}
+        </div>
       </ContainerWrapper>
     </div>
   );

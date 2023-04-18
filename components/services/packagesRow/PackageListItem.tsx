@@ -13,7 +13,7 @@ export default function PackageListItem(props: IPackageListItem) {
       <li className="flex space-x-3">
         <svg
           aria-hidden="true"
-          className="flex-shrink-0 w-5 h-5 text-primary dark:text-primary"
+          className="flex-shrink-0 w-5 h-5 text-primary"
           fill="currentColor"
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"
@@ -25,7 +25,7 @@ export default function PackageListItem(props: IPackageListItem) {
             clipRule="evenodd"
           ></path>
         </svg>
-        <span className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400">
+        <span className="text-base font-normal leading-tight text-gray-500">
           {props.objPackageListItem.feature}
         </span>
       </li>
@@ -35,7 +35,7 @@ export default function PackageListItem(props: IPackageListItem) {
     <li className="flex space-x-3 line-through decoration-gray-500">
       <svg
         aria-hidden="true"
-        className="flex-shrink-0 w-5 h-5 text-gray-400 dark:text-gray-500"
+        className="flex-shrink-0 w-5 h-5 text-gray-400"
         fill="currentColor"
         viewBox="0 0 20 20"
         xmlns="http://www.w3.org/2000/svg"

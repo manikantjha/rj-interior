@@ -10,7 +10,7 @@ interface ITeamMemberCard {
 
 export default function TeamMemberCard(props: ITeamMemberCard) {
   return (
-    <div className="shadow-sm rounded-lg overflow-hidden flex flex-col items-center p-8 border bg-white">
+    <div className="shadow-sm-light rounded-lg overflow-hidden flex flex-col items-center p-8 border bg-white">
       <div className="w-[75px] h-[75px] md:w-[150px] md:h-[150px] overflow-hidden rounded-full">
         <img
           src={props.objTeamMember.imgSrc}
@@ -19,10 +19,12 @@ export default function TeamMemberCard(props: ITeamMemberCard) {
         />
       </div>
       <div className="text-center">
-        <p className="text-xl mt-4 mb-3 font-medium">
+        <p className="text-xl mt-4 mb-3 font-semibold">
           {props.objTeamMember.name}
         </p>
-        <p>{props.objTeamMember.description}</p>
+        <p className="text-base text-gray-500">
+          {props.objTeamMember.description}
+        </p>
       </div>
     </div>
   );

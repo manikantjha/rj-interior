@@ -1,3 +1,5 @@
+import CountUp from "react-countup";
+
 interface IFigrueCard {
   objFigrue: {
     figure: string;
@@ -8,11 +10,11 @@ interface IFigrueCard {
 export default function FigureCard(props: IFigrueCard) {
   return (
     <div className="text-center">
-      <div className="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-          {props.objFigrue.figure}
+      <div className="block p-6 bg-white border border-gray-200 rounded-lg shadow-sm-light hover:bg-gray-100">
+        <h5 className="mb-2 text-3xl lg:text-4xl font-bold text-primary">
+          <CountUp end={parseInt(props.objFigrue.figure)} scrollSpyOnce />
         </h5>
-        <p className="font-normal text-gray-700 dark:text-gray-400">
+        <p className="font-normal text-gray-700">
           {props.objFigrue.description}
         </p>
       </div>

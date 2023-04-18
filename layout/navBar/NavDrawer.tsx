@@ -6,14 +6,19 @@ import NavBarMenuItem from "./NavBarMenuItem";
 interface INavDrawerNavDrawer {
   routerPathName: string;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  isOpen: boolean;
 }
 
 export default function NavDrawer(props: INavDrawerNavDrawer) {
   return (
-    <div className="fixed top-[60] left-0 right-0 h-[calc(100vh_-_60px)] z-[1000] p-4 overflow-y-auto bg-white w-full dark:bg-gray-800 shadow-lg transition-all grid grid-rows-[auto_1fr] gap-4">
+    <div
+      className={`fixed top-[60] ${
+        props.isOpen ? "left-0" : "left-[-100vw]"
+      }  h-[calc(100vh_-_60px)] z-[1000] p-4 overflow-y-auto bg-white w-full shadow-lg grid grid-rows-[auto_1fr] gap-4 transition-all lg:hidden`}
+    >
       <button
         type="button"
-        className="text-gray-400 bg-gray-200 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 w-fit ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+        className="text-gray-400 bg-gray-200 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 w-fit ml-auto inline-flex items-center"
         onClick={() => props.setIsOpen(false)}
       >
         <svg
@@ -31,7 +36,7 @@ export default function NavDrawer(props: INavDrawerNavDrawer) {
         </svg>
         <span className="sr-only">Close menu</span>
       </button>
-      <ul className="flex flex-col p-4 border border-gray-100 rounded-lg dark:bg-gray-800 md:dark:bg-gray-900 space-y-4">
+      <ul className="flex flex-col p-4 border border-gray-100 rounded-lg space-y-4">
         {lstNavBarMenu.map((item) => (
           <NavBarMenuItem
             key={item.id}
