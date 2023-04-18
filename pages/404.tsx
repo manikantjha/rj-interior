@@ -2,8 +2,6 @@
 import ContainerWrapper from "@/components/common/ContainerWrapper";
 import LinkBtn from "@/components/common/LinkBtn";
 import MainLayout from "@/layout/MainLayout";
-import Link from "next/link";
-import React from "react";
 
 export default function PageNotFound() {
   return (
