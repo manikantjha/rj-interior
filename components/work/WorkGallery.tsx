@@ -5,47 +5,47 @@ import ImageViewer from "react-simple-image-viewer";
 
 export const photos = [
   {
-    src: "./assets/interior/01.jpg",
+    src: "/assets/interior/01.jpg",
     width: 2,
     height: 2,
   },
   {
-    src: "./assets/interior/02.jpg",
+    src: "/assets/interior/02.jpg",
     width: 1,
     height: 1,
   },
   {
-    src: "./assets/interior/03.jpg",
+    src: "/assets/interior/03.jpg",
     width: 3,
     height: 4,
   },
   {
-    src: "./assets/interior/04.jpg",
+    src: "/assets/interior/04.jpg",
     width: 3,
     height: 4,
   },
   {
-    src: "./assets/interior/05.jpg",
+    src: "/assets/interior/05.jpg",
     width: 3,
     height: 4,
   },
   {
-    src: "./assets/interior/06.jpg",
+    src: "/assets/interior/06.jpg",
     width: 4,
     height: 3,
   },
   {
-    src: "./assets/interior/07.jpg",
+    src: "/assets/interior/07.jpg",
     width: 3,
     height: 4,
   },
   {
-    src: "./assets/interior/08.jpg",
+    src: "/assets/interior/08.jpg",
     width: 4,
     height: 3,
   },
   {
-    src: "./assets/interior/09.jpg",
+    src: "/assets/interior/09.jpg",
     width: 4,
     height: 3,
   },

@@ -3,7 +3,7 @@ import Title from "@/components/common/Title";
 import { lstServices } from "@/data/data";
 import ServiceCard from "./ServiceCard";
 import Link from "next/link";
-import SeeAllBtn from "@/components/common/SeeAllBtn";
+import LinkBtn from "@/components/common/LinkBtn";
 
 interface IServicesRow {
   containerClassName?: string;
@@ -24,7 +24,9 @@ export default function ServicesRow(props: IServicesRow) {
         ))}
       </div>
       {props.showButton && (
-        <SeeAllBtn text="See All Services" href="/services" />
+        <div className="mt-16">
+          <LinkBtn text="See All Services" href="/services" />
+        </div>
       )}
     </ContainerWrapper>
   );
