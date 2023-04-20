@@ -1,7 +1,9 @@
 import Hero from "@/components/common/Hero";
+import LinkBtn from "@/components/common/LinkBtn";
 import ContactRow from "@/components/home/contactRow/ContactRow";
 import FeaturesRow from "@/components/home/featuresRow/FeaturesRow";
 import FiguresRow from "@/components/home/figuresRow/FiguresRow";
+import RecentWorkRow from "@/components/home/recentWorkRow/RecentWorkRow";
 import ServicesRow from "@/components/home/servicesRow/ServicesRow";
 import TestimonialsRow from "@/components/home/testimonialsRow/TestimonialsRow";
 import MainLayout from "@/layout/MainLayout";
@@ -26,8 +28,13 @@ export default function Home() {
             hasContent
             title="RJ Interior"
             description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corporis, nihil!"
+            renderButton={() => (
+              <div className="mt-12">
+                <LinkBtn href="/contact" text="Get In Touch" />
+              </div>
+            )}
           />
-          <ScrollAnimation animateIn="fadeIn">
+          <ScrollAnimation animateIn="fadeIn" initiallyVisible>
             <FeaturesRow />
           </ScrollAnimation>
           <ScrollAnimation animateIn="fadeIn">
@@ -38,6 +45,9 @@ export default function Home() {
           </ScrollAnimation>
           <ScrollAnimation animateIn="fadeIn">
             <ServicesRow containerClassName="bg-white" showButton />
+          </ScrollAnimation>
+          <ScrollAnimation animateIn="fadeIn">
+            <RecentWorkRow />
           </ScrollAnimation>
           <ScrollAnimation animateIn="fadeIn">
             <ContactRow />

@@ -1,11 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 
+import { ReactNode } from "react";
+
 interface IHero {
   imgSrc: string;
   imgAlt: string;
   hasContent?: boolean;
   title?: string;
   description?: string;
+  renderButton?: () => ReactNode;
 }
 
 export default function Hero(props: IHero) {
@@ -23,9 +26,10 @@ export default function Hero(props: IHero) {
             <h2 className="text-3xl md:text-6xl font-semibold text-white mb-4">
               {props.title}
             </h2>
-            <p className="text-white text-lg md:text-2xl">
+            <p className="text-white text-lg md:text-2xl px-2">
               {props.description}
             </p>
+            {props.renderButton && props.renderButton()}
           </div>
         </>
       )}
