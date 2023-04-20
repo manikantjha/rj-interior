@@ -1,3 +1,6 @@
+import femaleAvatar from "../public/assets/avatar_female.svg";
+import maleAvatar from "../public/assets/avatar_male.svg";
+
 // Common
 export const companyName = "RJ Interior";
 
@@ -226,14 +229,14 @@ export const objHowItStartedInfo = {
 
 export const objFounderInfo = {
   raja: {
-    imgSrc: "/assets/avatar_male.svg",
+    imgSrc: maleAvatar,
     name: "Raja Singh",
     designation: "Founder",
     description:
       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos explicabo quibusdam doloremque  oluptates libero odit non praesentium  repellendus magni aliquid vel, possimus odio expedita obcaecati! Fugiat perferendis minima corporis mollitia perspiciatis, placeat accusantium nesciunt commodi dolores et sint quae sit? Sapiente, ducimus quaerat. Cupiditate repellendus nemo animi numquam hic velit.",
   },
   ghanshyam: {
-    imgSrc: "/assets/avatar_male.svg",
+    imgSrc: maleAvatar,
     name: "Ghanshyam Parmar",
     designation: "Co-Founder",
     description:
@@ -244,35 +247,35 @@ export const objFounderInfo = {
 export const lstTeamMembers = [
   {
     id: 1,
-    imgSrc: "/assets/avatar_male.svg",
+    imgSrc: maleAvatar,
     name: "John Doe",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, officiis.",
   },
   {
     id: 2,
-    imgSrc: "/assets/avatar_female.svg",
+    imgSrc: femaleAvatar,
     name: "John Doe",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, officiis.",
   },
   {
     id: 3,
-    imgSrc: "/assets/avatar_female.svg",
+    imgSrc: femaleAvatar,
     name: "John Doe",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, officiis.",
   },
   {
     id: 4,
-    imgSrc: "/assets/avatar_male.svg",
+    imgSrc: maleAvatar,
     name: "John Doe",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, officiis.",
   },
   {
     id: 5,
-    imgSrc: "/assets/avatar_male.svg",
+    imgSrc: maleAvatar,
     name: "John Doe",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, officiis.",

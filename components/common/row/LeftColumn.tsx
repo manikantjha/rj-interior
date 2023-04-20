@@ -1,9 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
+import Image, { StaticImageData } from "next/image";
 import { ReactNode } from "react";
 
 export interface ILeftCoumn {
   renderLeftColumn?: () => ReactNode;
-  imgSrc?: string;
+  imgSrc?: StaticImageData;
   imgAlt?: string;
 }
 
@@ -13,9 +14,9 @@ export default function LeftColumn(props: ILeftCoumn) {
   }
   return (
     <div className="w-full h-[300px] md:h-[500px] rounded-xl overflow-hidden">
-      <img
-        src={props.imgSrc}
-        alt={props.imgAlt}
+      <Image
+        src={props.imgSrc || ""}
+        alt={props.imgAlt || "row image"}
         className="h-full w-full object-cover"
       />
     </div>

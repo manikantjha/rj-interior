@@ -1,8 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 
+import Image, { StaticImageData } from "next/image";
+
 interface ITeamMemberCard {
   objTeamMember: {
-    imgSrc: string;
+    imgSrc: StaticImageData;
     name: string;
     description: string;
   };
@@ -12,7 +14,7 @@ export default function TeamMemberCard(props: ITeamMemberCard) {
   return (
     <div className="shadow-sm-light rounded-lg overflow-hidden flex flex-col items-center p-8 border bg-white">
       <div className="w-[75px] h-[75px] md:w-[150px] md:h-[150px] overflow-hidden rounded-full">
-        <img
+        <Image
           src={props.objTeamMember.imgSrc}
           alt={props.objTeamMember.name}
           className="h-full w-full object-cover"

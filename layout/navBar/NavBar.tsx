@@ -35,6 +35,7 @@ export default function NavBar() {
             type="button"
             className="inline-flex items-center ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
             onClick={() => setIsOpen((open) => !open)}
+            title="menu"
           >
             <svg
               className="w-6 h-6"

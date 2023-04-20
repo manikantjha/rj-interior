@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-
 import { ReactNode } from "react";
+import Image, { StaticImageData } from "next/image";
 
 interface IHero {
-  imgSrc: string;
+  imgSrc: StaticImageData;
   imgAlt: string;
   hasContent?: boolean;
   title?: string;
@@ -13,11 +13,13 @@ interface IHero {
 
 export default function Hero(props: IHero) {
   return (
-    <div className="h-[70vh] w-full overflow-hidden relative">
-      <img
+    <div className="h-[70vh] w-full overflow-hidden relative block">
+      <Image
         src={props.imgSrc}
         alt={props.imgAlt}
-        className="h-full w-full object-cover object-center"
+        sizes="100vw"
+        priority={true}
+        style={{ objectFit: "cover", height: "100%", width: "100%" }}
       />
       {props.hasContent && (
         <>

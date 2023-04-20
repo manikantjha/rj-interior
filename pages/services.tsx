@@ -5,6 +5,7 @@ import PackagesRow from "@/components/services/packagesRow/PackagesRow";
 import MainLayout from "@/layout/MainLayout";
 import Head from "next/head";
 import ScrollAnimation from "react-animate-on-scroll";
+import heroImage from "../public/assets/hero/services.jpg";
 
 export default function Services() {
   return (
@@ -18,7 +19,7 @@ export default function Services() {
       <MainLayout>
         <main>
           <Hero
-            imgSrc="/assets/hero/services.jpg"
+            imgSrc={heroImage}
             imgAlt="about image"
             title="Services"
             description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum, iure?"

@@ -6,6 +6,7 @@ import FiguresRow from "@/components/home/figuresRow/FiguresRow";
 import MainLayout from "@/layout/MainLayout";
 import Head from "next/head";
 import ScrollAnimation from "react-animate-on-scroll";
+import heroImage from "../public/assets/hero/about.jpg";
 
 export default function About() {
   return (
@@ -19,7 +20,7 @@ export default function About() {
       <MainLayout>
         <main>
           <Hero
-            imgSrc="/assets/hero/about.jpg"
+            imgSrc={heroImage}
             imgAlt="about image"
             title="About"
             description="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates, consectetur?"

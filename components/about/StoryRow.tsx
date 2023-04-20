@@ -1,14 +1,13 @@
 import { objHowItStartedInfo } from "@/data/data";
+import aboutRowImage from "../../public/assets/interior/10.jpg";
 import ContainerWrapper from "../common/ContainerWrapper";
-import Title from "../common/Title";
 import Row from "../common/row/Row";
 
 export default function StoryRow() {
   return (
     <ContainerWrapper>
-      {/* <Title title="How it Started" /> */}
       <Row
-        imgSrc="/assets/interior/10.jpg"
+        imgSrc={aboutRowImage}
         renderRightColumn={() => (
           <div>
             <h2 className="text-4xl mb-8">Our Story</h2>

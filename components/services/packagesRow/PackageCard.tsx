@@ -19,9 +19,9 @@ export default function PackageCard(props: IPackageCard) {
     <div className="w-full bg-gray-50 border border-gray-200 rounded-lg shadow-sm-light overflow-hidden">
       <div className="bg-white text-center">
         <div className="p-4 lg:p-6 bg-gradient-to-tl from-orange-900 to-orange-700">
-          <h5 className="text-2xl font-semibold text-white">
+          <p className="text-2xl font-semibold text-white">
             {props.objPackage.name}
-          </h5>
+          </p>
         </div>
         <hr />
         <div className="px-4 lg:px-6 py-4">

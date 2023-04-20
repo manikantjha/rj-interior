@@ -7,9 +7,9 @@ import RecentWorkRow from "@/components/home/recentWorkRow/RecentWorkRow";
 import ServicesRow from "@/components/home/servicesRow/ServicesRow";
 import TestimonialsRow from "@/components/home/testimonialsRow/TestimonialsRow";
 import MainLayout from "@/layout/MainLayout";
-import "animate.css/animate.min.css";
 import Head from "next/head";
 import ScrollAnimation from "react-animate-on-scroll";
+import heroImage from "../public/assets/hero/home.jpg";
 
 export default function Home() {
   return (
@@ -23,7 +23,7 @@ export default function Home() {
       <MainLayout>
         <main>
           <Hero
-            imgSrc="/assets/hero/home.jpg"
+            imgSrc={heroImage}
             imgAlt="home hero"
             hasContent
             title="RJ Interior"
