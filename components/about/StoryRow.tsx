@@ -8,7 +8,7 @@ export default function StoryRow() {
     <ContainerWrapper>
       {/* <Title title="How it Started" /> */}
       <Row
-        imgSrc="https://images.unsplash.com/photo-1598350742412-8fe67cd5375b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+        imgSrc="/assets/interior/10.jpg"
         renderRightColumn={() => (
           <div>
             <h2 className="text-4xl mb-8">Our Story</h2>

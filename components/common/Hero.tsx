@@ -17,7 +17,7 @@ export default function Hero(props: IHero) {
       <img
         src={props.imgSrc}
         alt={props.imgAlt}
-        className="h-full w-full object-cover"
+        className="h-full w-full object-cover object-center"
       />
       {props.hasContent && (
         <>

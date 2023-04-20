@@ -18,7 +18,7 @@ export default function Services() {
       <MainLayout>
         <main>
           <Hero
-            imgSrc="https://images.unsplash.com/photo-1600210491369-e753d80a41f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80"
+            imgSrc="/assets/hero/services.jpg"
             imgAlt="about image"
             title="Services"
             description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum, iure?"
