@@ -1,4 +1,3 @@
-import React from "react";
 import ContainerWrapper from "../common/ContainerWrapper";
 import ContactForm from "./ContactForm";
 import ContactInfoCard from "./ContactInfoCard";

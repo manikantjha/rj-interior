@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import { ReactNode } from "react";
 import Image, { StaticImageData } from "next/image";
+import { ReactNode } from "react";
 
 interface IHero {
   imgSrc: StaticImageData;

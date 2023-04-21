@@ -1,5 +1,4 @@
 import { objContactInfo } from "@/data/data";
-import React from "react";
 import ContactInfoListItem from "./ContactInfoListItem";
 
 export default function ContactInfoCard() {

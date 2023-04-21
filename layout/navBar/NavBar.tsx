@@ -4,9 +4,9 @@ import { lstNavBarMenu } from "@/data/data";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { checkIsActive } from "./navbarHelper";
 import NavBarMenuItem from "./NavBarMenuItem";
 import NavDrawer from "./NavDrawer";
+import { checkIsActive } from "./navbarHelper";
 
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);

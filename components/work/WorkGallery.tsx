@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState, useCallback } from "react";
+import { useCallback, useState } from "react";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import ImageViewer from "react-simple-image-viewer";
 

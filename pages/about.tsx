@@ -1,5 +1,5 @@
-import FounderRow from "@/components/about/founderRow/FounderRow";
 import StoryRow from "@/components/about/StoryRow";
+import FounderRow from "@/components/about/founderRow/FounderRow";
 import TeamRow from "@/components/about/teamRow/TeamRow";
 import Hero from "@/components/common/Hero";
 import FiguresRow from "@/components/home/figuresRow/FiguresRow";

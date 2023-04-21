@@ -1,6 +1,5 @@
-import React from "react";
-import Title from "../common/Title";
 import ContainerWrapper from "../common/ContainerWrapper";
+import Title from "../common/Title";
 
 export default function PrivacyMain() {
   return (

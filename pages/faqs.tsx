@@ -1,7 +1,6 @@
 import FAQsRow from "@/components/faqs/FAQsRow";
 import MainLayout from "@/layout/MainLayout";
 import Head from "next/head";
-import React from "react";
 
 export default function faqs() {
   return (

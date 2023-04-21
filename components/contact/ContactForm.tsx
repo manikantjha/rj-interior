@@ -1,12 +1,81 @@
-import React from "react";
+import emailjs from "@emailjs/browser";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import Modal from "../common/Modal";
+import ContactModalContent from "./ContactModalContent";
+
+const phoneRegExp =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+
+const schema = yup
+  .object({
+    name: yup.string().required("Name is required"),
+    phone: yup
+      .string()
+      .matches(phoneRegExp, "A valid phone number is required"),
+    email: yup.string().email().required("Email is required"),
+    message: yup.string().required("Message is required"),
+  })
+  .required();
+
+type FormData = yup.InferType<typeof schema>;
 
 export default function ContactForm() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  function handleClose() {
+    setIsOpen(false);
+  }
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    defaultValues: {
+      name: "",
+      phone: "",
+      email: "",
+      message: "",
+    },
+    resolver: yupResolver(schema),
+  });
+
+  const form = useRef<HTMLFormElement>(null);
+
+  const onSubmit = (data: FormData) => {
+    if (form.current) {
+      emailjs
+        .sendForm(
+          // "YOUR_SERVICE_ID",
+          "service_5g5sfca",
+          // "YOUR_TEMPLATE_ID",
+          "template_90779r9",
+          // Data,
+          form.current,
+          // "YOUR_PUBLIC_KEY"
+          "cLinWhNUqZbIpCAga"
+        )
+        .then(
+          (result) => {
+            setIsSuccess(true);
+            setIsOpen(true);
+          },
+          (error) => {
+            setIsSuccess(false);
+            setIsOpen(true);
+          }
+        );
+    }
+  };
+
   return (
     <div className="w-full p-4 bg-white rounded-lg sm:p-6 md:p-8">
-      <form className="space-y-6" action="#">
-        {/* <h5 className="text-xl font-bold text-gray-900">
-          {"Let's get in touch!"}
-        </h5> */}
+      <form ref={form} className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label
             htmlFor="name"
@@ -15,13 +84,14 @@ export default function ContactForm() {
             Your name
           </label>
           <input
-            type="text"
-            name="name"
             id="name"
+            type="text"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5 placeholder-gray-400 "
-            placeholder=""
-            required
+            {...register("name")}
           />
+          {errors.name && (
+            <p className="text-red-600 mt-2">* {errors.name.message}</p>
+          )}
         </div>
         <div>
           <label
@@ -32,12 +102,13 @@ export default function ContactForm() {
           </label>
           <input
             type="number"
-            name="phone"
             id="phone"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary placeholder-gray-400 focus:border-primary block w-full p-2.5"
-            placeholder=""
-            required
+            {...register("phone")}
           />
+          {errors.phone && (
+            <p className="text-red-600 mt-2">* {errors.phone.message}</p>
+          )}
         </div>
         <div>
           <label
@@ -47,13 +118,14 @@ export default function ContactForm() {
             Your email address
           </label>
           <input
-            type="email"
-            name="email"
             id="email"
-            placeholder=""
+            type="email"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
-            required
+            {...register("email")}
           />
+          {errors.email && (
+            <p className="text-red-600 mt-2">* {errors.email.message}</p>
+          )}
         </div>
         <div>
           <label
@@ -63,13 +135,15 @@ export default function ContactForm() {
             Your enquiry
           </label>
           <textarea
-            name="message"
             id="message"
             rows={4}
             placeholder="Enter your questions or message"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
-            required
+            {...register("message")}
           />
+          {errors.message && (
+            <p className="text-red-600 mt-2">* {errors.message.message}</p>
+          )}
         </div>
 
         <button
@@ -79,6 +153,31 @@ export default function ContactForm() {
           Send
         </button>
       </form>
+
+      {isOpen && (
+        <Modal
+          isOpen={isOpen}
+          handleClose={handleClose}
+          modalTitle="Message Status"
+          renderContent={() => (
+            <ContactModalContent
+              isSuccess={isSuccess}
+              handleClose={handleClose}
+            />
+          )}
+          renderButtons={() => (
+            <button
+              className="block mx-auto text-center p-2 md:p-3 font-bold bg-primary text-white rounded-full !w-[200px] hover:bg-orange-800 hover:shadow-sm"
+              onClick={() => {
+                handleClose();
+                reset();
+              }}
+            >
+              Ok
+            </button>
+          )}
+        />
+      )}
     </div>
   );
 }

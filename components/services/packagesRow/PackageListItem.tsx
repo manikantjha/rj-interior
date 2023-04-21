@@ -1,5 +1,3 @@
-import React from "react";
-
 interface IPackageListItem {
   objPackageListItem: {
     isIncluded: boolean;

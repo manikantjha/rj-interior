@@ -1,9 +1,8 @@
 import ContainerWrapper from "@/components/common/ContainerWrapper";
+import LinkBtn from "@/components/common/LinkBtn";
 import Title from "@/components/common/Title";
 import { lstServices } from "@/data/data";
 import ServiceCard from "./ServiceCard";
-import Link from "next/link";
-import LinkBtn from "@/components/common/LinkBtn";
 
 interface IServicesRow {
   containerClassName?: string;
