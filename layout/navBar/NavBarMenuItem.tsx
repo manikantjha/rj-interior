@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-interface INavBarMenuItem {
+interface INavbarMenuItem {
   objMenuItem: {
     name: string;
     path: string;
@@ -9,7 +9,7 @@ interface INavBarMenuItem {
   onClick: () => void;
 }
 
-export default function NavbarMenuItem(props: INavBarMenuItem) {
+export default function NavbarMenuItem(props: INavbarMenuItem) {
   return (
     <li onClick={props.onClick}>
       <Link
