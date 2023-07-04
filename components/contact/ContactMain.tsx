@@ -1,12 +1,15 @@
+import { getContactInfos } from "@/services/apiServices";
 import ContainerWrapper from "../common/ContainerWrapper";
 import ContactForm from "./ContactForm";
 import ContactInfoCard from "./ContactInfoCard";
+import { useQuery } from "react-query";
 
 interface IContactMain {
   containerClassName?: string;
 }
 
 export default function ContactMain(props: IContactMain) {
+  const contactInfos = useQuery("contactInfos", () => getContactInfos());
   return (
     <ContainerWrapper
       containerClassName={`${
@@ -14,7 +17,7 @@ export default function ContactMain(props: IContactMain) {
       }`}
     >
       <div className="bg-white shadow p-4 lg:p-8 max-w-7xl rounded-lg grid xs:grid-cols-1 md:grid-cols-1 lg:grid-cols-[2fr_3fr] gap-4 mx-auto">
-        <ContactInfoCard />
+        <ContactInfoCard contactInfos={contactInfos} />
         <ContactForm />
       </div>
     </ContainerWrapper>

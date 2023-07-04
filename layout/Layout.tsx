@@ -1,15 +1,15 @@
 import { ReactNode } from "react";
 import Footer from "./Footer";
-import NavBar from "./navBar/NavBar";
+import Navbar from "./navbar/Navbar";
 
 interface IMainLayout {
   children: ReactNode;
 }
 
-export default function MainLayout(props: IMainLayout) {
+export default function Layout(props: IMainLayout) {
   return (
     <>
-      <NavBar />
+      <Navbar />
       <>{props.children}</>
       <Footer />
     </>

@@ -4,11 +4,11 @@ import { lstNavBarMenu } from "@/data/data";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import NavBarMenuItem from "./NavBarMenuItem";
+import NavbarMenuItem from "./NavbarMenuItem";
 import NavDrawer from "./NavDrawer";
 import { checkIsActive } from "./navbarHelper";
 
-export default function NavBar() {
+export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
@@ -22,7 +22,7 @@ export default function NavBar() {
           <div className="hidden w-full md:block md:w-auto">
             <ul className="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white">
               {lstNavBarMenu.map((item) => (
-                <NavBarMenuItem
+                <NavbarMenuItem
                   key={item.id}
                   objMenuItem={item}
                   isActive={checkIsActive(item.path, router.pathname)}

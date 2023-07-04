@@ -1,6 +1,5 @@
 interface IContactInfoListItem {
   objContactInfo: {
-    id: number;
     icon: JSX.Element;
     info: string;
   };

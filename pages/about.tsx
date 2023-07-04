@@ -2,13 +2,19 @@ import StoryRow from "@/components/about/StoryRow";
 import FounderRow from "@/components/about/founderRow/FounderRow";
 import TeamRow from "@/components/about/teamRow/TeamRow";
 import Hero from "@/components/common/Hero";
+import LinkBtn from "@/components/common/LinkBtn";
 import FiguresRow from "@/components/home/figuresRow/FiguresRow";
-import MainLayout from "@/layout/MainLayout";
+import Layout from "@/layout/Layout";
+import { getFigures, getHero, getTeamMembers } from "@/services/apiServices";
 import Head from "next/head";
 import ScrollAnimation from "react-animate-on-scroll";
-import heroImage from "../public/assets/hero/about.jpg";
+import { useQuery } from "react-query";
 
 export default function About() {
+  const hero = useQuery("aboutHero", () => getHero("about"));
+  const figures = useQuery("figures", () => getFigures());
+  const teamMembers = useQuery("teamMembers", () => getTeamMembers());
+
   return (
     <>
       <Head>
@@ -17,14 +23,21 @@ export default function About() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <MainLayout>
+      <Layout>
         <main>
           <Hero
-            imgSrc={heroImage}
+            imgSrc={hero?.data?.hero?.imageURL}
             imgAlt="about image"
-            title="About"
+            title={hero?.data?.hero?.title}
             description="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates, consectetur?"
             hasContent={true}
+            renderButton={() =>
+              hero?.data?.hero?.hasContactButton ? (
+                <div className="mt-12">
+                  <LinkBtn href="/contact" text="Get In Touch" />
+                </div>
+              ) : null
+            }
           />
           <ScrollAnimation animateIn="fadeIn">
             <StoryRow />
@@ -33,13 +46,13 @@ export default function About() {
             <FounderRow />
           </ScrollAnimation>
           <ScrollAnimation animateIn="fadeIn">
-            <FiguresRow />
+            <FiguresRow figures={figures} />
           </ScrollAnimation>
           <ScrollAnimation animateIn="fadeIn">
-            <TeamRow />
+            <TeamRow teamMembers={teamMembers} />
           </ScrollAnimation>
         </main>
-      </MainLayout>
+      </Layout>
     </>
   );
 }

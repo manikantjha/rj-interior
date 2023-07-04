@@ -3,7 +3,7 @@ import Image, { StaticImageData } from "next/image";
 import { ReactNode } from "react";
 
 interface IHero {
-  imgSrc: StaticImageData;
+  imgSrc: string; //StaticImageData;
   imgAlt: string;
   hasContent?: boolean;
   title?: string;
@@ -14,11 +14,12 @@ interface IHero {
 export default function Hero(props: IHero) {
   return (
     <div className="h-[70vh] w-full overflow-hidden relative block">
-      <Image
+      <img
         src={props.imgSrc}
         alt={props.imgAlt}
         sizes="100vw"
-        priority={true}
+        // width={"100%"}
+        // priority={true}
         style={{ objectFit: "cover", height: "100%", width: "100%" }}
       />
       {props.hasContent && (

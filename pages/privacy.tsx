@@ -1,10 +1,10 @@
 import PrivacyMain from "@/components/privacy/PrivacyMain";
-import MainLayout from "@/layout/MainLayout";
+import Layout from "@/layout/Layout";
 
 export default function Privacy() {
   return (
-    <MainLayout>
+    <Layout>
       <PrivacyMain />
-    </MainLayout>
+    </Layout>
   );
 }

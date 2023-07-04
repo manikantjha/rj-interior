@@ -1,6 +1,6 @@
 import { lstNavBarMenu } from "@/data/data";
 import { Dispatch, SetStateAction } from "react";
-import NavBarMenuItem from "./NavBarMenuItem";
+import NavbarMenuItem from "./NavbarMenuItem";
 import { checkIsActive } from "./navbarHelper";
 
 interface INavDrawerNavDrawer {
@@ -38,7 +38,7 @@ export default function NavDrawer(props: INavDrawerNavDrawer) {
       </button>
       <ul className="flex flex-col p-4 border border-gray-100 rounded-lg space-y-4">
         {lstNavBarMenu.map((item) => (
-          <NavBarMenuItem
+          <NavbarMenuItem
             key={item.id}
             objMenuItem={item}
             isActive={checkIsActive(item.path, props.routerPathName)}

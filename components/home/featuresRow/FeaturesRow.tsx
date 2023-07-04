@@ -1,9 +1,13 @@
 import ContainerWrapper from "@/components/common/ContainerWrapper";
 import Title from "@/components/common/Title";
-import { lstFeatures } from "@/data/data";
+import { UseQueryResult } from "react-query";
 import FeatureCard from "./FeatureCard";
 
-export default function FeaturesRow() {
+interface IFeaturesRowProps {
+  features: UseQueryResult<any, unknown>;
+}
+
+export default function FeaturesRow(props: IFeaturesRowProps) {
   return (
     <ContainerWrapper containerClassName="bg-gray-50">
       <Title
@@ -11,7 +15,7 @@ export default function FeaturesRow() {
         description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, error?"
       />
       <div className="grid xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {lstFeatures.map((item) => (
+        {props?.features?.data?.features[0]?.features?.map((item: any) => (
           <FeatureCard key={item.id} objFeature={item} />
         ))}
       </div>

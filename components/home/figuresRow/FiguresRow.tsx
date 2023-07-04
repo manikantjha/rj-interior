@@ -2,13 +2,18 @@ import ContainerWrapper from "@/components/common/ContainerWrapper";
 import Title from "@/components/common/Title";
 import { lstFigures } from "@/data/data";
 import FigureCard from "./FigureCard";
+import { UseQueryResult } from "react-query";
 
-export default function FiguresRow() {
+interface IFiguresRowProps {
+  figures: UseQueryResult<any, unknown>;
+}
+
+export default function FiguresRow(props: IFiguresRowProps) {
   return (
     <ContainerWrapper>
       <Title title="Let our numbers do the talking!" />
       <div className="grid xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {lstFigures.map((item) => (
+        {props?.figures?.data?.figures[0]?.figures?.map((item: any) => (
           <FigureCard key={item.id} objFigrue={item} />
         ))}
       </div>

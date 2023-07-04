@@ -6,12 +6,23 @@ import FiguresRow from "@/components/home/figuresRow/FiguresRow";
 import RecentWorkRow from "@/components/home/recentWorkRow/RecentWorkRow";
 import ServicesRow from "@/components/home/servicesRow/ServicesRow";
 import TestimonialsRow from "@/components/home/testimonialsRow/TestimonialsRow";
-import MainLayout from "@/layout/MainLayout";
+import Layout from "@/layout/Layout";
+import {
+  getFeatures,
+  getFigures,
+  getHero,
+  getServices,
+} from "@/services/apiServices";
 import Head from "next/head";
 import ScrollAnimation from "react-animate-on-scroll";
-import heroImage from "../public/assets/hero/home.jpg";
+import { useQuery } from "react-query";
 
 export default function Home() {
+  const hero = useQuery("homeHero", () => getHero("home"));
+  const features = useQuery("features", () => getFeatures());
+  const figures = useQuery("figures", () => getFigures());
+  const services = useQuery("services", () => getServices());
+
   return (
     <>
       <Head>
@@ -20,31 +31,37 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <MainLayout>
+      <Layout>
         <main>
           <Hero
-            imgSrc={heroImage}
+            imgSrc={hero?.data?.hero?.imageURL}
             imgAlt="home hero"
             hasContent
-            title="RJ Interior"
-            description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corporis, nihil!"
-            renderButton={() => (
-              <div className="mt-12">
-                <LinkBtn href="/contact" text="Get In Touch" />
-              </div>
-            )}
+            title={hero?.data?.hero?.title}
+            description={hero?.data?.hero?.description}
+            renderButton={() =>
+              hero?.data?.hero?.hasContactButton ? (
+                <div className="mt-12">
+                  <LinkBtn href="/contact" text="Get In Touch" />
+                </div>
+              ) : null
+            }
           />
           <ScrollAnimation animateIn="fadeIn" initiallyVisible>
-            <FeaturesRow />
+            <FeaturesRow features={features} />
           </ScrollAnimation>
           <ScrollAnimation animateIn="fadeIn">
-            <FiguresRow />
+            <FiguresRow figures={figures} />
           </ScrollAnimation>
           <ScrollAnimation animateIn="fadeIn">
             <TestimonialsRow />
           </ScrollAnimation>
           <ScrollAnimation animateIn="fadeIn">
-            <ServicesRow containerClassName="bg-white" showButton />
+            <ServicesRow
+              containerClassName="bg-white"
+              showButton
+              services={services}
+            />
           </ScrollAnimation>
           <ScrollAnimation animateIn="fadeIn">
             <RecentWorkRow />
@@ -53,7 +70,7 @@ export default function Home() {
             <ContactRow />
           </ScrollAnimation>
         </main>
-      </MainLayout>
+      </Layout>
     </>
   );
 }

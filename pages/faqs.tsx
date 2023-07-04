@@ -1,8 +1,11 @@
 import FAQsRow from "@/components/faqs/FAQsRow";
-import MainLayout from "@/layout/MainLayout";
+import Layout from "@/layout/Layout";
+import { getFAQs } from "@/services/apiServices";
 import Head from "next/head";
+import { useQuery } from "react-query";
 
-export default function faqs() {
+export default function FAQs() {
+  const faqs = useQuery("faqs", () => getFAQs());
   return (
     <>
       <Head>
@@ -11,11 +14,11 @@ export default function faqs() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <MainLayout>
+      <Layout>
         <main>
-          <FAQsRow />
+          <FAQsRow faqs={faqs} />
         </main>
-      </MainLayout>
+      </Layout>
     </>
   );
 }

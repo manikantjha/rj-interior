@@ -9,7 +9,7 @@ interface INavBarMenuItem {
   onClick: () => void;
 }
 
-export default function NavBarMenuItem(props: INavBarMenuItem) {
+export default function NavbarMenuItem(props: INavBarMenuItem) {
   return (
     <li onClick={props.onClick}>
       <Link

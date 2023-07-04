@@ -1,5 +1,5 @@
 import WorkGallery from "@/components/work/WorkGallery";
-import MainLayout from "@/layout/MainLayout";
+import Layout from "@/layout/Layout";
 import Head from "next/head";
 
 export default function Work() {
@@ -11,11 +11,11 @@ export default function Work() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <MainLayout>
+      <Layout>
         <main>
           <WorkGallery />
         </main>
-      </MainLayout>
+      </Layout>
     </>
   );
 }

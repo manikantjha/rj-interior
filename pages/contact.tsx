@@ -1,5 +1,5 @@
 import ContactMain from "@/components/contact/ContactMain";
-import MainLayout from "@/layout/MainLayout";
+import Layout from "@/layout/Layout";
 import Head from "next/head";
 
 export default function Contact() {
@@ -11,9 +11,9 @@ export default function Contact() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <MainLayout>
+      <Layout>
         <ContactMain />
-      </MainLayout>
+      </Layout>
     </>
   );
 }

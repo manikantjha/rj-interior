@@ -3,7 +3,7 @@ import ServiceChecklistItem from "./ServiceChecklistItem";
 interface IServiceCard {
   objService: {
     title: string;
-    checklist: string[];
+    list: string[];
   };
 }
 
@@ -36,7 +36,7 @@ export default function ServiceCard(props: IServiceCard) {
             <hr />
             <div className="p-5 md:p-6">
               <ul role="list" className="space-y-2">
-                {props.objService.checklist.map((item, index) => (
+                {props.objService?.list?.map((item, index) => (
                   <ServiceChecklistItem key={index} checklistItem={item} />
                 ))}
               </ul>
