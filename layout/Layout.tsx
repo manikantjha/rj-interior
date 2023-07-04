@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import Footer from "./Footer";
-import Navbar from "./navbar/Navbar";
+import Navbar from "./navbar/NavBar";
 
 interface IMainLayout {
   children: ReactNode;
