@@ -5,8 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import NavDrawer from "./NavDrawer";
-import NavbarMenuItem from "./NavbarMenuItem";
-import { checkIsActive } from "./navbarHelper";
+import NavbarMenuItem from "./NavBarMenuItem";
+import { checkIsActive } from "./navBarHelper";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
