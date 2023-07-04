@@ -1,11 +1,10 @@
+import { addUpdateTeamMember } from "@/services/apiServices";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { UseQueryResult, useMutation } from "react-query";
 import * as yup from "yup";
 import FormSectionContainer from "../common/FormSectionContainer";
 import ImageUploader from "../common/ImageUploader";
-import { addUpdateTeamMember } from "@/services/apiServices";
-import FormSectionTitle from "../common/FormSectionTitle";
 
 type TeamMembersForm = {
   teamMembers: {
@@ -30,10 +29,6 @@ const schema = yup.object({
 });
 
 export default function TeamMembersForm(props: ITeamMembersFormProps) {
-  const addUpdateTeamMemberMutation = useMutation(addUpdateTeamMember, {
-    onSuccess: () => {},
-  });
-
   const {
     register,
     control,
@@ -42,7 +37,7 @@ export default function TeamMembersForm(props: ITeamMembersFormProps) {
   } = useForm<any>({
     resolver: yupResolver(schema),
     defaultValues: {
-      teamMembers: props.teamMembers?.data?.teamMembers
+      teamMembers: props.teamMembers?.data
         ? props.teamMembers?.data?.teamMembers[0]?.teamMembers
         : [{ name: "", description: "", imageURL: "" }],
     },
@@ -51,6 +46,10 @@ export default function TeamMembersForm(props: ITeamMembersFormProps) {
   const { fields, append, remove } = useFieldArray({
     control,
     name: "teamMembers",
+  });
+
+  const addUpdateTeamMemberMutation = useMutation(addUpdateTeamMember, {
+    onSuccess: () => {},
   });
 
   function onSubmit(data: any) {
@@ -63,7 +62,6 @@ export default function TeamMembersForm(props: ITeamMembersFormProps) {
 
   return (
     <>
-      <FormSectionTitle title="Team Members" />
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormSectionContainer>
           <div className="grid gap-6 mb-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

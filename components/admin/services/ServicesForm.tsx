@@ -4,7 +4,6 @@ import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import { UseQueryResult, useMutation } from "react-query";
 import * as yup from "yup";
 import FormSectionContainer from "../common/FormSectionContainer";
-import FormSectionTitle from "../common/FormSectionTitle";
 import FormSectionWrapper from "../common/FormSectionWrapper";
 import ServicesListForm from "./ServicesListForm";
 
@@ -65,7 +64,6 @@ export default function ServicesForm(props: IServices) {
 
   return (
     <FormSectionWrapper>
-      <FormSectionTitle title="Services" />
       <FormProvider {...objForm}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <FormSectionContainer>

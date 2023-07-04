@@ -31,7 +31,6 @@ export default function AboutHeroForm(props: IHeroFormProps) {
 
   const {
     register,
-    control,
     handleSubmit,
     formState: { errors },
   } = useForm<HeroForm>({

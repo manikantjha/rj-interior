@@ -2,7 +2,7 @@ import { addUpdateHero } from "@/services/apiServices";
 import { storage } from "@/services/firebaseServices";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import * as yup from "yup";
@@ -31,7 +31,6 @@ export default function ServiceHeroForm(props: IHeroFormProps) {
 
   const {
     register,
-    control,
     handleSubmit,
     formState: { errors },
   } = useForm<HeroForm>({

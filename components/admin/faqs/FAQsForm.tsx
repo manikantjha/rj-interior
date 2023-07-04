@@ -1,10 +1,9 @@
-import React from "react";
+import { addUpdateFAQ } from "@/services/apiServices";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useFieldArray, useForm } from "react-hook-form";
+import { UseQueryResult, useMutation } from "react-query";
 import * as yup from "yup";
 import FormSectionContainer from "../common/FormSectionContainer";
-import { UseQueryResult, useMutation } from "react-query";
-import { addUpdateFAQ } from "@/services/apiServices";
 
 type FAQsForm = {
   faqs: {
@@ -43,13 +42,13 @@ export default function FAQsForm(props: IFAQsForm) {
     },
   });
 
-  const addUpdateFAQsMutation = useMutation(addUpdateFAQ, {
-    onSuccess: () => {},
-  });
-
   const { fields, append, remove } = useFieldArray({
     control,
     name: "faqs",
+  });
+
+  const addUpdateFAQsMutation = useMutation(addUpdateFAQ, {
+    onSuccess: () => {},
   });
 
   const onSubmit = (data: FAQsForm) => {

@@ -1,11 +1,10 @@
+import { addUpdateFigure } from "@/services/apiServices";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { UseQueryResult, useMutation } from "react-query";
 import * as yup from "yup";
 import FormSectionContainer from "../common/FormSectionContainer";
-import FormSectionTitle from "../common/FormSectionTitle";
 import FormSectionWrapper from "../common/FormSectionWrapper";
-import { UseQueryResult, useMutation } from "react-query";
-import { addUpdateFigure } from "@/services/apiServices";
 
 type FiguresForm = {
   figures: {
@@ -35,7 +34,6 @@ const schema = yup
 export default function FiguresForm(props: IFigures) {
   const {
     register,
-    control,
     handleSubmit,
     formState: { errors },
   } = useForm<FiguresForm>({
@@ -60,7 +58,6 @@ export default function FiguresForm(props: IFigures) {
 
   return (
     <FormSectionWrapper>
-      <FormSectionTitle title="Figures" />
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormSectionContainer>
           {[...Array(4)].map((item, index) => (

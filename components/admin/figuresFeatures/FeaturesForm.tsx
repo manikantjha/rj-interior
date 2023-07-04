@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { UseQueryResult, useMutation } from "react-query";
 import * as yup from "yup";
 import FormSectionContainer from "../common/FormSectionContainer";
-import FormSectionTitle from "../common/FormSectionTitle";
 
 type FeaturesForm = {
   features: {
@@ -31,7 +30,6 @@ const schema = yup
 export default function FeaturesForm(props: IFeatures) {
   const {
     register,
-    control,
     handleSubmit,
     formState: { errors },
   } = useForm<FeaturesForm>({
@@ -56,7 +54,6 @@ export default function FeaturesForm(props: IFeatures) {
 
   return (
     <div className="mb-8">
-      <FormSectionTitle title="Features" />
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormSectionContainer>
           {[...Array(4)].map((item, index) => (

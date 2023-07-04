@@ -1,4 +1,5 @@
 import FormSectionTitle from "@/components/admin/common/FormSectionTitle";
+import RenderAppropriateComponent from "@/components/admin/common/RenderAppropriateComponent";
 import ContactInfoForm from "@/components/admin/contactInfo/ContactInfoForm";
 import AdminLayout from "@/layout/admin/AdminLayout";
 import { getContactInfos } from "@/services/apiServices";
@@ -10,7 +11,12 @@ export default function ContactInfo() {
     <AdminLayout>
       <div className="mb-8">
         <FormSectionTitle title="Contact Info" />
-        <ContactInfoForm contactInfos={contactInfos} />
+        <RenderAppropriateComponent
+          queryResult={contactInfos}
+          loaderHeight="h-[400px]"
+        >
+          <ContactInfoForm contactInfos={contactInfos} />
+        </RenderAppropriateComponent>
       </div>
     </AdminLayout>
   );

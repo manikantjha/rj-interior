@@ -1,10 +1,10 @@
 import { addUpdatePackage } from "@/services/apiServices";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useEffect } from "react";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import { UseQueryResult, useMutation } from "react-query";
 import * as yup from "yup";
 import FormSectionContainer from "../common/FormSectionContainer";
-import FormSectionTitle from "../common/FormSectionTitle";
 import FormSectionWrapper from "../common/FormSectionWrapper";
 import PackagesListForm from "./PackagesListForm";
 
@@ -45,17 +45,6 @@ export default function PackagesForm(props: IPackages) {
     },
   });
 
-  const addUpdatePackagesMutation = useMutation(addUpdatePackage, {
-    onSuccess: () => {},
-  });
-
-  const onSubmit = (data: PackagesForm) => {
-    const id = props?.packages?.data?.packages
-      ? props?.packages?.data?.packages[0]?._id
-      : undefined;
-    addUpdatePackagesMutation.mutate({ ...data, id: id });
-  };
-
   const {
     register,
     control,
@@ -68,9 +57,19 @@ export default function PackagesForm(props: IPackages) {
     name: "packages",
   });
 
+  const addUpdatePackagesMutation = useMutation(addUpdatePackage, {
+    onSuccess: () => {},
+  });
+
+  const onSubmit = (data: PackagesForm) => {
+    const id = props?.packages?.data?.packages
+      ? props?.packages?.data?.packages[0]?._id
+      : undefined;
+    addUpdatePackagesMutation.mutate({ ...data, id: id });
+  };
+
   return (
     <FormSectionWrapper>
-      <FormSectionTitle title="Packages" />
       <FormProvider {...objForm}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <FormSectionContainer>

@@ -1,14 +1,22 @@
+import FormSectionTitle from "@/components/admin/common/FormSectionTitle";
+import RenderAppropriateComponent from "@/components/admin/common/RenderAppropriateComponent";
 import TeamMembersForm from "@/components/admin/teamMembers/TeamMembersForm";
 import AdminLayout from "@/layout/admin/AdminLayout";
 import { getTeamMembers } from "@/services/apiServices";
-import React from "react";
 import { useQuery } from "react-query";
 
 export default function FoundersTeam() {
   const teamMembers = useQuery("teamMembers", () => getTeamMembers());
+
   return (
     <AdminLayout>
-      <TeamMembersForm teamMembers={teamMembers} />
+      <FormSectionTitle title="Team Members" />
+      <RenderAppropriateComponent
+        queryResult={teamMembers}
+        loaderHeight="h-[400px]"
+      >
+        <TeamMembersForm teamMembers={teamMembers} />
+      </RenderAppropriateComponent>
     </AdminLayout>
   );
 }

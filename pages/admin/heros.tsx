@@ -1,5 +1,6 @@
 import FormSectionTitle from "@/components/admin/common/FormSectionTitle";
 import FormSectionWrapper from "@/components/admin/common/FormSectionWrapper";
+import RenderAppropriateComponent from "@/components/admin/common/RenderAppropriateComponent";
 import AboutHeroForm from "@/components/admin/heros/AboutHeroForm";
 import HomeHeroForm from "@/components/admin/heros/HomeHeroForm";
 import ServiceHeroForm from "@/components/admin/heros/ServiceHeroForm";
@@ -16,15 +17,30 @@ export default function Heroes() {
     <AdminLayout>
       <FormSectionWrapper>
         <FormSectionTitle title="Home Page Hero" />
-        <HomeHeroForm hero={homeHero} />
+        <RenderAppropriateComponent
+          queryResult={homeHero}
+          loaderHeight="h-[400px]"
+        >
+          <HomeHeroForm hero={homeHero} />
+        </RenderAppropriateComponent>
       </FormSectionWrapper>
       <FormSectionWrapper>
         <FormSectionTitle title="About Page Hero" />
-        <AboutHeroForm hero={aboutHero} />
+        <RenderAppropriateComponent
+          queryResult={aboutHero}
+          loaderHeight="h-[400px]"
+        >
+          <AboutHeroForm hero={aboutHero} />
+        </RenderAppropriateComponent>
       </FormSectionWrapper>
       <FormSectionWrapper>
         <FormSectionTitle title="Service Page Hero" />
-        <ServiceHeroForm hero={serviceHero} />
+        <RenderAppropriateComponent
+          queryResult={serviceHero}
+          loaderHeight="h-[400px]"
+        >
+          <ServiceHeroForm hero={serviceHero} />
+        </RenderAppropriateComponent>
       </FormSectionWrapper>
     </AdminLayout>
   );
