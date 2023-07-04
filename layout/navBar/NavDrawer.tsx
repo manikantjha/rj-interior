@@ -1,7 +1,7 @@
 import { lstNavBarMenu } from "@/data/data";
 import { Dispatch, SetStateAction } from "react";
-import NavbarMenuItem from "./NavBarMenuItem";
-import { checkIsActive } from "./navBarHelper";
+import NavbarMenuItem from "./NavbarMenuItem";
+import { checkIsActive } from "./navbarHelper";
 
 interface INavDrawerNavDrawer {
   routerPathName: string;
