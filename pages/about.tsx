@@ -7,7 +7,6 @@ import FiguresRow from "@/components/home/figuresRow/FiguresRow";
 import Layout from "@/layout/Layout";
 import { getFigures, getHero, getTeamMembers } from "@/services/apiServices";
 import Head from "next/head";
-import ScrollAnimation from "react-animate-on-scroll";
 import { useQuery } from "react-query";
 
 export default function About() {
@@ -39,18 +38,10 @@ export default function About() {
               ) : null
             }
           />
-          <ScrollAnimation animateIn="fadeIn">
-            <StoryRow />
-          </ScrollAnimation>
-          <ScrollAnimation animateIn="fadeIn">
-            <FounderRow />
-          </ScrollAnimation>
-          <ScrollAnimation animateIn="fadeIn">
-            <FiguresRow figures={figures} />
-          </ScrollAnimation>
-          <ScrollAnimation animateIn="fadeIn">
-            <TeamRow teamMembers={teamMembers} />
-          </ScrollAnimation>
+          <StoryRow />
+          <FounderRow />
+          <FiguresRow figures={figures} />
+          <TeamRow teamMembers={teamMembers} />
         </main>
       </Layout>
     </>

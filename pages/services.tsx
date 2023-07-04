@@ -6,7 +6,6 @@ import PackagesRow from "@/components/services/packagesRow/PackagesRow";
 import Layout from "@/layout/Layout";
 import { getHero, getServices } from "@/services/apiServices";
 import Head from "next/head";
-import ScrollAnimation from "react-animate-on-scroll";
 import { useQuery } from "react-query";
 
 export default function Services() {
@@ -37,15 +36,9 @@ export default function Services() {
               ) : null
             }
           />
-          <ScrollAnimation animateIn="fadeIn">
-            <ServicesRow services={services} />
-          </ScrollAnimation>
-          <ScrollAnimation animateIn="fadeIn">
-            <PackagesRow />
-          </ScrollAnimation>
-          <ScrollAnimation animateIn="fadeIn">
-            <ContactMain containerClassName="bg-gray-50" />
-          </ScrollAnimation>
+          <ServicesRow services={services} />
+          <PackagesRow />
+          <ContactMain containerClassName="bg-gray-50" />
         </main>
       </Layout>
     </>

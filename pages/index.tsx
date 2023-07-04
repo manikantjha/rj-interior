@@ -14,7 +14,6 @@ import {
   getServices,
 } from "@/services/apiServices";
 import Head from "next/head";
-import ScrollAnimation from "react-animate-on-scroll";
 import { useQuery } from "react-query";
 
 export default function Home() {
@@ -47,28 +46,16 @@ export default function Home() {
               ) : null
             }
           />
-          <ScrollAnimation animateIn="fadeIn" initiallyVisible>
-            <FeaturesRow features={features} />
-          </ScrollAnimation>
-          <ScrollAnimation animateIn="fadeIn">
-            <FiguresRow figures={figures} />
-          </ScrollAnimation>
-          <ScrollAnimation animateIn="fadeIn">
-            <TestimonialsRow />
-          </ScrollAnimation>
-          <ScrollAnimation animateIn="fadeIn">
-            <ServicesRow
-              containerClassName="bg-white"
-              showButton
-              services={services}
-            />
-          </ScrollAnimation>
-          <ScrollAnimation animateIn="fadeIn">
-            <RecentWorkRow />
-          </ScrollAnimation>
-          <ScrollAnimation animateIn="fadeIn">
-            <ContactRow />
-          </ScrollAnimation>
+          <FeaturesRow features={features} />
+          <FiguresRow figures={figures} />
+          <TestimonialsRow />
+          <ServicesRow
+            containerClassName="bg-white"
+            showButton
+            services={services}
+          />
+          <RecentWorkRow />
+          <ContactRow />
         </main>
       </Layout>
     </>
