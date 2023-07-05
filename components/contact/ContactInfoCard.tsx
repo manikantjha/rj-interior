@@ -1,4 +1,3 @@
-import { objContactInfo } from "@/data/data";
 import { UseQueryResult } from "react-query";
 import ContactInfoListItem from "./ContactInfoListItem";
 
@@ -8,7 +7,7 @@ interface IContactInfoCardProps {
 
 export default function ContactInfoCard(props: IContactInfoCardProps) {
   return (
-    <div className="grid grid-rows-[1fr_auto] rounded-xl p-6 border-2 border-white bg-gradient-to-br from-orange-700 to-orange-900">
+    <>
       <div className="mb-6 lg:mb-0">
         <h2 className="text-4xl text-white mb-6">
           {props.contactInfos?.data?.contactInfos &&
@@ -109,6 +108,6 @@ export default function ContactInfoCard(props: IContactInfoCardProps) {
           }}
         />
       </div>
-    </div>
+    </>
   );
 }
