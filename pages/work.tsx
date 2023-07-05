@@ -1,3 +1,6 @@
+import RenderAppropriateComponent from "@/components/admin/common/RenderAppropriateComponent";
+import Error from "@/components/common/Error";
+import WorkSkeleton from "@/components/skeletons/WorkSkeleton";
 import WorkGallery from "@/components/work/WorkGallery";
 import Layout from "@/layout/Layout";
 import { getWorks } from "@/services/apiServices";
@@ -16,7 +19,18 @@ export default function Work() {
       </Head>
       <Layout>
         <main>
-          <WorkGallery works={works} />
+          <RenderAppropriateComponent
+            queryResult={works}
+            loadingComponent={<WorkSkeleton />}
+            errorComponent={
+              <Error
+                containerClassName="h-[500px] w-full overflow-hidden flex justify-center items-center"
+                text="Failed to load works :("
+              />
+            }
+          >
+            <WorkGallery works={works} />
+          </RenderAppropriateComponent>
         </main>
       </Layout>
     </>

@@ -4,11 +4,7 @@ interface IPackageCard {
   objPackage: {
     name: string;
     price: string;
-    lstFeatures: {
-      id: number;
-      isIncluded: boolean;
-      feature: string;
-    }[];
+    list: string[];
   };
 }
 
@@ -40,8 +36,8 @@ export default function PackageCard(props: IPackageCard) {
       <hr />
       <div className="p-4 lg:p-6">
         <ul role="list" className="space-y-4">
-          {props.objPackage.lstFeatures.map((item) => (
-            <PackageListItem key={item.id} objPackageListItem={item} />
+          {props.objPackage.list.map((item, index) => (
+            <PackageListItem key={index} objPackageListItem={item} />
           ))}
         </ul>
       </div>

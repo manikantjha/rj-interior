@@ -23,7 +23,7 @@ export default function FAQsRow(props: IFAQsRowProps) {
                 objAccordion={item}
                 expanded={expanded}
                 setExpanded={setExpanded}
-                listLength={lstFAQs.length}
+                listLength={props.faqs?.data?.faqs[0]?.faqs?.length}
                 index={index}
               />
             ))

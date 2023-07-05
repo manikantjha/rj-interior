@@ -1,12 +1,11 @@
-import React from "react";
-
 interface IErrorProps {
   text?: string;
+  containerClassName?: string;
 }
 
 export default function Error(props: IErrorProps) {
   return (
-    <div>
+    <div className={props.containerClassName || ""}>
       <div
         className="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
         role="alert"

@@ -7,11 +7,19 @@ export default function RenderAppropriateComponent(props: {
   queryResult: UseQueryResult<any, unknown>;
   children: ReactNode;
   loaderHeight?: string;
+  loadingComponent?: ReactNode;
+  errorComponent?: ReactNode;
 }) {
   if (props.queryResult.isLoading) {
+    if (props.loadingComponent) {
+      return <>{props.loadingComponent}</>;
+    }
     return <Loading loaderContainerHeightWidth={props.loaderHeight} />;
   }
   if (props.queryResult.isError) {
+    if (props.errorComponent) {
+      return <>{props.errorComponent}</>;
+    }
     return <Error />;
   }
   return <>{props.children}</>;

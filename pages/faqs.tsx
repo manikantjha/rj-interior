@@ -1,3 +1,5 @@
+import RenderAppropriateComponent from "@/components/admin/common/RenderAppropriateComponent";
+import Error from "@/components/common/Error";
 import FAQsRow from "@/components/faqs/FAQsRow";
 import Layout from "@/layout/Layout";
 import { getFAQs } from "@/services/apiServices";
@@ -16,7 +18,17 @@ export default function FAQs() {
       </Head>
       <Layout>
         <main>
-          <FAQsRow faqs={faqs} />
+          <RenderAppropriateComponent
+            queryResult={faqs}
+            errorComponent={
+              <Error
+                containerClassName="h-[500px] w-full overflow-hidden flex justify-center items-center"
+                text="Failed to load faqs :("
+              />
+            }
+          >
+            <FAQsRow faqs={faqs} />
+          </RenderAppropriateComponent>
         </main>
       </Layout>
     </>

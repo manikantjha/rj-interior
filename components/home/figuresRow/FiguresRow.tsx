@@ -1,8 +1,7 @@
 import ContainerWrapper from "@/components/common/ContainerWrapper";
 import Title from "@/components/common/Title";
-import { lstFigures } from "@/data/data";
-import FigureCard from "./FigureCard";
 import { UseQueryResult } from "react-query";
+import FigureCard from "./FigureCard";
 
 interface IFiguresRowProps {
   figures: UseQueryResult<any, unknown>;
