@@ -272,3 +272,37 @@ export const addUpdateTeamMember = async (data: any) => {
     console.log("Error: ", error);
   }
 };
+
+//  Works --------------------------------------------------!
+
+export const getWorks = async () => {
+  const response = await fetch(`${BASE_URL}/api/works`);
+  const json = await response.json();
+  return json;
+};
+
+export const getWork = async (id: string) => {
+  const options = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ pageId: id }),
+  };
+  const response = await fetch(`${BASE_URL}/api/works/${id}`, options);
+  const json = await response.json();
+  return json;
+};
+
+export const addUpdateWork = async (data: any) => {
+  try {
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    };
+    const response = await fetch(`${BASE_URL}/api/works`, options);
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+};

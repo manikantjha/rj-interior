@@ -16,16 +16,18 @@ export default function FAQsRow(props: IFAQsRowProps) {
       <Title title="FAQs" />
 
       <div>
-        {props.faqs?.data?.faqs[0]?.faqs.map((item: any, index: number) => (
-          <Accordion
-            key={index}
-            objAccordion={item}
-            expanded={expanded}
-            setExpanded={setExpanded}
-            listLength={lstFAQs.length}
-            index={index}
-          />
-        ))}
+        {props.faqs?.data?.faqs
+          ? props.faqs?.data?.faqs[0]?.faqs.map((item: any, index: number) => (
+              <Accordion
+                key={index}
+                objAccordion={item}
+                expanded={expanded}
+                setExpanded={setExpanded}
+                listLength={lstFAQs.length}
+                index={index}
+              />
+            ))
+          : null}
       </div>
     </ContainerWrapper>
   );

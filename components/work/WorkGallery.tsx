@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { useCallback, useState } from "react";
+import { UseQueryResult } from "react-query";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import ImageViewer from "react-simple-image-viewer";
 
@@ -51,9 +52,16 @@ export const photos = [
   },
 ];
 
+interface IWorkGalleryProps {
+  works?: UseQueryResult<any, unknown>;
+}
+
 export const images = photos.map((photo) => photo.src);
 
-export default function WorkGallery() {
+export default function WorkGallery(props: IWorkGalleryProps) {
+  const works =
+    (props?.works?.data?.works && props?.works?.data?.works[0].works) || [];
+  const worksImages = works.map((work: any) => work.imageURL);
   const [currentImage, setCurrentImage] = useState(0);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
 
@@ -71,7 +79,7 @@ export default function WorkGallery() {
     <div className="p-1 lg:p-2">
       <ResponsiveMasonry columnsCountBreakPoints={{ 350: 2, 750: 3, 900: 4 }}>
         <Masonry>
-          {images.map((image, index) => (
+          {worksImages.map((image: string, index: number) => (
             <div key={index} className="cursor-pointer overflow-hidden">
               <div className="cursor-pointer w-full h-auto overflow-hidden p-1 md:p-2">
                 <img
@@ -87,7 +95,7 @@ export default function WorkGallery() {
       </ResponsiveMasonry>
       {isViewerOpen && (
         <ImageViewer
-          src={images}
+          src={worksImages}
           currentIndex={currentImage}
           onClose={closeImageViewer}
           disableScroll={false}

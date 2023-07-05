@@ -1,4 +1,4 @@
-import { addUpdateTeamMember } from "@/services/apiServices";
+import { addUpdateTeamMember, addUpdateWork } from "@/services/apiServices";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { UseQueryResult, useMutation } from "react-query";
@@ -10,59 +10,57 @@ import SubmitButton from "../common/SubmitButton";
 import Toast from "../common/Toast";
 import { ToastOptions, toast } from "react-toastify";
 
-type TeamMembersForm = {
-  teamMembers: {
+type WorksForm = {
+  works: {
     imageURL: string;
     name: string;
     description: string;
   }[];
 };
 
-interface ITeamMembersFormProps {
-  teamMembers?: UseQueryResult<any, unknown>;
+interface IWorksFormProps {
+  works?: UseQueryResult<any, unknown>;
 }
 
 const schema = yup.object({
-  teamMembers: yup.array().of(
+  works: yup.array().of(
     yup.object({
-      imageURL: yup.string(),
-      name: yup.string().required("Name is required"),
-      description: yup.string().required("Description is required"),
+      imageURL: yup.string().required("Image is required"),
+      name: yup.string(),
+      description: yup.string(),
     })
   ),
 });
 
-export default function TeamMembersForm(props: ITeamMembersFormProps) {
+export default function WorksForm(props: IWorksFormProps) {
   const {
     register,
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<TeamMembersForm>({
+  } = useForm<WorksForm>({
     resolver: yupResolver(schema),
     defaultValues: {
-      teamMembers: props.teamMembers?.data
-        ? props.teamMembers?.data?.teamMembers[0]?.teamMembers
+      works: props.works?.data?.works
+        ? props.works?.data?.works[0]?.works
         : [{ name: "", description: "", imageURL: "" }],
     },
   });
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "teamMembers",
+    name: "works",
   });
 
-  const addUpdateTeamMemberMutation = useMutation(addUpdateTeamMember, {
+  const addUpdateWorkMutation = useMutation(addUpdateWork, {
     onSuccess: () => {},
   });
 
   const notify = (text: string, options: ToastOptions) => toast(text, options);
 
   function onSubmit(data: any) {
-    const id = props.teamMembers?.data?.teamMembers
-      ? props.teamMembers?.data?.teamMembers[0]?._id
-      : "";
-    addUpdateTeamMemberMutation.mutate(
+    const id = props.works?.data?.works ? props.works?.data?.works[0]?._id : "";
+    addUpdateWorkMutation.mutate(
       {
         ...data,
         id: id,
@@ -77,7 +75,6 @@ export default function TeamMembersForm(props: ITeamMembersFormProps) {
       }
     );
   }
-
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -111,55 +108,50 @@ export default function TeamMembersForm(props: ITeamMembersFormProps) {
                   <div className="mb-4">
                     <Controller
                       control={control}
-                      name={`teamMembers.${index}.imageURL`}
+                      name={`works.${index}.imageURL`}
                       render={({ field: { onChange, onBlur, value, ref } }) => (
                         <ImageUploader
-                          label="Member Image"
+                          label="Work Image"
                           onChange={onChange}
                           index={index}
-                          id={`teamMembers.${index}.imageURL`}
+                          id={`works.${index}.imageURL`}
                           imageURL={
-                            props.teamMembers?.data?.teamMembers[0]
-                              ?.teamMembers[index]?.imageURL || ""
+                            (props.works?.data?.works &&
+                              props.works?.data?.works[0]?.works[index]
+                                ?.imageURL) ||
+                            ""
                           }
                         />
                       )}
                     />
+                    {errors.works && errors.works[index]?.imageURL && (
+                      <p className="text-red-700 text-sm">
+                        * {errors.works[index]?.imageURL?.message}
+                      </p>
+                    )}
                   </div>
                   <div>
                     <div>
                       <p className="block mb-2 text-sm font-medium text-gray-900">
-                        Member Name
+                        Work Name
                       </p>
                       <input
                         type="text"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
                         placeholder="Member Name"
-                        {...register(`teamMembers.${index}.name`)}
+                        {...register(`works.${index}.name`)}
                       />
-                      {errors.teamMembers &&
-                        errors.teamMembers[index]?.name && (
-                          <p className="text-red-700 text-sm">
-                            * {errors.teamMembers[index]?.name?.message}
-                          </p>
-                        )}
                     </div>
                     <div>
                       <p className="block mb-2 text-sm font-medium text-gray-900 mt-2">
-                        Member Short Description
+                        Work Short Description
                       </p>
                       <input
                         type="text"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
                         placeholder="Hero Short Description"
-                        {...register(`teamMembers.${index}.description`)}
+                        {...register(`works.${index}.description`)}
                       />
-                      {errors.teamMembers &&
-                        errors.teamMembers[index]?.description && (
-                          <p className="text-red-700 text-sm">
-                            * {errors.teamMembers[index]?.description?.message}
-                          </p>
-                        )}
                     </div>
                   </div>
                 </FormSectionContainer>
@@ -172,9 +164,9 @@ export default function TeamMembersForm(props: ITeamMembersFormProps) {
               onClick={() =>
                 append({ name: "", description: "", imageURL: "" })
               }
-              text="Add Member"
+              text="Add Work"
             />
-            <SubmitButton isLoading={addUpdateTeamMemberMutation.isLoading} />
+            <SubmitButton isLoading={addUpdateWorkMutation.isLoading} />
           </div>
         </FormSectionContainer>
       </form>

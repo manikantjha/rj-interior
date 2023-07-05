@@ -12,6 +12,7 @@ import {
   getFigures,
   getHero,
   getServices,
+  getWorks,
 } from "@/services/apiServices";
 import Head from "next/head";
 import { useQuery } from "react-query";
@@ -21,6 +22,7 @@ export default function Home() {
   const features = useQuery("features", () => getFeatures());
   const figures = useQuery("figures", () => getFigures());
   const services = useQuery("services", () => getServices());
+  const works = useQuery("recentWorks", () => getWorks());
 
   return (
     <>
@@ -54,7 +56,7 @@ export default function Home() {
             showButton
             services={services}
           />
-          <RecentWorkRow />
+          <RecentWorkRow works={works} />
           <ContactRow />
         </main>
       </Layout>

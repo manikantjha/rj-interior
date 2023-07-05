@@ -1,8 +1,11 @@
 import WorkGallery from "@/components/work/WorkGallery";
 import Layout from "@/layout/Layout";
+import { getWorks } from "@/services/apiServices";
 import Head from "next/head";
+import { useQuery } from "react-query";
 
 export default function Work() {
+  const works = useQuery("works", () => getWorks());
   return (
     <>
       <Head>
@@ -13,7 +16,7 @@ export default function Work() {
       </Head>
       <Layout>
         <main>
-          <WorkGallery />
+          <WorkGallery works={works} />
         </main>
       </Layout>
     </>

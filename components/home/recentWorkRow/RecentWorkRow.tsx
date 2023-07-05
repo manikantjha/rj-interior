@@ -3,18 +3,12 @@ import ContainerWrapper from "@/components/common/ContainerWrapper";
 import LinkBtn from "@/components/common/LinkBtn";
 import Title from "@/components/common/Title";
 import Image from "next/image";
+import { UseQueryResult } from "react-query";
 import Slider, { CustomArrowProps } from "react-slick";
-import img01 from "../../../public/assets/interior/01.jpg";
-import img02 from "../../../public/assets/interior/02.jpg";
-import img03 from "../../../public/assets/interior/03.jpg";
-import img04 from "../../../public/assets/interior/04.jpg";
-import img05 from "../../../public/assets/interior/05.jpg";
-import img06 from "../../../public/assets/interior/06.jpg";
-import img07 from "../../../public/assets/interior/07.jpg";
-import img08 from "../../../public/assets/interior/08.jpg";
-import img09 from "../../../public/assets/interior/09.jpg";
 
-const images = [img01, img02, img03, img04, img05, img06, img07, img08, img09];
+interface IWorkGalleryProps {
+  works?: UseQueryResult<any, unknown>;
+}
 
 function SampleNextArrow(props: CustomArrowProps) {
   const { className, style, onClick } = props;
@@ -106,15 +100,19 @@ const settings = {
   ],
 };
 
-export default function RecentWorkRow() {
+export default function RecentWorkRow(props: IWorkGalleryProps) {
+  const works =
+    (props?.works?.data?.works && props?.works?.data?.works[0].works) || [];
+  const worksImages = works.map((work: any) => work.imageURL);
+
   return (
     <ContainerWrapper containerClassName="bg-gray-100 overflow-x-hidden">
       <Title title="Recent Work" />
       <div>
         <Slider {...settings}>
-          {images.map((item, index) => (
+          {worksImages.map((item: string, index: number) => (
             <div key={index} className="px-2">
-              <Image
+              <img
                 className="h-auto max-w-full rounded-lg"
                 src={item}
                 alt="interior image"
