@@ -28,7 +28,7 @@ export default function ContactMain(props: IContactMain) {
             }
             errorComponent={
               <Error
-                containerClassName="h-[200px] bg-gray-100 w-full overflow-hidden flex justify-center items-center"
+                containerClassName="h-[200px] w-full overflow-hidden flex justify-center items-center"
                 text="Failed to load contact info :("
               />
             }
