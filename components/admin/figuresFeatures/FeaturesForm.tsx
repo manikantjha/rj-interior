@@ -4,6 +4,9 @@ import { useForm } from "react-hook-form";
 import { UseQueryResult, useMutation } from "react-query";
 import * as yup from "yup";
 import FormSectionContainer from "../common/FormSectionContainer";
+import SubmitButton from "../common/SubmitButton";
+import Toast from "../common/Toast";
+import { ToastOptions, toast } from "react-toastify";
 
 type FeaturesForm = {
   features: {
@@ -41,6 +44,8 @@ export default function FeaturesForm(props: IFeatures) {
     },
   });
 
+  const notify = (text: string, options: ToastOptions) => toast(text, options);
+
   const addUpdateFeaturesMutation = useMutation(addUpdateFeature, {
     onSuccess: () => {},
   });
@@ -49,7 +54,17 @@ export default function FeaturesForm(props: IFeatures) {
     const id = props?.features?.data?.features
       ? props?.features?.data?.features[0]?._id
       : undefined;
-    addUpdateFeaturesMutation.mutate({ ...data, id: id });
+    addUpdateFeaturesMutation.mutate(
+      { ...data, id: id },
+      {
+        onSuccess: () => {
+          notify("Submitted succesfully!", { type: "success" });
+        },
+        onError: () => {
+          notify("Failed to submit!", { type: "error" });
+        },
+      }
+    );
   };
 
   return (
@@ -103,15 +118,11 @@ export default function FeaturesForm(props: IFeatures) {
             </div>
           ))}
           <div className="w-full flex items-center space-x-4 mt-8">
-            <button
-              type="submit"
-              className="bg-primary hover:bg-orange-600 active:bg-orange-800 px-8 py-2 text-white font-semibold rounded-full"
-            >
-              Submit
-            </button>
+            <SubmitButton isLoading={addUpdateFeaturesMutation.isLoading} />
           </div>
         </FormSectionContainer>
       </form>
+      <Toast />
     </div>
   );
 }

@@ -32,13 +32,35 @@ export default function ServicesListForm(props: IServicesListForm) {
               >
                 Service List Item {index + 1}
               </label>
-              <input
-                id={`listItem${index}`}
-                type="text"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
-                placeholder="Service List Item"
-                {...register(`services[${props.parentIndex}].list[${index}]`)}
-              />
+              <div className="grid grid-cols-[1fr_auto] place-items-center">
+                <input
+                  id={`listItem${index}`}
+                  type="text"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
+                  placeholder="Service List Item"
+                  {...register(`services[${props.parentIndex}].list[${index}]`)}
+                />
+                <button
+                  type="button"
+                  className="bg-gray-50 border border-primary hover:bg-white active:bg-gray-200 p-1 text-primary font-semibold rounded-full flex items-center justify-center ml-4"
+                  onClick={() => remove(index)}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
             {fieldState.error && (
               <p className="text-red-700 mt-2 text-sm">

@@ -7,6 +7,10 @@ import * as yup from "yup";
 import FormSectionContainer from "../common/FormSectionContainer";
 import FormSectionWrapper from "../common/FormSectionWrapper";
 import PackagesListForm from "./PackagesListForm";
+import AddMoreButton from "../common/AddMoreButton";
+import SubmitButton from "../common/SubmitButton";
+import { ToastOptions, toast } from "react-toastify";
+import Toast from "../common/Toast";
 
 type PackagesForm = {
   packages: {
@@ -57,6 +61,8 @@ export default function PackagesForm(props: IPackages) {
     name: "packages",
   });
 
+  const notify = (text: string, options: ToastOptions) => toast(text, options);
+
   const addUpdatePackagesMutation = useMutation(addUpdatePackage, {
     onSuccess: () => {},
   });
@@ -65,7 +71,17 @@ export default function PackagesForm(props: IPackages) {
     const id = props?.packages?.data?.packages
       ? props?.packages?.data?.packages[0]?._id
       : undefined;
-    addUpdatePackagesMutation.mutate({ ...data, id: id });
+    addUpdatePackagesMutation.mutate(
+      { ...data, id: id },
+      {
+        onSuccess: () => {
+          notify("Submitted succesfully!", { type: "success" });
+        },
+        onError: () => {
+          notify("Failed to submit!", { type: "error" });
+        },
+      }
+    );
   };
 
   return (
@@ -75,6 +91,28 @@ export default function PackagesForm(props: IPackages) {
           <FormSectionContainer>
             {fields.map((item, index) => (
               <FormSectionContainer key={item.id} className="mb-4">
+                <div className="w-full flex justify-end">
+                  <button
+                    type="button"
+                    className="bg-primary text-white border hover:bg-orange-800 active:bg-orange-800 p-1 font-semibold rounded-full flex"
+                    onClick={() => remove(index)}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-5 h-5"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                </div>
                 <div className="grid gap-6 mb-4 md:grid-cols-2">
                   <div>
                     <label
@@ -120,24 +158,18 @@ export default function PackagesForm(props: IPackages) {
                 <PackagesListForm parentIndex={index} />
               </FormSectionContainer>
             ))}
+
             <div className="w-full flex items-center space-x-4 mt-8">
-              <button
-                type="button"
-                className="bg-gray-50 border border-primary hover:bg-white active:bg-gray-200 px-8 py-2 text-primary font-semibold rounded-full"
+              <AddMoreButton
                 onClick={() => append({ title: "", price: 0, list: [] })}
-              >
-                Add Package
-              </button>
-              <button
-                type="submit"
-                className="bg-primary hover:bg-orange-600 active:bg-orange-800 px-8 py-2 text-white font-semibold rounded-full"
-              >
-                Submit
-              </button>
+                text="Add Package"
+              />
+              <SubmitButton isLoading={addUpdatePackagesMutation.isLoading} />
             </div>
           </FormSectionContainer>
         </form>
       </FormProvider>
+      <Toast />
     </FormSectionWrapper>
   );
 }

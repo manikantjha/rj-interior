@@ -10,7 +10,10 @@ export default function FAQs() {
   return (
     <AdminLayout>
       <FormSectionTitle title="FAQs" />
-      <RenderAppropriateComponent queryResult={faqs} loaderHeight="h-[400px]">
+      <RenderAppropriateComponent
+        queryResult={faqs}
+        loaderHeight="h-[400px] w-full"
+      >
         <FAQsForm faqs={faqs} />
       </RenderAppropriateComponent>
     </AdminLayout>

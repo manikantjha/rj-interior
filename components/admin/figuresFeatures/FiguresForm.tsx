@@ -2,9 +2,12 @@ import { addUpdateFigure } from "@/services/apiServices";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { UseQueryResult, useMutation } from "react-query";
+import { ToastOptions, toast } from "react-toastify";
 import * as yup from "yup";
 import FormSectionContainer from "../common/FormSectionContainer";
 import FormSectionWrapper from "../common/FormSectionWrapper";
+import SubmitButton from "../common/SubmitButton";
+import Toast from "../common/Toast";
 
 type FiguresForm = {
   figures: {
@@ -45,6 +48,8 @@ export default function FiguresForm(props: IFigures) {
     },
   });
 
+  const notify = (text: string, options: ToastOptions) => toast(text, options);
+
   const addUpdateFiguresMutation = useMutation(addUpdateFigure, {
     onSuccess: () => {},
   });
@@ -53,7 +58,17 @@ export default function FiguresForm(props: IFigures) {
     const id = props?.figures?.data?.figures
       ? props?.figures?.data?.figures[0]?._id
       : undefined;
-    addUpdateFiguresMutation.mutate({ ...data, id: id });
+    addUpdateFiguresMutation.mutate(
+      { ...data, id: id },
+      {
+        onSuccess: () => {
+          notify("Submitted succesfully!", { type: "success" });
+        },
+        onError: () => {
+          notify("Failed to submit!", { type: "error" });
+        },
+      }
+    );
   };
 
   return (
@@ -105,15 +120,11 @@ export default function FiguresForm(props: IFigures) {
             </div>
           ))}
           <div className="w-full flex items-center space-x-4 mt-8">
-            <button
-              type="submit"
-              className="bg-primary hover:bg-orange-600 active:bg-orange-800 px-8 py-2 text-white font-semibold rounded-full"
-            >
-              Submit
-            </button>
+            <SubmitButton isLoading={addUpdateFiguresMutation.isLoading} />
           </div>
         </FormSectionContainer>
       </form>
+      <Toast />
     </FormSectionWrapper>
   );
 }

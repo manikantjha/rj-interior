@@ -3,8 +3,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { UseQueryResult, useMutation } from "react-query";
 import * as yup from "yup";
+import AddMoreButton from "../common/AddMoreButton";
 import FormSectionContainer from "../common/FormSectionContainer";
 import ImageUploader from "../common/ImageUploader";
+import SubmitButton from "../common/SubmitButton";
+import Toast from "../common/Toast";
+import { ToastOptions, toast } from "react-toastify";
 
 type TeamMembersForm = {
   teamMembers: {
@@ -52,12 +56,24 @@ export default function TeamMembersForm(props: ITeamMembersFormProps) {
     onSuccess: () => {},
   });
 
+  const notify = (text: string, options: ToastOptions) => toast(text, options);
+
   function onSubmit(data: any) {
     const id = props.teamMembers?.data?.teamMembers[0]?._id || "";
-    addUpdateTeamMemberMutation.mutate({
-      ...data,
-      id: id,
-    });
+    addUpdateTeamMemberMutation.mutate(
+      {
+        ...data,
+        id: id,
+      },
+      {
+        onSuccess: () => {
+          notify("Submitted succesfully!", { type: "success" });
+        },
+        onError: () => {
+          notify("Failed to submit!", { type: "error" });
+        },
+      }
+    );
   }
 
   return (
@@ -68,6 +84,28 @@ export default function TeamMembersForm(props: ITeamMembersFormProps) {
             {fields.map((item, index) => (
               <div key={item.id}>
                 <FormSectionContainer>
+                  <div className="w-full flex justify-end">
+                    <button
+                      type="button"
+                      className="bg-primary text-white border hover:bg-orange-800 active:bg-orange-800 p-1 font-semibold rounded-full flex"
+                      onClick={() => remove(index)}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-5 h-5"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+                  </div>
                   <div className="mb-4">
                     <Controller
                       control={control}
@@ -115,25 +153,18 @@ export default function TeamMembersForm(props: ITeamMembersFormProps) {
             ))}
           </div>
 
-          <div>
-            <button
-              type="button"
-              className="border border-primary bg-slate-50 hover:bg-white active:bg-orange-800 px-8 py-2 text-primary font-semibold rounded-full mt-6 mr-4"
+          <div className="w-full flex items-center space-x-4 mt-8">
+            <AddMoreButton
               onClick={() =>
                 append({ name: "", description: "", imageURL: "" })
               }
-            >
-              Add Member
-            </button>
-            <button
-              type="submit"
-              className="bg-primary hover:bg-orange-600 active:bg-orange-800 px-8 py-2 text-white font-semibold rounded-full mt-6"
-            >
-              Submit
-            </button>
+              text="Add Member"
+            />
+            <SubmitButton isLoading={addUpdateTeamMemberMutation.isLoading} />
           </div>
         </FormSectionContainer>
       </form>
+      <Toast />
     </>
   );
 }

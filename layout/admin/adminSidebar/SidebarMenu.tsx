@@ -14,7 +14,7 @@ export default function SidebarMenu(props: ISidebarMenuProps) {
   return (
     <aside
       id="default-sidebar"
-      className={`fixed top-[80px] left-0 z-40 w-full md:w-64 h-screen transition-transform ${
+      className={`fixed top-[80px] left-0 z-[100] w-full md:w-64 h-screen transition-transform ${
         props.isSidebarOpen
           ? "-translate-x-0 md:-translate-x-0"
           : "-translate-x-full md:-translate-x-0"

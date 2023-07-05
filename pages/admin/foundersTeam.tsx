@@ -13,7 +13,7 @@ export default function FoundersTeam() {
       <FormSectionTitle title="Team Members" />
       <RenderAppropriateComponent
         queryResult={teamMembers}
-        loaderHeight="h-[400px]"
+        loaderHeight="h-[400px] w-full"
       >
         <TeamMembersForm teamMembers={teamMembers} />
       </RenderAppropriateComponent>

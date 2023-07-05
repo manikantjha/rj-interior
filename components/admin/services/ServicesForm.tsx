@@ -2,9 +2,13 @@ import { addUpdateService } from "@/services/apiServices";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import { UseQueryResult, useMutation } from "react-query";
+import { ToastOptions, toast } from "react-toastify";
 import * as yup from "yup";
+import AddMoreButton from "../common/AddMoreButton";
 import FormSectionContainer from "../common/FormSectionContainer";
 import FormSectionWrapper from "../common/FormSectionWrapper";
+import SubmitButton from "../common/SubmitButton";
+import Toast from "../common/Toast";
 import ServicesListForm from "./ServicesListForm";
 
 export type ServicesForm = {
@@ -51,6 +55,8 @@ export default function ServicesForm(props: IServices) {
     name: "services",
   });
 
+  const notify = (text: string, options: ToastOptions) => toast(text, options);
+
   const addUpdateServicesMutation = useMutation(addUpdateService, {
     onSuccess: () => {},
   });
@@ -59,7 +65,17 @@ export default function ServicesForm(props: IServices) {
     const id = props?.services?.data?.services
       ? props?.services?.data?.services[0]?._id
       : undefined;
-    addUpdateServicesMutation.mutate({ ...data, id: id });
+    addUpdateServicesMutation.mutate(
+      { ...data, id: id },
+      {
+        onSuccess: () => {
+          notify("Submitted succesfully!", { type: "success" });
+        },
+        onError: () => {
+          notify("Failed to submit!", { type: "error" });
+        },
+      }
+    );
   };
 
   return (
@@ -70,6 +86,28 @@ export default function ServicesForm(props: IServices) {
             {fields.map((item, index) => (
               <FormSectionContainer key={item.id} className="mb-4">
                 <div className="grid gap-4 mb-4">
+                  <div className="w-full flex justify-end">
+                    <button
+                      type="button"
+                      className="bg-primary text-white border hover:bg-orange-800 active:bg-orange-800 p-1 font-semibold rounded-full flex"
+                      onClick={() => remove(index)}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-5 h-5"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+                  </div>
                   <div>
                     <label
                       htmlFor={`title${index}`}
@@ -95,23 +133,16 @@ export default function ServicesForm(props: IServices) {
               </FormSectionContainer>
             ))}
             <div className="w-full flex items-center space-x-4 mt-8">
-              <button
-                type="button"
-                className="bg-gray-50 border border-primary hover:bg-white active:bg-gray-200 px-8 py-2 text-primary font-semibold rounded-full"
+              <AddMoreButton
                 onClick={() => append({ title: "", list: [""] })}
-              >
-                Add Service
-              </button>
-              <button
-                type="submit"
-                className="bg-primary hover:bg-orange-600 active:bg-orange-800 px-8 py-2 text-white font-semibold rounded-full"
-              >
-                Submit
-              </button>
+                text="Add Service"
+              />
+              <SubmitButton isLoading={addUpdateServicesMutation.isLoading} />
             </div>
           </FormSectionContainer>
         </form>
       </FormProvider>
+      <Toast />
     </FormSectionWrapper>
   );
 }

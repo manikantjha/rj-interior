@@ -9,7 +9,7 @@ export default function RenderAppropriateComponent(props: {
   loaderHeight?: string;
 }) {
   if (props.queryResult.isLoading) {
-    return <Loading loaderHeight={props.loaderHeight} />;
+    return <Loading loaderContainerHeightWidth={props.loaderHeight} />;
   }
   if (props.queryResult.isError) {
     return <Error />;
