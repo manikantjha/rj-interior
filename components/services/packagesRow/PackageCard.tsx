@@ -2,7 +2,7 @@ import PackageListItem from "./PackageListItem";
 
 interface IPackageCard {
   objPackage: {
-    name: string;
+    title: string;
     price: string;
     list: string[];
   };
@@ -16,7 +16,7 @@ export default function PackageCard(props: IPackageCard) {
       <div className="bg-white text-center">
         <div className="p-4 lg:p-6 bg-gradient-to-tl from-orange-900 to-orange-700">
           <p className="text-2xl font-semibold text-white">
-            {props.objPackage.name}
+            {props.objPackage.title}
           </p>
         </div>
         <hr />

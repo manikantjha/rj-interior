@@ -1,3 +1,10 @@
+import { auth } from "@/services/firebaseServices";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
 import {
   ReactNode,
   createContext,
@@ -5,13 +12,6 @@ import {
   useEffect,
   useState,
 } from "react";
-import {
-  onAuthStateChanged,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
-import { auth } from "@/services/firebaseServices";
 const AuthContext = createContext<any>({});
 
 export function useAuth() {
@@ -21,6 +21,7 @@ export function useAuth() {
 export function AuthContextProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {

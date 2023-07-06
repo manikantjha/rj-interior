@@ -9,6 +9,8 @@ import ImageUploader from "../common/ImageUploader";
 import SubmitButton from "../common/SubmitButton";
 import Toast from "../common/Toast";
 import { ToastOptions, toast } from "react-toastify";
+import { deleteObject, ref } from "firebase/storage";
+import { storage } from "@/services/firebaseServices";
 
 type TeamMembersForm = {
   teamMembers: {
@@ -56,6 +58,23 @@ export default function TeamMembersForm(props: ITeamMembersFormProps) {
     onSuccess: () => {},
   });
 
+  function deleteFile(index: number) {
+    const imageRef = ref(
+      storage,
+      props.teamMembers?.data?.teamMembers[0]?.teamMembers[index]?.imageURL ||
+        ""
+    );
+
+    deleteObject(imageRef)
+      .then(() => {
+        console.log("Deleted successfuly!");
+        notify("Image removed", { type: "success" });
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      });
+  }
+
   const notify = (text: string, options: ToastOptions) => toast(text, options);
 
   function onSubmit(data: any) {
@@ -90,7 +109,10 @@ export default function TeamMembersForm(props: ITeamMembersFormProps) {
                     <button
                       type="button"
                       className="bg-primary text-white border hover:bg-orange-800 active:bg-orange-800 p-1 font-semibold rounded-full flex"
-                      onClick={() => remove(index)}
+                      onClick={() => {
+                        deleteFile(index);
+                        remove(index);
+                      }}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

@@ -306,3 +306,35 @@ export const addUpdateWork = async (data: any) => {
     console.log("Error: ", error);
   }
 };
+
+//  Signup --------------------------------------------------!
+
+export const signup = async (data: any) => {
+  try {
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    };
+    const response = await fetch(`${BASE_URL}/api/signup`, options);
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+};
+
+export const login = async (data: any) => {
+  try {
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    };
+    const response = await fetch(`${BASE_URL}/api/login`, options);
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+};

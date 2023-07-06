@@ -1,9 +1,7 @@
-import React from "react";
-import * as yup from "yup";
+import { useAuth } from "@/contexts/AuthContext";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { useAuth } from "@/contexts/AuthContext";
+import * as yup from "yup";
 
 type SignupForm = {
   email: string;
@@ -30,8 +28,12 @@ export default function Signup() {
 
   const { user, signup } = useAuth();
 
+  // const signupMutation = useMutation(signup);
+
   const onSubmit = async (data: SignupForm) => {
+    console.log("data", data);
     try {
+      // signupMutation.mutate({ email: data.email, password: data.password });
       await signup(data.email, data.password);
     } catch (error) {
       console.log(error);
