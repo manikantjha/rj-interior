@@ -1,3 +1,4 @@
+import { signout } from "@/services/apiServices";
 import { auth } from "@/services/firebaseServices";
 import {
   createUserWithEmailAndPassword,
@@ -23,37 +24,39 @@ export function AuthContextProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser({
-          uid: user.uid,
-          email: user.email,
-          displayName: user.displayName,
-        });
-      } else {
-        setUser(null);
-      }
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
+    // const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setUser(token);
+      //   {
+      //   uid: user.uid,
+      //   email: user.email,
+      //   displayName: user.displayName,
+      // }
+    } else {
+      setUser(null);
+    }
+    setLoading(false);
+    // });
+    // return () => unsubscribe();
   }, []);
 
-  function signup(email: string, password: string) {
-    return createUserWithEmailAndPassword(auth, email, password);
-  }
+  // function signup(email: string, password: string) {
+  //   return createUserWithEmailAndPassword(auth, email, password);
+  // }
 
-  function login(email: string, password: string) {
-    return signInWithEmailAndPassword(auth, email, password);
-  }
+  // function login(email: string, password: string) {
+  //   return signInWithEmailAndPassword(auth, email, password);
+  // }
 
   async function logout() {
+    localStorage.removeItem("token");
     setUser(null);
-    await signOut(auth);
+    await signout({});
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout, loading }}>
+    <AuthContext.Provider value={{ user, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

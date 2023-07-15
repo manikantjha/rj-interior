@@ -13,7 +13,6 @@ export default function AdminLayout(props: IAdminMainLayout) {
     <AuthContextProvider>
       <AuthGuard>
         <AdminNavbar />
-        {/* <AdminSidebar /> */}
         <div className="p-4 md:p-8 sm:ml-64">{props.children}</div>
       </AuthGuard>
     </AuthContextProvider>

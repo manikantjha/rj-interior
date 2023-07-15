@@ -307,7 +307,7 @@ export const addUpdateWork = async (data: any) => {
   }
 };
 
-//  Signup --------------------------------------------------!
+//  Auth --------------------------------------------------!
 
 export const signup = async (data: any) => {
   try {
@@ -332,6 +332,38 @@ export const login = async (data: any) => {
       body: JSON.stringify(data),
     };
     const response = await fetch(`${BASE_URL}/api/login`, options);
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+};
+
+export const signout = async (data: any) => {
+  try {
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    };
+    const response = await fetch(`${BASE_URL}/api/signout`, options);
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+};
+
+//  Contact --------------------------------------------------!
+
+export const contact = async (data: any) => {
+  try {
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    };
+    const response = await fetch(`${BASE_URL}/api/contact`, options);
     const json = await response.json();
     return json;
   } catch (error) {

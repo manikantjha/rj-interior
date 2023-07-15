@@ -22,12 +22,6 @@ export default function PageNotFound() {
             />
           </div>
           <div>
-            {/* <Link
-              href="/"
-              className="bg-primary p-3 text-white rounded-full h-full"
-            >
-              Back to Home
-            </Link> */}
             <LinkBtn text="Back to Home" href="/" />
           </div>
         </div>

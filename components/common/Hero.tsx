@@ -2,7 +2,7 @@
 import { ReactNode } from "react";
 
 interface IHero {
-  imgSrc: string; //StaticImageData;
+  imgSrc: string;
   imgAlt: string;
   hasContent?: boolean;
   title?: string;
@@ -17,8 +17,6 @@ export default function Hero(props: IHero) {
         src={props.imgSrc}
         alt={props.imgAlt}
         sizes="100vw"
-        // width={"100%"}
-        // priority={true}
         style={{ objectFit: "cover", height: "100%", width: "100%" }}
       />
       {props.hasContent && (

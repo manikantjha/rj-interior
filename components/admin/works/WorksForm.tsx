@@ -59,6 +59,14 @@ export default function WorksForm(props: IWorksFormProps) {
   });
 
   function deleteFile(index: number) {
+    if (
+      !(
+        props.works?.data?.works &&
+        props.works?.data?.works[0]?.works[index]?.imageURL
+      )
+    ) {
+      return;
+    }
     const imageRef = ref(
       storage,
       (props.works?.data?.works &&

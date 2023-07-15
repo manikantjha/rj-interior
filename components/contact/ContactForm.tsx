@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import Modal from "../common/Modal";
 import ContactModalContent from "./ContactModalContent";
+import { contact } from "@/services/apiServices";
 
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
@@ -49,27 +50,15 @@ export default function ContactForm() {
 
   const onSubmit = (data: FormData) => {
     if (form.current) {
-      emailjs
-        .sendForm(
-          // "YOUR_SERVICE_ID",
-          "service_5g5sfca",
-          // "YOUR_TEMPLATE_ID",
-          "template_90779r9",
-          // Data,
-          form.current,
-          // "YOUR_PUBLIC_KEY"
-          "cLinWhNUqZbIpCAga"
-        )
-        .then(
-          (result) => {
-            setIsSuccess(true);
-            setIsOpen(true);
-          },
-          (error) => {
-            setIsSuccess(false);
-            setIsOpen(true);
-          }
-        );
+      contact(form.current)
+        .then(() => {
+          setIsSuccess(true);
+          setIsOpen(true);
+        })
+        .catch(() => {
+          setIsSuccess(false);
+          setIsOpen(true);
+        });
     }
   };
 

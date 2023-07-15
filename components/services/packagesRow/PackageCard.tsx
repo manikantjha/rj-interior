@@ -8,8 +8,6 @@ interface IPackageCard {
   };
 }
 
-// bg-gradient-to-b from-orange-700 to-orange-900
-
 export default function PackageCard(props: IPackageCard) {
   return (
     <div className="w-full bg-gray-50 border border-gray-200 rounded-lg shadow-sm-light overflow-hidden">
@@ -26,9 +24,6 @@ export default function PackageCard(props: IPackageCard) {
             <span className="text-5xl font-semibold tracking-tight">
               {props.objPackage.price}*
             </span>
-            {/* <span className="ml-1 text-xl font-normal text-gray-500">
-          /month
-        </span> */}
           </div>
           <span className="text-base block mt-2">*Starting From</span>
         </div>
@@ -41,12 +36,6 @@ export default function PackageCard(props: IPackageCard) {
           ))}
         </ul>
       </div>
-      {/* <button
-        type="button"
-        className="text-white bg-primary hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"
-      >
-        Choose plan
-      </button> */}
     </div>
   );
 }

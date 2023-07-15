@@ -33,9 +33,7 @@ export default function ServicesRowSkeleton() {
                       <path d="M11.085 10.354c.03.297.038.575.036.805a7.484 7.484 0 01-.805-.036c-.833-.084-1.677-.325-2.195-.843a1.5 1.5 0 012.122-2.12c.517.517.759 1.36.842 2.194zM12.877 10.354c-.03.297-.038.575-.036.805.23.002.508-.006.805-.036.833-.084 1.677-.325 2.195-.843A1.5 1.5 0 0013.72 8.16c-.518.518-.76 1.362-.843 2.194z" />
                     </svg>
 
-                    <h2 className="text-2xl text-center font-semibold text-white">
-                      {/* {props.objService.title} */}
-                    </h2>
+                    <h2 className="text-2xl text-center font-semibold text-white"></h2>
                   </div>
                   <hr />
                   <div className="p-5 md:p-6">

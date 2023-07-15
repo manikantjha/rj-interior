@@ -59,9 +59,19 @@ export default function TeamMembersForm(props: ITeamMembersFormProps) {
   });
 
   function deleteFile(index: number) {
+    if (
+      !(
+        props.teamMembers?.data?.teamMembers &&
+        props.teamMembers?.data?.teamMembers[0]?.teamMembers[index]?.imageURL
+      )
+    ) {
+      return;
+    }
     const imageRef = ref(
       storage,
-      props.teamMembers?.data?.teamMembers[0]?.teamMembers[index]?.imageURL ||
+      (props.teamMembers?.data?.teamMembers &&
+        props.teamMembers?.data?.teamMembers[0]?.teamMembers[index]
+          ?.imageURL) ||
         ""
     );
 

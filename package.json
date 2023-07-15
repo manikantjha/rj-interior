@@ -21,6 +21,7 @@
     "eslint-config-next": "13.2.4",
     "firebase": "^9.22.1",
     "flowbite": "^1.6.4",
+    "jsonwebtoken": "^9.0.1",
     "mongoose": "^7.2.1",
     "next": "13.2.4",
     "next-cloudinary": "^4.4.0",
