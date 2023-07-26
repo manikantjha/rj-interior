@@ -2,6 +2,7 @@
 import ContainerWrapper from "@/components/common/ContainerWrapper";
 import LinkBtn from "@/components/common/LinkBtn";
 import Title from "@/components/common/Title";
+import YoutubeEmbed from "@/components/common/YoutubeEmbed";
 import { UseQueryResult } from "react-query";
 import Slider, { CustomArrowProps } from "react-slick";
 
@@ -102,22 +103,34 @@ const settings = {
 export default function RecentWorkRow(props: IWorkGalleryProps) {
   const works =
     (props?.works?.data?.works && props?.works?.data?.works[0].works) || [];
-  const worksImages = works.map((work: any) => work.imageURL);
+  const worksImages = works.map((work: any) => {
+    return {
+      imageURL: work.imageURL,
+      isVideo: work.isVideo,
+      embedId: work.embedId,
+    };
+  });
 
   return (
     <ContainerWrapper containerClassName="bg-gray-100 overflow-x-hidden">
       <Title title="Recent Work" />
       <div>
         <Slider {...settings}>
-          {worksImages.map((item: string, index: number) => (
-            <div key={index} className="px-2">
-              <img
-                className="h-auto max-w-full rounded-lg"
-                src={item}
-                alt="interior image"
-              />
-            </div>
-          ))}
+          {worksImages.map((item: any, index: number) => {
+            if (item.isVideo) {
+              return <YoutubeEmbed key={index} embedId={item.embedId} />;
+            } else {
+              return (
+                <div key={index} className="px-2">
+                  <img
+                    className="h-auto max-w-full rounded-lg"
+                    src={item.imageURL}
+                    alt="interior image"
+                  />
+                </div>
+              );
+            }
+          })}
         </Slider>
       </div>
       <div className="mt-12">

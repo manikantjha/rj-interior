@@ -10,7 +10,12 @@ import FiguresRowSkeleton from "@/components/skeletons/FiguresRowSkeleton";
 import HeroSkeleton from "@/components/skeletons/HeroSkeleton";
 import OurTeamRowSkeleton from "@/components/skeletons/OurTeamRowSkeleton";
 import Layout from "@/layout/Layout";
-import { getFigures, getHero, getTeamMembers } from "@/services/apiServices";
+import {
+  getFigures,
+  getFounders,
+  getHero,
+  getTeamMembers,
+} from "@/services/apiServices";
 import Head from "next/head";
 import { useQuery } from "react-query";
 
@@ -18,6 +23,7 @@ export default function About() {
   const hero = useQuery("aboutHero", () => getHero("about"));
   const figures = useQuery("figures", () => getFigures());
   const teamMembers = useQuery("teamMembers", () => getTeamMembers());
+  const founders = useQuery("founders", () => getFounders());
 
   return (
     <>
@@ -55,7 +61,18 @@ export default function About() {
             />
           </RenderAppropriateComponent>
           <StoryRow />
-          <FounderRow />
+          <RenderAppropriateComponent
+            queryResult={founders}
+            loadingComponent={<OurTeamRowSkeleton />}
+            errorComponent={
+              <Error
+                containerClassName="h-[300px] w-full overflow-hidden flex justify-center items-center"
+                text="Failed to load figures :("
+              />
+            }
+          >
+            <FounderRow founders={founders} />
+          </RenderAppropriateComponent>
           <RenderAppropriateComponent
             queryResult={figures}
             loadingComponent={<FiguresRowSkeleton />}

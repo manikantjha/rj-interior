@@ -1,9 +1,11 @@
 import { Schema, model, models } from "mongoose";
 
 const workSchema = new Schema({
-  name: String,
-  description: String,
-  imageURL: String,
+  name: { type: String, trim: true },
+  description: { type: String, trim: true },
+  imageURL: { type: String, trim: true },
+  embedId: { type: String, trim: true },
+  isVideo: Boolean,
   createdAt: { type: Date, default: Date.now },
 });
 

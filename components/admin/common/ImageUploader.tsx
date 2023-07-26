@@ -6,8 +6,8 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { useState } from "react";
+import { ToastOptions, toast } from "react-toastify";
 import ProgressBar from "./ProgressBar";
-import { ToastContainer, ToastOptions, toast } from "react-toastify";
 import Toast from "./Toast";
 
 interface IImageUploader {
@@ -16,6 +16,7 @@ interface IImageUploader {
   imageURL?: string;
   onChange: any;
   index?: number;
+  isVideo?: boolean;
 }
 
 export default function ImageUploader(props: IImageUploader) {

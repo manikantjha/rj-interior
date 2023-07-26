@@ -1,20 +1,22 @@
-import { addUpdateTeamMember, addUpdateWork } from "@/services/apiServices";
+import { addUpdateWork } from "@/services/apiServices";
+import { storage } from "@/services/firebaseServices";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { deleteObject, ref } from "firebase/storage";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { UseQueryResult, useMutation } from "react-query";
+import { ToastOptions, toast } from "react-toastify";
 import * as yup from "yup";
 import AddMoreButton from "../common/AddMoreButton";
 import FormSectionContainer from "../common/FormSectionContainer";
 import ImageUploader from "../common/ImageUploader";
 import SubmitButton from "../common/SubmitButton";
 import Toast from "../common/Toast";
-import { ToastOptions, toast } from "react-toastify";
-import { storage } from "@/services/firebaseServices";
-import { deleteObject, ref } from "firebase/storage";
 
 type WorksForm = {
   works: {
-    imageURL: string;
+    imageURL?: string;
+    embedId?: string;
+    isVideo?: boolean;
     name: string;
     description: string;
   }[];
@@ -26,11 +28,29 @@ interface IWorksFormProps {
 
 const schema = yup.object({
   works: yup.array().of(
-    yup.object({
-      imageURL: yup.string().required("Image is required"),
-      name: yup.string(),
-      description: yup.string(),
-    })
+    yup.object().shape(
+      {
+        imageURL: yup.string().when("embedId", (embedId, stringSchema) => {
+          console.log("embedId", embedId);
+          if (!embedId || embedId.length === 0 || !embedId[0])
+            return stringSchema.required(
+              "Either provide an image or an embed id!"
+            );
+          return stringSchema;
+        }),
+        embedId: yup.string().when("imageURL", (imageURL, stringSchema) => {
+          if (!imageURL || imageURL.length === 0 || !imageURL[0])
+            return stringSchema.required(
+              "Either provide an image or an embed id!"
+            );
+          return stringSchema;
+        }),
+        name: yup.string(),
+        description: yup.string(),
+        isVideo: yup.boolean(),
+      },
+      [["imageURL", "embedId"]]
+    )
   ),
 });
 
@@ -40,6 +60,8 @@ export default function WorksForm(props: IWorksFormProps) {
     control,
     handleSubmit,
     formState: { errors },
+    getValues,
+    watch,
   } = useForm<WorksForm>({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -53,6 +75,8 @@ export default function WorksForm(props: IWorksFormProps) {
     control,
     name: "works",
   });
+
+  watch("works");
 
   const addUpdateWorkMutation = useMutation(addUpdateWork, {
     onSuccess: () => {},
@@ -136,30 +160,69 @@ export default function WorksForm(props: IWorksFormProps) {
                       </svg>
                     </button>
                   </div>
-                  <div className="mb-4">
+                  {getValues(`works.${index}.isVideo`) ? (
+                    <div className="mb-4">
+                      <p className="block mb-2 text-sm font-medium text-gray-900">
+                        YouTube Embed ID
+                      </p>
+                      <input
+                        type="text"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
+                        placeholder="YouTube Embed ID"
+                        {...register(`works.${index}.embedId`)}
+                      />
+                    </div>
+                  ) : (
+                    <div className="mb-4">
+                      <Controller
+                        control={control}
+                        name={`works.${index}.imageURL`}
+                        render={({
+                          field: { onChange, onBlur, value, ref },
+                        }) => (
+                          <ImageUploader
+                            label="Work Image"
+                            onChange={onChange}
+                            index={index}
+                            id={`works.${index}.imageURL`}
+                            imageURL={
+                              (props.works?.data?.works &&
+                                props.works?.data?.works[0]?.works[index]
+                                  ?.imageURL) ||
+                              ""
+                            }
+                          />
+                        )}
+                      />
+                      {errors.works && errors.works[index]?.imageURL && (
+                        <p className="text-red-700 text-sm">
+                          * {errors.works[index]?.imageURL?.message}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                  <div className="flex items-center mb-4">
                     <Controller
                       control={control}
-                      name={`works.${index}.imageURL`}
+                      name={`works.${index}.isVideo`}
                       render={({ field: { onChange, onBlur, value, ref } }) => (
-                        <ImageUploader
-                          label="Work Image"
-                          onChange={onChange}
-                          index={index}
-                          id={`works.${index}.imageURL`}
-                          imageURL={
-                            (props.works?.data?.works &&
-                              props.works?.data?.works[0]?.works[index]
-                                ?.imageURL) ||
-                            ""
-                          }
-                        />
+                        <>
+                          <input
+                            id={`works.${index}.isVideo`}
+                            type="checkbox"
+                            className="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary dark:focus:ring-primary focus:ring-2"
+                            onChange={onChange}
+                            checked={value}
+                          />
+                          <label
+                            htmlFor={`works.${index}.isVideo`}
+                            className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                          >
+                            Is Video
+                          </label>
+                        </>
                       )}
                     />
-                    {errors.works && errors.works[index]?.imageURL && (
-                      <p className="text-red-700 text-sm">
-                        * {errors.works[index]?.imageURL?.message}
-                      </p>
-                    )}
                   </div>
                   <div>
                     <div>
@@ -169,7 +232,7 @@ export default function WorksForm(props: IWorksFormProps) {
                       <input
                         type="text"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
-                        placeholder="Member Name"
+                        placeholder="Work Name"
                         {...register(`works.${index}.name`)}
                       />
                     </div>
@@ -180,7 +243,7 @@ export default function WorksForm(props: IWorksFormProps) {
                       <input
                         type="text"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
-                        placeholder="Hero Short Description"
+                        placeholder="Work Short Description"
                         {...register(`works.${index}.description`)}
                       />
                     </div>
@@ -193,7 +256,12 @@ export default function WorksForm(props: IWorksFormProps) {
           <div className="w-full flex items-center space-x-4 mt-8">
             <AddMoreButton
               onClick={() =>
-                append({ name: "", description: "", imageURL: "" })
+                append({
+                  name: "",
+                  description: "",
+                  imageURL: "",
+                  isVideo: false,
+                })
               }
               text="Add Work"
             />

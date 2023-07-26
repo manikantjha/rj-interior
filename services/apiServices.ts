@@ -273,6 +273,40 @@ export const addUpdateTeamMember = async (data: any) => {
   }
 };
 
+//  Founders --------------------------------------------------!
+
+export const getFounders = async () => {
+  const response = await fetch(`${BASE_URL}/api/founders`);
+  const json = await response.json();
+  return json;
+};
+
+export const getFounder = async (id: string) => {
+  const options = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ pageId: id }),
+  };
+  const response = await fetch(`${BASE_URL}/api/founders/${id}`, options);
+  const json = await response.json();
+  return json;
+};
+
+export const addUpdateFounder = async (data: any) => {
+  try {
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    };
+    const response = await fetch(`${BASE_URL}/api/founders`, options);
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+};
+
 //  Works --------------------------------------------------!
 
 export const getWorks = async () => {
@@ -356,7 +390,22 @@ export const signout = async (data: any) => {
 
 //  Contact --------------------------------------------------!
 
-export const contact = async (data: any) => {
+// export const contact = async (data: any) => {
+//   try {
+//     const options = {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify(data),
+//     };
+//     const response = await fetch(`${BASE_URL}/api/contact`, options);
+//     const json = await response.json();
+//     return json;
+//   } catch (error) {
+//     console.log("Error: ", error);
+//   }
+// };
+
+export async function sendContactForm(data: any) {
   try {
     const options = {
       method: "POST",
@@ -369,4 +418,4 @@ export const contact = async (data: any) => {
   } catch (error) {
     console.log("Error: ", error);
   }
-};
+}

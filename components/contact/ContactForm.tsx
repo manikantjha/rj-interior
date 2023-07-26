@@ -5,7 +5,8 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import Modal from "../common/Modal";
 import ContactModalContent from "./ContactModalContent";
-import { contact } from "@/services/apiServices";
+import { sendContactForm } from "@/services/apiServices";
+import { useMutation } from "react-query";
 
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
@@ -48,17 +49,22 @@ export default function ContactForm() {
 
   const form = useRef<HTMLFormElement>(null);
 
+  const contactMutation = useMutation(sendContactForm, {
+    onSuccess(data, variables, context) {
+      setIsSuccess(true);
+      setIsOpen(true);
+      reset();
+    },
+    onError(error, variables, context) {
+      setIsSuccess(false);
+      setIsOpen(true);
+      reset();
+    },
+  });
+
   const onSubmit = (data: FormData) => {
-    if (form.current) {
-      contact(form.current)
-        .then(() => {
-          setIsSuccess(true);
-          setIsOpen(true);
-        })
-        .catch(() => {
-          setIsSuccess(false);
-          setIsOpen(true);
-        });
+    if (data) {
+      contactMutation.mutate(data);
     }
   };
 
