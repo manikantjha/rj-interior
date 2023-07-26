@@ -16,7 +16,7 @@ interface ReviewListProps {
 }
 
 const ReviewList: React.FC<ReviewListProps> = ({ reviews, handleDelete }) => {
-  if (!reviews?.data?.reviews) return;
+  if (!reviews?.data?.reviews) return null;
   const lstReviews = reviews?.data?.reviews;
 
   return (
