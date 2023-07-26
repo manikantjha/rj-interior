@@ -12,7 +12,7 @@ export default function Packages() {
       <FormSectionTitle title="Packages" />
       <RenderAppropriateComponent
         queryResult={packages}
-        loaderHeight="h-[400px] w-full"
+        loaderContainerHeightWidth="h-[400px] w-full"
       >
         <PackagesForm packages={packages} />
       </RenderAppropriateComponent>

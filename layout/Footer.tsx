@@ -1,3 +1,4 @@
+import SocialMediaIcons from "@/components/common/SocialMediaIcons";
 import { companyName } from "@/data/data";
 import Link from "next/link";
 
@@ -5,16 +6,18 @@ export default function Footer() {
   return (
     <footer className="bg-white shadow border-t border-t-gray-200">
       <div className="w-full mx-auto container md:py-6 py-4 px-5 md:px-0 md:flex md:items-center md:justify-between">
-        <span className="text-sm text-gray-500 sm:text-center">
-          © 2023{" "}
-          <a href="https://flowbite.com/" className="hover:underline">
-            {companyName}™
-          </a>
-          . All Rights Reserved.
-        </span>
-        <ul className="flex flex-wrap items-center mt-3 text-sm text-gray-500">
+        <div className="flex flex-wrap items-center md:justify-normal justify-center">
+          <span className="text-sm text-textLight sm:text-center">
+            © 2023{" "}
+            <a href="https://flowbite.com/" className="hover:underline">
+              {companyName}™
+            </a>{" "}
+            All Rights Reserved
+          </span>
+        </div>
+        <ul className="flex flex-wrap items-center md:justify-normal justify-center mt-3 text-sm text-textLight space-x-4 md:space-x-6">
           <li>
-            <Link href="/privacy" className="mr-4 hover:underline md:mr-6">
+            <Link href="/privacy" className="hover:underline">
               Privacy Policy
             </Link>
           </li>
@@ -22,6 +25,9 @@ export default function Footer() {
             <Link href="/contact" className="hover:underline">
               Contact
             </Link>
+          </li>
+          <li>
+            <SocialMediaIcons />
           </li>
         </ul>
       </div>

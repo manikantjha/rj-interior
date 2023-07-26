@@ -8,6 +8,7 @@ import FiguresRow from "@/components/home/figuresRow/FiguresRow";
 import RecentWorkRow from "@/components/home/recentWorkRow/RecentWorkRow";
 import ServicesRow from "@/components/home/servicesRow/ServicesRow";
 import TestimonialsRow from "@/components/home/testimonialsRow/TestimonialsRow";
+import ReviewForm from "@/components/reviews/ReviewForm";
 import FeaturesRowSkeleton from "@/components/skeletons/FeaturesRowSkeleton";
 import FiguresRowSkeleton from "@/components/skeletons/FiguresRowSkeleton";
 import HeroSkeleton from "@/components/skeletons/HeroSkeleton";
@@ -18,6 +19,7 @@ import {
   getFeatures,
   getFigures,
   getHero,
+  getReviews,
   getServices,
   getWorks,
 } from "@/services/apiServices";
@@ -30,6 +32,7 @@ export default function Home() {
   const figures = useQuery("figures", () => getFigures());
   const services = useQuery("services", () => getServices());
   const works = useQuery("recentWorks", () => getWorks());
+  const reviews = useQuery("reviews", () => getReviews());
 
   return (
     <>
@@ -90,7 +93,7 @@ export default function Home() {
           >
             <FiguresRow figures={figures} />
           </RenderAppropriateComponent>
-          <TestimonialsRow />
+
           <RenderAppropriateComponent
             queryResult={services}
             loadingComponent={<ServicesRowSkeleton />}
@@ -119,8 +122,21 @@ export default function Home() {
           >
             <RecentWorkRow works={works} />
           </RenderAppropriateComponent>
+          <RenderAppropriateComponent
+            queryResult={reviews}
+            loadingComponent={<FeaturesRowSkeleton />}
+            errorComponent={
+              <Error
+                containerClassName="h-[300px] w-full overflow-hidden flex justify-center items-center"
+                text="Failed to load figures :("
+              />
+            }
+          >
+            <TestimonialsRow reviews={reviews} />
+          </RenderAppropriateComponent>
           <ContactRow />
         </main>
+        <ReviewForm />
       </Layout>
     </>
   );

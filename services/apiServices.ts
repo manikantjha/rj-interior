@@ -1,5 +1,5 @@
-// const BASE_URL = process.env.NEXT_PUBLIC_DEV_BASE_PATH || "";
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_PATH || "";
+const BASE_URL = process.env.NEXT_PUBLIC_DEV_BASE_PATH || "";
+// const BASE_URL = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 //  Heroes --------------------------------------------------!
 
@@ -418,4 +418,34 @@ export async function sendContactForm(data: any) {
   } catch (error) {
     console.log("Error: ", error);
   }
+}
+
+//  Reviews --------------------------------------------------!
+
+export async function sendReviewForm(data: IReview) {
+  const options = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  };
+  const response = await fetch(`${BASE_URL}/api/reviews`, options);
+  const json = await response.json();
+  return json;
+}
+
+export async function getReviews() {
+  const response = await fetch(`${BASE_URL}/api/reviews`);
+  const json = await response.json();
+  return json;
+}
+
+export async function deleteReview(data: { id: string }) {
+  const options = {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  };
+  const response = await fetch(`${BASE_URL}/api/reviews`, options);
+  const json = await response.json();
+  return json;
 }

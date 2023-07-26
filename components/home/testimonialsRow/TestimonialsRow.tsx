@@ -1,17 +1,28 @@
-import ContainerWrapper from "@/components/common/ContainerWrapper";
-import Title from "@/components/common/Title";
+import RowWrapper from "@/components/common/RowWrapper";
 import { lstTestimonials } from "@/data/data";
-import TestimonialCard from "./TestimonialCard";
+import { IRowTheme } from "@/types/row";
+import ReviewCard from "../reviewRow/ReviewCard";
+import { UseQueryResult } from "react-query";
 
-export default function TestimonialsRow() {
+interface ITestimonialsRowProps extends IRowTheme {
+  reviews?: UseQueryResult<any, unknown>;
+}
+
+export default function TestimonialsRow(props: ITestimonialsRowProps) {
+  if (!props.reviews?.data?.reviews || !props.reviews?.data?.reviews?.length)
+    return <></>;
+  const reviews = props.reviews?.data?.reviews?.slice(0, 3);
   return (
-    <ContainerWrapper containerClassName="bg-gray-50">
-      <Title title="What Our Clients Have to Say" />
+    <RowWrapper
+      title="What Our Clients Have to Say"
+      theme={props.theme}
+      containerWrapperClassName="bg-white"
+    >
       <div className="grid xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {lstTestimonials.map((item) => (
-          <TestimonialCard key={item.id} objTestimonial={item} />
+        {reviews.map((review: IReview, index: number) => (
+          <ReviewCard key={index} review={review} theme={props.theme} />
         ))}
       </div>
-    </ContainerWrapper>
+    </RowWrapper>
   );
 }

@@ -12,7 +12,7 @@ export default function Services() {
       <FormSectionTitle title="Services" />
       <RenderAppropriateComponent
         queryResult={services}
-        loaderHeight="h-[400px] w-full"
+        loaderContainerHeightWidth="h-[400px] w-full"
       >
         <ServicesForm services={services} />
       </RenderAppropriateComponent>

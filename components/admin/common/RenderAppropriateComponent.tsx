@@ -6,7 +6,7 @@ import { UseQueryResult } from "react-query";
 export default function RenderAppropriateComponent(props: {
   queryResult: UseQueryResult<any, unknown>;
   children: ReactNode;
-  loaderHeight?: string;
+  loaderContainerHeightWidth?: string;
   loadingComponent?: ReactNode;
   errorComponent?: ReactNode;
 }) {
@@ -14,7 +14,9 @@ export default function RenderAppropriateComponent(props: {
     if (props.loadingComponent) {
       return <>{props.loadingComponent}</>;
     }
-    return <Loading loaderContainerHeightWidth={props.loaderHeight} />;
+    return (
+      <Loading loaderContainerHeightWidth={props.loaderContainerHeightWidth} />
+    );
   }
   if (props.queryResult.isError) {
     if (props.errorComponent) {

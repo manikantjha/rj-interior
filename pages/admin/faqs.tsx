@@ -12,7 +12,7 @@ export default function FAQs() {
       <FormSectionTitle title="FAQs" />
       <RenderAppropriateComponent
         queryResult={faqs}
-        loaderHeight="h-[400px] w-full"
+        loaderContainerHeightWidth="h-[400px] w-full"
       >
         <FAQsForm faqs={faqs} />
       </RenderAppropriateComponent>

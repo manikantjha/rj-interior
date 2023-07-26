@@ -13,7 +13,7 @@ export default function Founders() {
       <FormSectionTitle title="Founders" />
       <RenderAppropriateComponent
         queryResult={founders}
-        loaderHeight="h-[400px] w-full"
+        loaderContainerHeightWidth="h-[400px] w-full"
       >
         <FoundersForm founders={founders} />
       </RenderAppropriateComponent>

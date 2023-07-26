@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
+import Card from "@/components/common/Card";
+import { IRowTheme } from "@/types/row";
 
-interface ITestimonialCard {
+interface ITestimonialCard extends IRowTheme {
   objTestimonial: {
     client: {
       name: string;
@@ -14,12 +16,15 @@ interface ITestimonialCard {
 
 export default function TestimonialCard(props: ITestimonialCard) {
   return (
-    <div className="grid border border-gray-200 rounded-lg shadow-sm-light bg-white overflow-hidden">
+    <Card theme={props.theme}>
       <figure className="flex flex-col items-center justify-center p-8 text-center">
         <div className="flex items-center mb-5">
           <svg
             aria-hidden="true"
-            className="w-5 h-5 text-yellow-400"
+            className="w-5 h-5 text-orange-600
+            text-orange-600
+            text-orange-600
+            text-orange-600"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +34,7 @@ export default function TestimonialCard(props: ITestimonialCard) {
           </svg>
           <svg
             aria-hidden="true"
-            className="w-5 h-5 text-yellow-400"
+            className="w-5 h-5 text-orange-600"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +44,7 @@ export default function TestimonialCard(props: ITestimonialCard) {
           </svg>
           <svg
             aria-hidden="true"
-            className="w-5 h-5 text-yellow-400"
+            className="w-5 h-5 text-orange-600"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +54,7 @@ export default function TestimonialCard(props: ITestimonialCard) {
           </svg>
           <svg
             aria-hidden="true"
-            className="w-5 h-5 text-yellow-400"
+            className="w-5 h-5 text-orange-600"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -59,7 +64,7 @@ export default function TestimonialCard(props: ITestimonialCard) {
           </svg>
           <svg
             aria-hidden="true"
-            className="w-5 h-5 text-yellow-400"
+            className="w-5 h-5 text-orange-600"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -72,24 +77,22 @@ export default function TestimonialCard(props: ITestimonialCard) {
           <h3 className="text-lg font-semibold">
             {props.objTestimonial.title}
           </h3>
-          <p className="my-4 text-gray-500">
-            {props.objTestimonial.testimonial}
-          </p>
+          <p className="my-4 text-black">{props.objTestimonial.testimonial}</p>
         </blockquote>
         <figcaption className="flex items-center justify-center space-x-3">
           <img
-            className="rounded-full w-9 h-9"
+            className="rounded-full w-9 h-9 border border-black"
             src={props.objTestimonial.client.imgSrc}
             alt="profile picture"
           />
           <div className="space-y-0.5 font-medium text-left">
             <div>{props.objTestimonial.client.name}</div>
-            <div className="text-sm font-light text-gray-400">
+            <div className="text-sm font-light text-black">
               {props.objTestimonial.client.designation}
             </div>
           </div>
         </figcaption>
       </figure>
-    </div>
+    </Card>
   );
 }
