@@ -1,16 +1,16 @@
 import RowWrapper from "@/components/common/RowWrapper";
-import { lstTestimonials } from "@/data/data";
 import { IRowTheme } from "@/types/row";
-import ReviewCard from "../reviewRow/ReviewCard";
 import { UseQueryResult } from "react-query";
+import ReviewCard from "../reviewRow/ReviewCard";
 
 interface ITestimonialsRowProps extends IRowTheme {
   reviews?: UseQueryResult<any, unknown>;
 }
 
 export default function TestimonialsRow(props: ITestimonialsRowProps) {
-  if (!props.reviews?.data?.reviews || !props.reviews?.data?.reviews?.length)
-    return <></>;
+  if (!props.reviews?.data?.reviews || !props.reviews?.data?.reviews?.length) {
+    return null;
+  }
   const reviews = props.reviews?.data?.reviews?.slice(0, 3);
   return (
     <RowWrapper

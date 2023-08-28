@@ -201,27 +201,19 @@ export const objHowItStartedInfo = {
   description: (
     <>
       <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi
-        veniam tempore minus amet, impedit blanditiis omnis saepe accusamus
-        quidem quibusdam quam eum molestias fugit minima quos hic sint
-        doloremque voluptate? Quos voluptatum, qui quaerat deserunt itaque
-        facere vitae amet quae. Corrupti ut rem iste repellat repellendus enim
-        impedit fuga sint. Lorem ipsum dolor sit amet consectetur adipisicing
-        elit. Ad deleniti quibusdam vero nostrum magnam, tempora quod quisquam,
-        nobis doloremque distinctio maxime! Numquam natus maiores illo quod
-        veniam aperiam aut voluptates.
+        {`In the heart of Surat, India, Raja founded RJ Interior with an unwavering passion for design over a decade ago. From humble beginnings to becoming a formidable presence in the industry, our journey has been guided by a commitment to crafting exceptional spaces.`}
       </p>
       <br />
       <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi
-        veniam tempore minus amet, impedit blanditiis omnis saepe accusamus
-        quidem quibusdam quam eum molestias fugit minima quos hic sint
-        doloremque voluptate? Quos voluptatum, qui quaerat deserunt itaque
-        facere vitae amet quae. Corrupti ut rem iste repellat repellendus enim
-        impedit fuga sint. Lorem ipsum dolor sit amet consectetur adipisicing
-        elit. Ad deleniti quibusdam vero nostrum magnam, tempora quod quisquam,
-        nobis doloremque distinctio maxime! Numquam natus maiores illo quod
-        veniam aperiam aut voluptates.
+        {`Drawing inspiration from art, culture, and nature, RJ Interior's creative team weaves stories of elegance and innovation into every project. With a legacy of 10+ years, our expertise extends across residential and commercial spaces, leaving an indelible mark of refined aesthetics.`}
+      </p>
+      <br />
+      <p>
+        {`Led by Raja's visionary approach, we embrace the uniqueness of each client's vision, delivering tailored design solutions that transcend expectations. We pride ourselves on sourcing premium materials, collaborating with skilled artisans, and executing projects with meticulous precision.`}
+      </p>
+      <br />
+      <p>
+        {`Our dedication to quality, personalization, and client delight remains at the core of our design philosophy. As we embark on new horizons, we continue to redefine spaces, leaving a trail of timeless beauty and cherished memories along the way.`}
       </p>
     </>
   ),

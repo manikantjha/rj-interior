@@ -61,7 +61,10 @@ export const images = photos.map((photo) => photo.src);
 
 export default function WorkGallery(props: IWorkGalleryProps) {
   const works =
-    (props?.works?.data?.works && props?.works?.data?.works[0].works) || [];
+    (props?.works?.data?.works &&
+      props?.works?.data?.works[0] &&
+      props?.works?.data?.works[0]?.works) ||
+    [];
   console.log("works", works);
   const worksImages = works.map((work: any) => {
     return {

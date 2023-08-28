@@ -1,13 +1,13 @@
+import { addUpdateContactInfo } from "@/services/apiServices";
 import { phoneRegEx } from "@/utils/utils";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { UseQueryResult, useMutation } from "react-query";
+import { ToastOptions, toast } from "react-toastify";
 import * as yup from "yup";
 import FormSectionContainer from "../common/FormSectionContainer";
-import { UseQueryResult, useMutation } from "react-query";
-import { addUpdateContactInfo } from "@/services/apiServices";
 import SubmitButton from "../common/SubmitButton";
 import Toast from "../common/Toast";
-import { ToastOptions, toast } from "react-toastify";
 
 type ContactInfoForm = {
   title: string;
@@ -33,7 +33,16 @@ const schema = yup
       .required("Phone number is required"),
     phone2: yup
       .string()
-      .matches(phoneRegEx, "Please provide a valid phone number"),
+      .test("phone", "Please provide a valid phone number", function (value) {
+        // Check if the value is not empty and contains a number
+        if (!value) {
+          return true;
+        }
+        if (value && phoneRegEx.test(value)) {
+          return phoneRegEx.test(value);
+        }
+        return false;
+      }),
     address: yup.string().required("Address is required"),
   })
   .required();

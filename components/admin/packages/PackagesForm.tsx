@@ -15,7 +15,7 @@ import Toast from "../common/Toast";
 type PackagesForm = {
   packages: {
     title: string;
-    price: number;
+    price: string;
     list: string[];
   }[];
 };
@@ -29,10 +29,7 @@ const schema = yup
     packages: yup.array().of(
       yup.object({
         title: yup.string().required("Title is required"),
-        price: yup
-          .number()
-          .positive("Price must be greater than 0")
-          .required("Price is required"),
+        price: yup.string().required("Price is required"),
         list: yup.array().of(yup.string().required("List item is required")),
       })
     ),
@@ -161,7 +158,7 @@ export default function PackagesForm(props: IPackages) {
 
             <div className="w-full flex items-center space-x-4 mt-8">
               <AddMoreButton
-                onClick={() => append({ title: "", price: 0, list: [] })}
+                onClick={() => append({ title: "", price: "", list: [] })}
                 text="Add Package"
               />
               <SubmitButton isLoading={addUpdatePackagesMutation.isLoading} />

@@ -1,6 +1,7 @@
 import ContainerWrapper from "@/components/common/ContainerWrapper";
 import LinkBtn from "@/components/common/LinkBtn";
 import Title from "@/components/common/Title";
+import { checkForData } from "@/utils/utils";
 import { UseQueryResult } from "react-query";
 import ServiceCard from "./ServiceCard";
 
@@ -11,6 +12,8 @@ interface IServicesRow {
 }
 
 export default function ServicesRow(props: IServicesRow) {
+  const data = checkForData("services", props.services);
+  if (!data) return null;
   return (
     <ContainerWrapper
       containerClassName={`${
@@ -19,10 +22,9 @@ export default function ServicesRow(props: IServicesRow) {
     >
       <Title title="Our Services" />
       <div className="grid xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {props?.services?.data?.services &&
-          props?.services?.data?.services[0]?.services?.map((item: any) => (
-            <ServiceCard key={item.id} objService={item} />
-          ))}
+        {data?.map((item: any) => (
+          <ServiceCard key={item.id} objService={item} />
+        ))}
       </div>
       {props.showButton && (
         <div className="mt-16">

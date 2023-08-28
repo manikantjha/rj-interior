@@ -105,7 +105,7 @@ export default function Home() {
             }
           >
             <ServicesRow
-              containerClassName="bg-white"
+              containerClassName="bg-gray-50"
               showButton
               services={services}
             />

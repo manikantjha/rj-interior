@@ -2,7 +2,7 @@ import { Schema, model, models } from "mongoose";
 
 const packageSchema = new Schema({
   title: { type: String, required: true },
-  price: Number,
+  price: { type: String, required: true },
   list: [String],
   createdAt: { type: Date, default: Date.now },
 });
