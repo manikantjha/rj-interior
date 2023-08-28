@@ -1,5 +1,3 @@
-import React from "react";
-
 interface IAddMoreButtonProps {
   onClick: any;
   text: string;

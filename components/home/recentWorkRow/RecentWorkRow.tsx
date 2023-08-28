@@ -7,7 +7,7 @@ import { checkForData } from "@/utils/utils";
 import { UseQueryResult } from "react-query";
 import Slider, { CustomArrowProps } from "react-slick";
 
-interface IWorkGalleryProps {
+interface IRecentWorkRowProps {
   works?: UseQueryResult<any, unknown>;
 }
 
@@ -101,7 +101,7 @@ const settings = {
   ],
 };
 
-export default function RecentWorkRow(props: IWorkGalleryProps) {
+export default function RecentWorkRow(props: IRecentWorkRowProps) {
   const data = checkForData("works", props.works);
 
   if (!data) return null;

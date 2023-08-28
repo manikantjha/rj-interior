@@ -1,6 +1,6 @@
 import Features from "@/models/features";
-import { NextApiRequest, NextApiResponse } from "next";
 import { ObjectId } from "mongodb";
+import { NextApiRequest, NextApiResponse } from "next";
 
 export async function getFeatures(req: NextApiRequest, res: NextApiResponse) {
   try {

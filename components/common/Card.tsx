@@ -1,5 +1,5 @@
 import { IRowTheme } from "@/types/row";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 interface ICardProps extends IRowTheme {
   className?: string;

@@ -1,6 +1,6 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { ObjectId } from "mongodb";
 import Packages from "@/models/packages";
+import { ObjectId } from "mongodb";
+import { NextApiRequest, NextApiResponse } from "next";
 
 export async function getPackages(req: NextApiRequest, res: NextApiResponse) {
   try {

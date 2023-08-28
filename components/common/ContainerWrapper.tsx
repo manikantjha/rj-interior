@@ -1,11 +1,11 @@
 import { ReactNode } from "react";
 
-interface IContainerWrapper {
+interface IContainerWrapperProps {
   children: ReactNode;
   containerClassName?: string;
 }
 
-export default function ContainerWrapper(props: IContainerWrapper) {
+export default function ContainerWrapper(props: IContainerWrapperProps) {
   return (
     <div className={`${props.containerClassName}`}>
       <div className="container mx-auto py-14 md:py-20 px-4 md:px-0">

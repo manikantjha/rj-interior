@@ -1,13 +1,13 @@
 import ServiceChecklistItem from "./ServiceChecklistItem";
 
-interface IServiceCard {
+interface IServiceCardProps {
   objService: {
     title: string;
     list: string[];
   };
 }
 
-export default function ServiceCard(props: IServiceCard) {
+export default function ServiceCard(props: IServiceCardProps) {
   return (
     <div>
       <div className="w-full bg-white border border-gray-200 rounded-lg shadow-sm-light overflow-hidden">

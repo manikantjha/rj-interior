@@ -10,12 +10,12 @@ export interface IReviewListItem {
   message: string;
 }
 
-interface ReviewListProps {
+interface IReviewListProps {
   reviews: UseQueryResult<any, unknown>;
   handleDelete: UseMutateFunction<any, unknown, string, unknown>;
 }
 
-const ReviewList: React.FC<ReviewListProps> = ({ reviews, handleDelete }) => {
+const ReviewList: React.FC<IReviewListProps> = ({ reviews, handleDelete }) => {
   if (!reviews?.data?.reviews) return null;
   const lstReviews = reviews?.data?.reviews;
 

@@ -18,7 +18,7 @@ export type ServicesForm = {
   }[];
 };
 
-interface IServices {
+interface IServicesFormProps {
   services: UseQueryResult<any, unknown>;
 }
 
@@ -33,7 +33,7 @@ const schema = yup
   })
   .required();
 
-export default function ServicesForm(props: IServices) {
+export default function ServicesForm(props: IServicesFormProps) {
   const objForm = useForm<ServicesForm>({
     resolver: yupResolver(schema),
     defaultValues: {

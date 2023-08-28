@@ -1,11 +1,11 @@
 import Link from "next/link";
 
-interface ISeeAllBtn {
+interface ILinkBtnProps {
   href: string;
   text?: string;
 }
 
-export default function LinkBtn(props: ISeeAllBtn) {
+export default function LinkBtn(props: ILinkBtnProps) {
   return (
     <Link
       href={props.href}

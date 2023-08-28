@@ -5,59 +5,9 @@ import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import ImageViewer from "react-simple-image-viewer";
 import YoutubeEmbed from "../common/YoutubeEmbed";
 
-export const photos = [
-  {
-    src: "/assets/interior/01.jpg",
-    width: 2,
-    height: 2,
-  },
-  {
-    src: "/assets/interior/02.jpg",
-    width: 1,
-    height: 1,
-  },
-  {
-    src: "/assets/interior/03.jpg",
-    width: 3,
-    height: 4,
-  },
-  {
-    src: "/assets/interior/04.jpg",
-    width: 3,
-    height: 4,
-  },
-  {
-    src: "/assets/interior/05.jpg",
-    width: 3,
-    height: 4,
-  },
-  {
-    src: "/assets/interior/06.jpg",
-    width: 4,
-    height: 3,
-  },
-  {
-    src: "/assets/interior/07.jpg",
-    width: 3,
-    height: 4,
-  },
-  {
-    src: "/assets/interior/08.jpg",
-    width: 4,
-    height: 3,
-  },
-  {
-    src: "/assets/interior/09.jpg",
-    width: 4,
-    height: 3,
-  },
-];
-
 interface IWorkGalleryProps {
   works?: UseQueryResult<any, unknown>;
 }
-
-export const images = photos.map((photo) => photo.src);
 
 export default function WorkGallery(props: IWorkGalleryProps) {
   const works =

@@ -1,6 +1,6 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { ObjectId } from "mongodb";
 import TeamMembers from "@/models/teamMembers";
+import { ObjectId } from "mongodb";
+import { NextApiRequest, NextApiResponse } from "next";
 
 export async function getTeamMembers(
   req: NextApiRequest,

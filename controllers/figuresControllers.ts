@@ -1,6 +1,5 @@
 import Figures from "@/models/figures";
 import { ObjectId } from "mongodb";
-import mongoose from "mongoose";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export async function getFigures(req: NextApiRequest, res: NextApiResponse) {

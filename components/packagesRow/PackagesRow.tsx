@@ -1,14 +1,13 @@
 import ContainerWrapper from "@/components/common/ContainerWrapper";
 import Title from "@/components/common/Title";
-import { lstPackages } from "@/data/data";
-import PackageCard from "./PackageCard";
 import { UseQueryResult } from "react-query";
+import PackageCard from "./PackageCard";
 
-interface IPackagesRow {
+interface IPackagesRowProps {
   packages?: UseQueryResult<any, unknown>;
 }
 
-export default function PackagesRow(props: IPackagesRow) {
+export default function PackagesRow(props: IPackagesRowProps) {
   return (
     <ContainerWrapper>
       <Title title="Our Packages" />

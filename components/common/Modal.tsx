@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-interface IModal {
+interface IModalProps {
   isOpen: boolean;
   handleClose: () => void;
   modalTitle: string;
@@ -8,7 +8,7 @@ interface IModal {
   renderButtons?: () => ReactNode;
 }
 
-export default function Modal(props: IModal) {
+export default function Modal(props: IModalProps) {
   return (
     <div className="">
       {/* <!-- Main modal --> */}

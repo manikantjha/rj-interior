@@ -1,8 +1,10 @@
-interface IServiceChecklistItem {
+interface IServiceChecklistItemProps {
   checklistItem: string;
 }
 
-export default function ServiceChecklistItem(props: IServiceChecklistItem) {
+export default function ServiceChecklistItem(
+  props: IServiceChecklistItemProps
+) {
   return (
     <li className="flex space-x-2 items-center">
       <svg

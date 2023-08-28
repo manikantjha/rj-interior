@@ -1,6 +1,6 @@
 import ContactInfos from "@/models/contactInfo";
-import { NextApiRequest, NextApiResponse } from "next";
 import { ObjectId } from "mongodb";
+import { NextApiRequest, NextApiResponse } from "next";
 
 export async function getContactInfos(
   req: NextApiRequest,

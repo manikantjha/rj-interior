@@ -16,7 +16,7 @@ type FAQsForm = {
   }[];
 };
 
-interface IFAQsForm {
+interface IFAQsFormProps {
   faqs: UseQueryResult<any, unknown>;
 }
 
@@ -31,7 +31,7 @@ const schema = yup
   })
   .required();
 
-export default function FAQsForm(props: IFAQsForm) {
+export default function FAQsForm(props: IFAQsFormProps) {
   const {
     register,
     control,

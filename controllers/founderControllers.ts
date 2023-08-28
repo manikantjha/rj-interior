@@ -1,6 +1,6 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { ObjectId } from "mongodb";
 import Founders from "@/models/founders";
+import { ObjectId } from "mongodb";
+import { NextApiRequest, NextApiResponse } from "next";
 
 export async function getFounders(req: NextApiRequest, res: NextApiResponse) {
   try {

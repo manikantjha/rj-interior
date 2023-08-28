@@ -2,11 +2,11 @@ import { addUpdateFeature } from "@/services/apiServices";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { UseQueryResult, useMutation } from "react-query";
+import { ToastOptions, toast } from "react-toastify";
 import * as yup from "yup";
 import FormSectionContainer from "../common/FormSectionContainer";
 import SubmitButton from "../common/SubmitButton";
 import Toast from "../common/Toast";
-import { ToastOptions, toast } from "react-toastify";
 
 type FeaturesForm = {
   features: {
@@ -15,7 +15,7 @@ type FeaturesForm = {
   }[];
 };
 
-interface IFeatures {
+interface IFeaturesFormProps {
   features: UseQueryResult<any, unknown>;
 }
 
@@ -30,7 +30,7 @@ const schema = yup
   })
   .required();
 
-export default function FeaturesForm(props: IFeatures) {
+export default function FeaturesForm(props: IFeaturesFormProps) {
   const {
     register,
     handleSubmit,

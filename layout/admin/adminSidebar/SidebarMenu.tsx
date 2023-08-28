@@ -1,8 +1,7 @@
-import { lstAdminNavBarMenu } from "@/data/adminData";
-import React from "react";
-import SidebarMenuItem from "./SidebarMenuItem";
 import { useAuth } from "@/contexts/AuthContext";
+import { lstAdminNavBarMenu } from "@/data/adminData";
 import { useRouter } from "next/navigation";
+import SidebarMenuItem from "./SidebarMenuItem";
 
 interface ISidebarMenuProps {
   isSidebarOpen: boolean;

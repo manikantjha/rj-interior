@@ -16,7 +16,7 @@ type FiguresForm = {
   }[];
 };
 
-interface IFigures {
+interface IFiguresFormProps {
   figures: UseQueryResult<any, unknown>;
 }
 
@@ -34,7 +34,7 @@ const schema = yup
   })
   .required();
 
-export default function FiguresForm(props: IFigures) {
+export default function FiguresForm(props: IFiguresFormProps) {
   const {
     register,
     handleSubmit,

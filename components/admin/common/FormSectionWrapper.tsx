@@ -1,10 +1,10 @@
 import { ReactNode } from "react";
 
-interface IFormSectionWrapper {
+interface IFormSectionWrapperProps {
   children: ReactNode;
 }
 
-export default function FormSectionWrapper(props: IFormSectionWrapper) {
+export default function FormSectionWrapper(props: IFormSectionWrapperProps) {
   return (
     <div className="mb-8">
       <>{props.children}</>

@@ -1,4 +1,4 @@
-interface ITitle {
+interface ITitleProps {
   title: string;
   description?: string;
   titleClassName?: string;
@@ -6,7 +6,7 @@ interface ITitle {
   containerClassName?: string;
 }
 
-export default function Title(props: ITitle) {
+export default function Title(props: ITitleProps) {
   return (
     <div className={`text-center mb-16 ${props.containerClassName || ""}`}>
       <h2

@@ -1,10 +1,10 @@
-import { useFormContext, useFieldArray } from "react-hook-form";
+import { useFieldArray, useFormContext } from "react-hook-form";
 
-interface IPackagesListForm {
+interface IPackagesListFormProps {
   parentIndex: number;
 }
 
-export default function PackagesListForm(props: IPackagesListForm) {
+export default function PackagesListForm(props: IPackagesListFormProps) {
   const { register, control, getFieldState } = useFormContext();
   const { fields, remove, append } = useFieldArray({
     control,

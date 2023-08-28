@@ -1,10 +1,10 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
 
-interface IServicesListForm {
+interface IServicesListFormProps {
   parentIndex: number;
 }
 
-export default function ServicesListForm(props: IServicesListForm) {
+export default function ServicesListForm(props: IServicesListFormProps) {
   const {
     control,
     register,

@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { ReactNode } from "react";
 
-interface IHero {
+interface IHeroProps {
   imgSrc: string;
   imgAlt: string;
   hasContent?: boolean;
@@ -10,7 +10,7 @@ interface IHero {
   renderButton?: () => ReactNode;
 }
 
-export default function Hero(props: IHero) {
+export default function Hero(props: IHeroProps) {
   return (
     <div className="h-[70vh] w-full overflow-hidden relative block">
       <img

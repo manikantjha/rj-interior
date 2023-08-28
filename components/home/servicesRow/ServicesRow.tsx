@@ -5,13 +5,13 @@ import { checkForData } from "@/utils/utils";
 import { UseQueryResult } from "react-query";
 import ServiceCard from "./ServiceCard";
 
-interface IServicesRow {
+interface IServicesRowProps {
   containerClassName?: string;
   showButton?: boolean;
   services?: UseQueryResult<any, unknown>;
 }
 
-export default function ServicesRow(props: IServicesRow) {
+export default function ServicesRow(props: IServicesRowProps) {
   const data = checkForData("services", props.services);
   if (!data) return null;
   return (

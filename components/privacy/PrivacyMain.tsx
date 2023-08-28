@@ -9,7 +9,7 @@ export default function PrivacyMain() {
       <div className="container mx-auto py-8">
         <h2 className="text-2xl font-bold mb-4">Privacy Policy</h2>
         <p>Last updated: 23 July 2023</p>
-        <p>{`RJ Interior operates the www.bigining.com website.`}</p>
+        <p>{`RJ Interior operates the www.rjinterior.in website.`}</p>
         <p className="mt-4">
           This page informs you of our policies regarding the collection, use,
           and disclosure of Personal Information when you use our Service.

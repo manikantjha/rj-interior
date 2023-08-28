@@ -1,9 +1,8 @@
-import { lstFAQs } from "@/data/data";
 import { useState } from "react";
+import { UseQueryResult } from "react-query";
 import ContainerWrapper from "../common/ContainerWrapper";
 import Title from "../common/Title";
 import Accordion from "../common/accordion/Accordion";
-import { UseQueryResult } from "react-query";
 
 interface IFAQsRowProps {
   faqs: UseQueryResult<any, unknown>;

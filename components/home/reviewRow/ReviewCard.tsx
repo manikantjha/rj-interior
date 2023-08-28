@@ -8,11 +8,11 @@ interface Review {
   message: string;
 }
 
-interface ReviewProps extends IRowTheme {
+interface IReviewCardProps extends IRowTheme {
   review: Review;
 }
 
-const ReviewCard = ({ review, ...other }: ReviewProps) => {
+const ReviewCard = ({ review, ...other }: IReviewCardProps) => {
   return (
     <Card
       className="p-6 bg-white border border-gray-200 rounded-lg shadow-sm-light text-center"

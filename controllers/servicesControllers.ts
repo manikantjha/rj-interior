@@ -1,6 +1,6 @@
 import Services from "@/models/services";
-import { NextApiRequest, NextApiResponse } from "next";
 import { ObjectId } from "mongodb";
+import { NextApiRequest, NextApiResponse } from "next";
 
 export async function getServices(req: NextApiRequest, res: NextApiResponse) {
   try {

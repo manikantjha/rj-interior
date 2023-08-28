@@ -4,7 +4,7 @@ import Hero from "@/components/common/Hero";
 import LinkBtn from "@/components/common/LinkBtn";
 import ContactMain from "@/components/contact/ContactMain";
 import ServicesRow from "@/components/home/servicesRow/ServicesRow";
-import PackagesRow from "@/components/services/packagesRow/PackagesRow";
+import PackagesRow from "@/components/packagesRow/PackagesRow";
 import HeroSkeleton from "@/components/skeletons/HeroSkeleton";
 import PackagesRowSkeleton from "@/components/skeletons/PackagesRowSkeleton";
 import ServicesRowSkeleton from "@/components/skeletons/ServicesRowSkeleton";

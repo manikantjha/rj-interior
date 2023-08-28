@@ -1,8 +1,8 @@
 import ContainerWrapper from "@/components/common/ContainerWrapper";
 import Title from "@/components/common/Title";
+import { checkForData } from "@/utils/utils";
 import { UseQueryResult } from "react-query";
 import FigureCard from "./FigureCard";
-import { checkForData } from "@/utils/utils";
 
 interface IFiguresRowProps {
   figures: UseQueryResult<any, unknown>;

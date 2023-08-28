@@ -2,13 +2,13 @@
 
 import { ReactNode } from "react";
 
-interface IContactModalContent {
+interface IContactModalContentProps {
   isSuccess: boolean;
   handleClose: () => void;
   message?: ReactNode;
 }
 
-function SuccessCase(props: IContactModalContent) {
+function SuccessCase(props: IContactModalContentProps) {
   return (
     <div className="grid grid-rows-[auto_auto_auto] gap-4 place-items-center">
       <div className="text-center mb-8">
@@ -31,7 +31,7 @@ function SuccessCase(props: IContactModalContent) {
   );
 }
 
-function FailureCase(props: IContactModalContent) {
+function FailureCase(props: IContactModalContentProps) {
   return (
     <div className="grid grid-rows-[auto_auto_auto] gap-4 place-items-center">
       <div className="text-center mb-8">
@@ -54,7 +54,7 @@ function FailureCase(props: IContactModalContent) {
   );
 }
 
-export default function ContactModalContent(props: IContactModalContent) {
+export default function ContactModalContent(props: IContactModalContentProps) {
   return (
     <div className="p-6 space-y-6">
       {props.isSuccess ? (

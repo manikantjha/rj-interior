@@ -1,5 +1,3 @@
-import React from "react";
-
 interface ILoaderProps {
   loaderContainerHeightWidth?: string;
   loaderHeightWidth?: string;

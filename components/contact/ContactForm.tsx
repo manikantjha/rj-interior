@@ -1,22 +1,17 @@
-import emailjs from "@emailjs/browser";
+import { sendContactForm } from "@/services/apiServices";
+import { phoneRegEx } from "@/utils/utils";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
 import * as yup from "yup";
 import Modal from "../common/Modal";
 import ContactModalContent from "./ContactModalContent";
-import { sendContactForm } from "@/services/apiServices";
-import { useMutation } from "react-query";
-
-const phoneRegExp =
-  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 const schema = yup
   .object({
     name: yup.string().required("Name is required"),
-    phone: yup
-      .string()
-      .matches(phoneRegExp, "A valid phone number is required"),
+    phone: yup.string().matches(phoneRegEx, "A valid phone number is required"),
     email: yup.string().email().required("Email is required"),
     message: yup.string().required("Message is required"),
   })

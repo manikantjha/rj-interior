@@ -1,14 +1,14 @@
 import Link from "next/link";
 import React from "react";
 
-interface SocialMediaIconsProps {
+interface ISocialMediaIconsProps {
   hrefYoutube?: string;
   hrefInsta?: string;
   hrefFacebook?: string;
 }
 
-const SocialMediaIcons: React.FC<SocialMediaIconsProps> = (
-  props: SocialMediaIconsProps
+const SocialMediaIcons: React.FC<ISocialMediaIconsProps> = (
+  props: ISocialMediaIconsProps
 ) => {
   return (
     <div className="flex space-x-4 items-center">

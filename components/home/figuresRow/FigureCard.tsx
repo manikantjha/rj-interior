@@ -1,13 +1,13 @@
 import CountUp from "react-countup";
 
-interface IFigrueCard {
+interface IFigrueCardProps {
   objFigrue: {
     figure: string;
     description: string;
   };
 }
 
-export default function FigureCard(props: IFigrueCard) {
+export default function FigureCard(props: IFigrueCardProps) {
   return (
     <div className="text-center">
       <div className="block p-6 bg-white border border-gray-200 rounded-lg shadow-sm-light hover:bg-gray-100">

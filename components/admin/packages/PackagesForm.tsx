@@ -1,16 +1,15 @@
 import { addUpdatePackage } from "@/services/apiServices";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect } from "react";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import { UseQueryResult, useMutation } from "react-query";
+import { ToastOptions, toast } from "react-toastify";
 import * as yup from "yup";
+import AddMoreButton from "../common/AddMoreButton";
 import FormSectionContainer from "../common/FormSectionContainer";
 import FormSectionWrapper from "../common/FormSectionWrapper";
-import PackagesListForm from "./PackagesListForm";
-import AddMoreButton from "../common/AddMoreButton";
 import SubmitButton from "../common/SubmitButton";
-import { ToastOptions, toast } from "react-toastify";
 import Toast from "../common/Toast";
+import PackagesListForm from "./PackagesListForm";
 
 type PackagesForm = {
   packages: {
@@ -20,7 +19,7 @@ type PackagesForm = {
   }[];
 };
 
-interface IPackages {
+interface IPackagesFormProps {
   packages: UseQueryResult<any, unknown>;
 }
 
@@ -36,7 +35,7 @@ const schema = yup
   })
   .required();
 
-export default function PackagesForm(props: IPackages) {
+export default function PackagesForm(props: IPackagesFormProps) {
   const objForm = useForm<PackagesForm>({
     resolver: yupResolver(schema),
     defaultValues: {

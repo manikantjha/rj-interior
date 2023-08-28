@@ -1,4 +1,4 @@
-import { addUpdateFounder, addUpdateTeamMember } from "@/services/apiServices";
+import { addUpdateFounder } from "@/services/apiServices";
 import { storage } from "@/services/firebaseServices";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { deleteObject, ref } from "firebase/storage";

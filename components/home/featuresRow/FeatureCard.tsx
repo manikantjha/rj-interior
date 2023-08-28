@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-interface IFeatureCard {
+interface IFeatureCardProps {
   objFeature: {
     icon: ReactNode;
     title: string;
@@ -8,7 +8,7 @@ interface IFeatureCard {
   };
 }
 
-export default function FeatureCard(props: IFeatureCard) {
+export default function FeatureCard(props: IFeatureCardProps) {
   return (
     <div className="p-6 bg-white border border-gray-200 rounded-lg shadow-sm-light text-center">
       <div className="mx-auto w-fit">

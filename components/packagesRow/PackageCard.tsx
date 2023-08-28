@@ -1,6 +1,6 @@
 import PackageListItem from "./PackageListItem";
 
-interface IPackageCard {
+interface IPackageCardProps {
   objPackage: {
     title: string;
     price: string;
@@ -8,7 +8,7 @@ interface IPackageCard {
   };
 }
 
-export default function PackageCard(props: IPackageCard) {
+export default function PackageCard(props: IPackageCardProps) {
   return (
     <div className="w-full bg-gray-50 border border-gray-200 rounded-lg shadow-sm-light overflow-hidden">
       <div className="bg-white text-center">

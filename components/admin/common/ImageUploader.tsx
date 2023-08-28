@@ -10,7 +10,7 @@ import { ToastOptions, toast } from "react-toastify";
 import ProgressBar from "./ProgressBar";
 import Toast from "./Toast";
 
-interface IImageUploader {
+interface IImageUploaderProps {
   id: string;
   label: string;
   imageURL?: string;
@@ -19,7 +19,7 @@ interface IImageUploader {
   isVideo?: boolean;
 }
 
-export default function ImageUploader(props: IImageUploader) {
+export default function ImageUploader(props: IImageUploaderProps) {
   const [image, setImage] = useState<File>();
   const [downloadURL, setDownloadURL] = useState(props.imageURL || "");
   const [isUploading, setIsUploading] = useState(false);
@@ -38,7 +38,7 @@ export default function ImageUploader(props: IImageUploader) {
 
   function handleFileUpload(image: File) {
     if (image) {
-      const name = image.name;
+      const name = image.name + Date.now();
       const storageRef = ref(storage, `images/${name}`);
       const uploadTask = uploadBytesResumable(storageRef, image);
       setIsUploading(true);

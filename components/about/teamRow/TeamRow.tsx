@@ -1,8 +1,7 @@
 import ContainerWrapper from "@/components/common/ContainerWrapper";
 import Title from "@/components/common/Title";
-import { lstTeamMembers } from "@/data/data";
-import TeamMemberCard from "./TeamMemberCard";
 import { UseQueryResult } from "react-query";
+import TeamMemberCard from "./TeamMemberCard";
 
 interface IFeaturesRowProps {
   teamMembers: UseQueryResult<any, unknown>;

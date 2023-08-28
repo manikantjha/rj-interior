@@ -1,17 +1,17 @@
 import { getContactInfos } from "@/services/apiServices";
-import ContainerWrapper from "../common/ContainerWrapper";
-import ContactForm from "./ContactForm";
-import ContactInfoCard from "./ContactInfoCard";
 import { useQuery } from "react-query";
 import RenderAppropriateComponent from "../admin/common/RenderAppropriateComponent";
+import ContainerWrapper from "../common/ContainerWrapper";
 import Error from "../common/Error";
 import Loading from "../common/Loading";
+import ContactForm from "./ContactForm";
+import ContactInfoCard from "./ContactInfoCard";
 
-interface IContactMain {
+interface IContactMainProps {
   containerClassName?: string;
 }
 
-export default function ContactMain(props: IContactMain) {
+export default function ContactMain(props: IContactMainProps) {
   const contactInfos = useQuery("contactInfos", () => getContactInfos());
   return (
     <ContainerWrapper
