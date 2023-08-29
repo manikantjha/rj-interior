@@ -139,6 +139,7 @@ export const deleteImageFromFirebase = async (image: IImage) => {
 };
 
 export const revalidatePath = async (path: string) => {
+  if (!BASE_URL) return;
   await fetch(
     `${BASE_URL}/api/revalidate?secret=${process.env.NEXT_PUBLIC_REVALIDATION_TOKEN}&path=${path}`
   );
