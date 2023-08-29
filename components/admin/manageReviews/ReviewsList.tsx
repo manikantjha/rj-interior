@@ -6,7 +6,7 @@ import { IAuthContext } from "@/types/auth";
 import { IReview } from "@/types/review";
 import { User } from "firebase/auth";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import { useState } from "react";
 import { UseQueryResult, useMutation, useQueryClient } from "react-query";
 import CommonButton from "../common/CommonButton";
 import ReviewListItem from "./ReviewListItem";
@@ -15,7 +15,7 @@ interface ReviewListProps {
   reviews: UseQueryResult<any, unknown>;
 }
 
-const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
+const ReviewList = ({ reviews }: ReviewListProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState<IReview>();
   const router = useRouter();
@@ -57,7 +57,7 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
     },
   });
 
-  if (!reviews?.data?.items) return;
+  if (!reviews?.data?.items) return null;
   const lstReviews = reviews?.data?.items;
 
   function handleApprove(review: IReview) {

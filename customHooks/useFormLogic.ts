@@ -35,7 +35,7 @@ const useFormLogic = <TForm extends FieldValues>({
   const { user } = useAuth() as IAuthContext<User>;
 
   const methods = useForm<TForm>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema as any),
     defaultValues,
   });
 

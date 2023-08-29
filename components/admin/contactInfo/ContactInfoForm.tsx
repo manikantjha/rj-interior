@@ -1,6 +1,9 @@
-import useFormLogic from "@/customHooks/useFormLogic";
-import { faqSchema } from "@/schemas/faqSchema";
-import { addFaq, updateFaq } from "@/services/apiServices";
+import { useAddUpdate } from "@/customHooks/useAddUpdate";
+import { contactInfoSchema } from "@/schemas/contactInfoSchema";
+import { createUpdateContactInfo } from "@/services/apiServices";
+import { IContactInfo } from "@/types/contactInfo";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 import { UseQueryResult } from "react-query";
 import * as yup from "yup";
 import FormSectionContainer from "../common/FormSectionContainer";
@@ -8,53 +11,91 @@ import SubmitButton from "../common/form/SubmitButton";
 import TextArea from "../common/form/TextArea";
 import TextInput from "../common/form/TextInput";
 
-type TForm = yup.InferType<typeof faqSchema>;
+type TForm = yup.InferType<typeof contactInfoSchema>;
 
-interface IFaqFormProps {
-  faq?: UseQueryResult<any, unknown>;
-  caseOfAdd: boolean;
+interface IContactInfoFormProps {
+  contactInfos: UseQueryResult<any, unknown>;
 }
 
-export default function FaqsForm(props: IFaqFormProps) {
-  const defaultValues = props.faq?.data || {};
-
-  const { onSubmit, isLoading, methods } = useFormLogic<TForm>({
-    defaultValues,
-    schema: faqSchema,
-    mutationFn: props.caseOfAdd ? addFaq : updateFaq,
-    entity: "faq",
-    entityPlural: "faqs",
-  });
+export default function ContactInfoForm(props: IContactInfoFormProps) {
+  const defaultValues = props?.contactInfos?.data
+    ? { ...props?.contactInfos?.data }
+    : {};
 
   const {
-    formState: { errors },
-    handleSubmit,
     register,
-  } = methods;
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TForm>({
+    resolver: yupResolver(contactInfoSchema),
+    defaultValues,
+  });
+
+  const addUpdateMutation = useAddUpdate(createUpdateContactInfo);
+
+  const onSubmit = (data: IContactInfo) => {
+    const _id = props.contactInfos?.data
+      ? props.contactInfos?.data._id
+      : undefined;
+    addUpdateMutation.mutate({ ...data, _id });
+  };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <FormSectionContainer className="grid grid-rows-[auto_1fr] gap-8">
-        <div className="grid grid-rows-[auto_1fr] gap-2">
+    <FormSectionContainer>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="grid gap-4 mb-4">
           <TextInput
-            label="Question"
-            name="question"
+            label="Section Title"
+            name="title"
             register={register}
-            error={errors.question}
-            placeholder="Question"
+            error={errors.title}
+            placeholder="Section title"
           />
           <TextArea
-            label="Answer"
-            name="answer"
+            label="Description"
+            name="description"
             register={register}
-            error={errors.answer}
-            placeholder="Answer..."
+            error={errors.description}
+            placeholder="Description"
           />
         </div>
-        <div className="flex space-x-4">
-          <SubmitButton loading={isLoading} />
+        <div className="grid gap-6 mb-4 md:grid-cols-2">
+          <TextInput
+            label="Email"
+            name="email"
+            register={register}
+            error={errors.email}
+            placeholder="Email address"
+            type="email"
+          />
+          <TextInput
+            label="Phone 1"
+            name="phone1"
+            register={register}
+            error={errors.phone1}
+            placeholder="Phone number"
+          />
         </div>
-      </FormSectionContainer>
-    </form>
+        <div className="grid gap-6 mb-4 md:grid-cols-2">
+          <TextInput
+            label="Phone 2"
+            name="phone2"
+            register={register}
+            error={errors.phone2}
+            placeholder="Phone number"
+          />
+          <TextInput
+            label="Address"
+            name="address"
+            register={register}
+            error={errors.address}
+            placeholder="Address"
+          />
+        </div>
+        <div className="w-full mt-8">
+          <SubmitButton loading={addUpdateMutation.isLoading} />
+        </div>
+      </form>
+    </FormSectionContainer>
   );
 }

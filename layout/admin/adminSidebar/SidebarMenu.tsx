@@ -8,7 +8,7 @@ interface ISidebarMenuProps {
 }
 
 export default function SidebarMenu(props: ISidebarMenuProps) {
-  const { user, logout } = useAuth();
+  const { user, logOut } = useAuth();
   const router = useRouter();
   return (
     <aside
@@ -27,8 +27,8 @@ export default function SidebarMenu(props: ISidebarMenuProps) {
           ))}
 
           <li
-            onClick={() => {
-              logout();
+            onClick={async () => {
+              await logOut();
               router.push("/login");
             }}
             className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"

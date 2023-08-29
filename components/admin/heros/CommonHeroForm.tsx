@@ -49,7 +49,7 @@ export default function CommonHeroForm({ hero, pageId }: ICommonHeroForm) {
     control,
     formState: { errors },
   } = useForm<TForm>({
-    resolver: yupResolver<TForm>(heroSchema),
+    resolver: yupResolver(heroSchema),
     defaultValues,
   });
 
