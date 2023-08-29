@@ -12,7 +12,7 @@ export default function AdminNavbar() {
 
   return (
     <nav className="bg-primary border-gray-200 dark:bg-gray-900 sticky top-0 z-[100]">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between md:justify-center mx-auto p-4">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between md:justify-center mx-auto p-4 ">
         <Link href="/admin" className="flex items-center">
           <Logo isWhite />
         </Link>
