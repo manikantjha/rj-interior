@@ -8,34 +8,31 @@ interface IFeaturesRowProps extends IRowTheme {
   features: IFeature[];
 }
 
+const icons = [
+  <GetIcon
+    name="puzzle"
+    key="puzzle"
+    className="text-primary"
+    size="w-14 h-14"
+  />,
+  <GetIcon name="team" key="team" className="text-primary" size="w-14 h-14" />,
+  <GetIcon
+    name="sheild"
+    key="sheild"
+    className="text-primary"
+    size="w-14 h-14"
+  />,
+  <GetIcon
+    name="smile"
+    key="smile"
+    className="text-primary"
+    size="w-14 h-14"
+  />,
+];
+
 export default function FeaturesRow(props: IFeaturesRowProps) {
   const data = props.features || [];
-  const icons = [
-    <GetIcon
-      name="puzzle"
-      key="puzzle"
-      className="text-primary mb-4"
-      size="w-14 h-14"
-    />,
-    <GetIcon
-      name="team"
-      key="team"
-      className="text-primary mb-4"
-      size="w-14 h-14"
-    />,
-    <GetIcon
-      name="sheild"
-      key="sheild"
-      className="text-primary mb-4"
-      size="w-14 h-14"
-    />,
-    <GetIcon
-      name="smile"
-      key="smile"
-      className="text-primary mb-4"
-      size="w-14 h-14"
-    />,
-  ];
+
   return (
     <RowWrapper title="Features" theme={props.theme}>
       <div className="grid xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

@@ -56,7 +56,7 @@ export default function RowListItem<T>({
         </CommonButton>
         <CommonButton
           onClick={() => onDelete(item)}
-          color="accent"
+          color="red"
           className="w-fit h-fit"
           variant="outlined"
           icon={<GetIcon name="delete" size="w-5 h-5" />}

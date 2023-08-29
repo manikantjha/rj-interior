@@ -123,7 +123,6 @@ export default function PrivacyMain() {
           us:
         </p>
         <ul className="list-disc list-inside mt-4">
-          <li>By email: </li>
           <li>
             By visiting this page on our website:{" "}
             <Link href={"/contact"} className="text-orange-700 underline">

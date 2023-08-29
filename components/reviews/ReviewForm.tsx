@@ -180,7 +180,7 @@ const ReviewForm = (props: IReviewFormProps) => {
           )}
           renderButtons={() => (
             <button
-              className="block mx-auto text-center p-2 md:p-3 font-bold bg-black text-accentLighter rounded-full !w-[200px] hover:bg-secondaryDark hover:shadow-sm"
+              className="block mx-auto text-center p-2 md:p-3 font-bold bg-primary hover:bg-orange-700 !text-white text-accentLighter rounded-full !w-[200px] hover:shadow-sm"
               onClick={() => {
                 handleClose();
                 reset();

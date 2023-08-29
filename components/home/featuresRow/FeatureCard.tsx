@@ -1,6 +1,5 @@
 import Card from "@/components/common/Card";
 import { IRowTheme } from "@/types/row";
-import Image from "next/image";
 import { ReactNode } from "react";
 
 interface IFeatureCard extends IRowTheme {
@@ -16,10 +15,10 @@ export default function FeatureCard({
   theme,
 }: IFeatureCard) {
   return (
-    <Card theme={theme}>
-      <div className="mx-auto w-fit">{icon}</div>
-      <p className="mb-2 text-2xl font-semibold text-gray-900">{title}</p>
-      <p className="mb-3 font-normal text-black">{description}</p>
+    <Card theme={theme} className="grid grid-row-[1fr_auto_auto] gap-1">
+      <div className="mx-auto w-fit mb-2">{icon}</div>
+      <p className="text-2xl font-semibold text-gray-900">{title}</p>
+      <p className="font-normal text-black">{description}</p>
     </Card>
   );
 }

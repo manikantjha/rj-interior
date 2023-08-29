@@ -57,14 +57,14 @@ export default function Login() {
             <div className="grid grid-cols-1 gap-2">
               <button
                 type="submit"
-                className="text-white bg-accentDark hover:bg-accentDark focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center !w-full"
+                className="text-white bg-primary hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center !w-full"
               >
                 Log In
               </button>
               <p className="text-gray-400 text-center">or</p>
               <Link
                 href="/signup"
-                className="hover:underline text-accentDark font-semibold text-center"
+                className="hover:underline text-primary font-semibold text-center"
               >
                 Sign Up
               </Link>

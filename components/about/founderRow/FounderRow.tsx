@@ -15,6 +15,7 @@ export default function FounderRow(props: IFounderRowProps) {
   if (data.length === 0) {
     return null;
   }
+
   return (
     <ContainerWrapper containerClassName="bg-gray-50">
       <Title title="Meet Our Founders" />
