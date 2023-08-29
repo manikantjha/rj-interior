@@ -13,7 +13,9 @@ import { ISendMessage } from "@/types/contact";
 import { IReview } from "@/types/review";
 import { IPackage } from "@/types/package";
 import { IFounder } from "@/types/founder";
-import { BASE_URL } from "@/utils/server";
+
+// export const BASE_URL = process.env.NEXT_PUBLIC_DEV_BASE_PATH;
+export const BASE_URL = process.env.NEXT_PUBLIC_BASE_PATH;
 
 //  Heroes --------------------------------------------------!
 

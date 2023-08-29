@@ -1,6 +1,8 @@
 import { get, post, remove } from "@/services/fetchServices";
 import { IDeleteApiResult, IPaginatedApiResult } from "@/types/api";
-import { BASE_URL } from "@/utils/server";
+
+// export const BASE_URL = process.env.NEXT_PUBLIC_DEV_BASE_PATH;
+export const BASE_URL = process.env.NEXT_PUBLIC_BASE_PATH;
 
 type Entity =
   | "artists"
