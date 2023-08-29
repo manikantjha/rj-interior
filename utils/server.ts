@@ -2,6 +2,9 @@ import { IImage, IImageSize } from "@/types/image";
 import { storage } from "firebase-admin";
 import { NextApiResponse } from "next";
 
+// export const BASE_URL = process.env.NEXT_PUBLIC_DEV_BASE_PATH;
+export const BASE_URL = process.env.NEXT_PUBLIC_BASE_PATH;
+
 type EnvVariableKey =
   | "JWT_SECRET"
   | "JWT_EXPIRES_IN"
@@ -137,6 +140,6 @@ export const deleteImageFromFirebase = async (image: IImage) => {
 
 export const revalidatePath = async (path: string) => {
   await fetch(
-    `${process.env.NEXT_PUBLIC_DEV_BASE_PATH}/api/revalidate?secret=${process.env.NEXT_PUBLIC_REVALIDATION_TOKEN}&path=${path}`
+    `${BASE_URL}/api/revalidate?secret=${process.env.NEXT_PUBLIC_REVALIDATION_TOKEN}&path=${path}`
   );
 };
