@@ -2,7 +2,7 @@
 import Card from "@/components/common/Card";
 import { IRowTheme } from "@/types/row";
 
-interface ITestimonialCardProps extends IRowTheme {
+interface ITestimonialCard extends IRowTheme {
   objTestimonial: {
     client: {
       name: string;
@@ -14,7 +14,7 @@ interface ITestimonialCardProps extends IRowTheme {
   };
 }
 
-export default function TestimonialCard(props: ITestimonialCardProps) {
+export default function TestimonialCard(props: ITestimonialCard) {
   return (
     <Card theme={props.theme}>
       <figure className="flex flex-col items-center justify-center p-8 text-center">

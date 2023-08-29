@@ -9,7 +9,7 @@ interface IFounderCardProps {
 
 export default function FounderCard(props: IFounderCardProps) {
   return (
-    <div className="grid grid-cols-1 gap-6 md:gap-8 border rounded-lg shadow-sm-light bg-white p-8 max-w-md justify-items-center">
+    <div className="grid grid-cols-1 gap-6 md:gap-8 border rounded-lg shadow-sm-light bg-white p-8 max-w-md w-full justify-items-center">
       <div className="rounded-full h-[150px] w-[150px] md:h-[200px] md:w-[200px] overflow-hidden">
         <img
           src={props.imgSrc}

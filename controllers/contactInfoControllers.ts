@@ -1,71 +1,16 @@
-import ContactInfos from "@/models/contactInfo";
-import { ObjectId } from "mongodb";
-import { NextApiRequest, NextApiResponse } from "next";
+import ContactInfo from "@/models/contactInfo";
+import { contactInfoSchema } from "@/schemas/contactInfoSchema";
+import { revalidatePath } from "@/utils/server";
+import { createGenericController } from "../HOFs/controllersHOF";
 
-export async function getContactInfos(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  try {
-    const contactInfos = await ContactInfos.find({});
-    if (!contactInfos) return res.status(404).json({ error: "No Data Found" });
-    return res.status(200).json({ contactInfos });
-  } catch (error) {
-    res.status(404).json({ error });
-  }
-}
+const contactInfoControllers = createGenericController({
+  Model: ContactInfo,
+  schema: contactInfoSchema,
+  revalidate: async () => {
+    revalidatePath("/");
+    revalidatePath("/services");
+    revalidatePath("/contact");
+  },
+});
 
-export async function getContactInfo(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  try {
-    const data = req.query;
-    if (!data || !data.id) {
-      return res.status(404).json({ error: "Form Datat Not Provided" });
-    }
-    const { id }: { id?: string } = data;
-    const contactInfos = await ContactInfos.findById(new ObjectId(id));
-    if (!contactInfos) return res.status(404).json({ error: "No Data Found" });
-    return res.status(200).json({ contactInfos });
-  } catch (error) {
-    res.status(404).json({ error });
-  }
-}
-
-export async function addUpdateContactInfo(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  try {
-    const { id, ...data } = req.body;
-    if (!data) {
-      return res.status(404).json({ error: "Form Datat Not Provided" });
-    }
-    if (id) {
-      const response = await ContactInfos.findByIdAndUpdate(id, data);
-      return res.status(200).json({ response });
-    } else {
-      const response = await ContactInfos.create(data);
-      return res.status(200).json({ response });
-    }
-  } catch (error) {
-    res.status(500).json({ error });
-  }
-}
-
-export async function deleteContactInfo(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  try {
-    const { id } = req.body;
-    if (!id) {
-      return res.status(404).json({ error: "Id Not Provided" });
-    }
-    const response = await ContactInfos.findByIdAndDelete(id);
-    return res.status(200).json({ response });
-  } catch (error) {
-    res.status(404).json({ error });
-  }
-}
+export default contactInfoControllers;

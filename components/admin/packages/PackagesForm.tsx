@@ -1,166 +1,71 @@
-import { addUpdatePackage } from "@/services/apiServices";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { FormProvider, useFieldArray, useForm } from "react-hook-form";
-import { UseQueryResult, useMutation } from "react-query";
-import { ToastOptions, toast } from "react-toastify";
+import useFormLogic from "@/customHooks/useFormLogic";
+import { packageSchema } from "@/schemas/packageSchema";
+import { FormProvider } from "react-hook-form";
+import { UseQueryResult } from "react-query";
 import * as yup from "yup";
-import AddMoreButton from "../common/AddMoreButton";
 import FormSectionContainer from "../common/FormSectionContainer";
 import FormSectionWrapper from "../common/FormSectionWrapper";
-import SubmitButton from "../common/SubmitButton";
 import Toast from "../common/Toast";
 import PackagesListForm from "./PackagesListForm";
+import SubmitButton from "../common/form/SubmitButton";
+import TextInput from "../common/form/TextInput";
+import { addPackage, updatePackage } from "@/services/apiServices";
 
-type PackagesForm = {
-  packages: {
-    title: string;
-    price: string;
-    list: string[];
-  }[];
-};
+type TForm = yup.InferType<typeof packageSchema>;
 
 interface IPackagesFormProps {
   packages: UseQueryResult<any, unknown>;
+  caseOfAdd: boolean;
 }
 
-const schema = yup
-  .object({
-    packages: yup.array().of(
-      yup.object({
-        title: yup.string().required("Title is required"),
-        price: yup.string().required("Price is required"),
-        list: yup.array().of(yup.string().required("List item is required")),
-      })
-    ),
-  })
-  .required();
-
 export default function PackagesForm(props: IPackagesFormProps) {
-  const objForm = useForm<PackagesForm>({
-    resolver: yupResolver(schema),
-    defaultValues: {
-      packages: props?.packages?.data?.packages
-        ? props?.packages?.data?.packages[0]?.packages
-        : [{ title: "", price: 0, list: [] }],
-    },
+  const defaultValues = props.packages?.data ? props.packages?.data : {};
+
+  const { onSubmit, isLoading, methods } = useFormLogic<TForm>({
+    defaultValues,
+    schema: packageSchema,
+    mutationFn: props.caseOfAdd ? addPackage : updatePackage,
+    entity: "package",
+    entityPlural: "packages",
   });
 
   const {
-    register,
-    control,
-    handleSubmit,
     formState: { errors },
-  } = objForm;
-
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "packages",
-  });
-
-  const notify = (text: string, options: ToastOptions) => toast(text, options);
-
-  const addUpdatePackagesMutation = useMutation(addUpdatePackage, {
-    onSuccess: () => {},
-  });
-
-  const onSubmit = (data: PackagesForm) => {
-    const id = props?.packages?.data?.packages
-      ? props?.packages?.data?.packages[0]?._id
-      : undefined;
-    addUpdatePackagesMutation.mutate(
-      { ...data, id: id },
-      {
-        onSuccess: () => {
-          notify("Submitted succesfully!", { type: "success" });
-        },
-        onError: () => {
-          notify("Failed to submit!", { type: "error" });
-        },
-      }
-    );
-  };
+    handleSubmit,
+    register,
+  } = methods;
 
   return (
     <FormSectionWrapper>
-      <FormProvider {...objForm}>
+      <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <FormSectionContainer>
-            {fields.map((item, index) => (
-              <FormSectionContainer key={item.id} className="mb-4">
-                <div className="w-full flex justify-end">
-                  <button
-                    type="button"
-                    className="bg-primary text-white border hover:bg-orange-800 active:bg-orange-800 p-1 font-semibold rounded-full flex"
-                    onClick={() => remove(index)}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-5 h-5"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </button>
+            <FormSectionContainer className="mb-4">
+              <div className="grid gap-6 mb-4 md:grid-cols-2">
+                <div>
+                  <TextInput
+                    label="Package Title"
+                    name="title"
+                    register={register}
+                    error={errors.title}
+                    placeholder="Title"
+                  />
                 </div>
-                <div className="grid gap-6 mb-4 md:grid-cols-2">
-                  <div>
-                    <label
-                      htmlFor="first_name"
-                      className="block mb-2 text-sm font-medium text-gray-900"
-                    >
-                      Package {index + 1} Title
-                    </label>
-                    <input
-                      type="text"
-                      id="first_name"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
-                      placeholder="Package title"
-                      {...register(`packages.${index}.title`)}
-                    />
-                    {errors.packages && errors.packages[index]?.title && (
-                      <p className="text-red-700 text-sm">
-                        * {errors.packages[index]?.title?.message}
-                      </p>
-                    )}
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="first_name"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >
-                      Starting Price
-                    </label>
-                    <input
-                      type="text"
-                      id="first_name"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
-                      placeholder="0"
-                      {...register(`packages.${index}.price`)}
-                    />
-                    {errors.packages && errors.packages[index]?.price && (
-                      <p className="text-red-700 text-sm">
-                        * {errors.packages[index]?.price?.message}
-                      </p>
-                    )}
-                  </div>
+                <div>
+                  <TextInput
+                    label="Starting Price"
+                    name="price"
+                    register={register}
+                    error={errors.price}
+                    type="string"
+                  />
                 </div>
-                <PackagesListForm parentIndex={index} />
-              </FormSectionContainer>
-            ))}
+              </div>
+              <PackagesListForm />
+            </FormSectionContainer>
 
             <div className="w-full flex items-center space-x-4 mt-8">
-              <AddMoreButton
-                onClick={() => append({ title: "", price: "", list: [] })}
-                text="Add Package"
-              />
-              <SubmitButton isLoading={addUpdatePackagesMutation.isLoading} />
+              <SubmitButton loading={isLoading} />
             </div>
           </FormSectionContainer>
         </form>

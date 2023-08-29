@@ -1,35 +1,35 @@
-// const BASE_URL = process.env.NEXT_PUBLIC_DEV_BASE_PATH || "";
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_PATH || "";
+import { IHero } from "@/types/hero";
+import { get, post, remove } from "./fetchServices";
+import createEntityService from "@/HOFs/servicesHOF";
+import { IFigures } from "@/types/figures";
+import { IFeatures } from "@/types/features";
+import { IService } from "@/types/service";
+import { IFaq } from "@/types/faq";
+import { IContactInfo } from "@/types/contactInfo";
+import { ITeamMember } from "@/types/teamMember";
+import { IWork } from "@/types/work";
+import { IUserCredentials } from "@/types/auth";
+import { ISendMessage } from "@/types/contact";
+import { IReview } from "@/types/review";
+import { IPackage } from "@/types/package";
+import { IFounder } from "@/types/founder";
+
+const BASE_URL = process.env.NEXT_PUBLIC_DEV_BASE_PATH || "";
+// const BASE_URL = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 //  Heroes --------------------------------------------------!
 
 export const getHeroes = async () => {
-  const response = await fetch(`${BASE_URL}/api/heroes`);
-  const json = await response.json();
-  return json;
+  return await get(`${BASE_URL}/api/heroes`);
 };
 
 export const getHero = async (pageId: string) => {
-  const options = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ pageId }),
-  };
-  const response = await fetch(`${BASE_URL}/api/heroes/${pageId}`, options);
-  const json = await response.json();
-  return json;
+  return await get(`${BASE_URL}/api/heroes/${pageId}`);
 };
 
-export const addUpdateHero = async (data: any) => {
+export const addUpdateHero = async (data: IHero, token: string) => {
   try {
-    const options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    };
-    const response = await fetch(`${BASE_URL}/api/heroes`, options);
-    const json = await response.json();
-    return json;
+    return await post(`${BASE_URL}/api/heroes`, data, token);
   } catch (error) {
     console.log("Error: ", error);
   }
@@ -37,305 +37,240 @@ export const addUpdateHero = async (data: any) => {
 
 //  Figures --------------------------------------------------!
 
-export const getFigures = async () => {
-  const response = await fetch(`${BASE_URL}/api/figures`);
-  const json = await response.json();
-  return json;
-};
+const figruesService = createEntityService<IFigures>("figures");
 
-export const getFigure = async (id: string) => {
-  const options = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ pageId: id }),
-  };
-  const response = await fetch(`${BASE_URL}/api/figures/${id}`, options);
-  const json = await response.json();
-  return json;
-};
+export async function getFigures() {
+  return await figruesService.get();
+}
 
-export const addUpdateFigure = async (data: any) => {
-  try {
-    const options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    };
-    const response = await fetch(`${BASE_URL}/api/figures`, options);
-    const json = await response.json();
-    return json;
-  } catch (error) {
-    console.log("Error: ", error);
-  }
-};
+export async function createUpdateFigures(data: IFigures, token: string) {
+  return await figruesService.post(data, token);
+}
 
 //  Features --------------------------------------------------!
 
-export const getFeatures = async () => {
-  const response = await fetch(`${BASE_URL}/api/features`);
-  const json = await response.json();
-  return json;
-};
+const featuresService = createEntityService<IFeatures>("features");
 
-export const getFeature = async (id: string) => {
-  const options = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ pageId: id }),
-  };
-  const response = await fetch(`${BASE_URL}/api/features/${id}`, options);
-  const json = await response.json();
-  return json;
-};
+export async function getFeatures() {
+  return await featuresService.get();
+}
 
-export const addUpdateFeature = async (data: any) => {
-  try {
-    const options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    };
-    const response = await fetch(`${BASE_URL}/api/features`, options);
-    const json = await response.json();
-    return json;
-  } catch (error) {
-    console.log("Error: ", error);
-  }
-};
+export async function createUpdateFeatures(data: IFeatures, token: string) {
+  return await featuresService.post(data, token);
+}
 
 //  Services --------------------------------------------------!
 
-export const getServices = async () => {
-  const response = await fetch(`${BASE_URL}/api/services`);
-  const json = await response.json();
-  return json;
+export const getServicesList = async () => {
+  return await get(`${BASE_URL}/api/services/list`);
+};
+
+export const getServicesPaginated = async (
+  currentPage: number,
+  limit: number
+) => {
+  return await get(
+    `${BASE_URL}/api/services?page=${currentPage}&limit=${limit}`
+  );
 };
 
 export const getService = async (id: string) => {
-  const options = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ pageId: id }),
-  };
-  const response = await fetch(`${BASE_URL}/api/services/${id}`, options);
-  const json = await response.json();
-  return json;
+  return await get(`${BASE_URL}/api/services/${id}`);
 };
 
-export const addUpdateService = async (data: any) => {
-  try {
-    const options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    };
-    const response = await fetch(`${BASE_URL}/api/services`, options);
-    const json = await response.json();
-    return json;
-  } catch (error) {
-    console.log("Error: ", error);
-  }
+export const addService = async (data: IService, token: string) => {
+  return await post(`${BASE_URL}/api/services/`, data, token);
+};
+
+export const updateService = async (data: IService, token: string) => {
+  return await post(`${BASE_URL}/api/services/${data._id}`, data, token);
+};
+
+export const deleteService = async (data: IService, token: string) => {
+  return await remove(`${BASE_URL}/api/services/${data._id}`, {}, token);
 };
 
 //  Packages --------------------------------------------------!
 
 export const getPackages = async () => {
-  const response = await fetch(`${BASE_URL}/api/packages`);
-  const json = await response.json();
-  return json;
+  return await get(`${BASE_URL}/api/packages`);
+};
+
+export const getPackagesPaginated = async (
+  currentPage: number,
+  limit: number
+) => {
+  return await get(
+    `${BASE_URL}/api/packages/paginated?page=${currentPage}&limit=${limit}`
+  );
 };
 
 export const getPackage = async (id: string) => {
-  const options = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ pageId: id }),
-  };
-  const response = await fetch(`${BASE_URL}/api/packages/${id}`, options);
-  const json = await response.json();
-  return json;
+  return await get(`${BASE_URL}/api/packages/${id}`);
 };
 
-export const addUpdatePackage = async (data: any) => {
-  try {
-    const options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    };
-    const response = await fetch(`${BASE_URL}/api/packages`, options);
-    const json = await response.json();
-    return json;
-  } catch (error) {
-    console.log("Error: ", error);
-  }
+export const addPackage = async (data: IPackage, token: string) => {
+  return await post(`${BASE_URL}/api/packages`, data, token);
+};
+
+export const updatePackage = async (data: IPackage, token: string) => {
+  return await post(`${BASE_URL}/api/packages/${data._id}`, data, token);
+};
+
+export const deletePackage = async (data: IPackage, token: string) => {
+  return await remove(`${BASE_URL}/api/packages/${data._id}`, {}, token);
 };
 
 //  FAQs --------------------------------------------------!
 
-export const getFAQs = async () => {
-  const response = await fetch(`${BASE_URL}/api/faqs`);
-  const json = await response.json();
-  return json;
+const faqService = createEntityService<IFaq>("faqs");
+
+export async function getFaqsPaginated(currentPage: number, limit: number) {
+  return await faqService.getPaginated(`?page=${currentPage}&limit=${limit}`);
+}
+
+export const getFaq = async (id: string) => {
+  return await faqService.get(`/${id}`);
 };
 
-export const getFAQ = async (id: string) => {
-  const options = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ pageId: id }),
-  };
-  const response = await fetch(`${BASE_URL}/api/faqs/${id}`, options);
-  const json = await response.json();
-  return json;
-};
+export async function addFaq(data: IFaq, token: string) {
+  return await faqService.post(data, token);
+}
 
-export const addUpdateFAQ = async (data: any) => {
-  try {
-    const options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    };
-    const response = await fetch(`${BASE_URL}/api/faqs`, options);
-    const json = await response.json();
-    return json;
-  } catch (error) {
-    console.log("Error: ", error);
-  }
-};
+export async function updateFaq(data: IFaq, token: string) {
+  if (!data._id) return;
+  return await faqService.update(data._id, data, token);
+}
+
+export async function deleteFaq(data: IFaq, token: string) {
+  if (!data._id) return;
+  return await faqService.remove(data._id, data, token);
+}
 
 //  Contact Info --------------------------------------------------!
 
-export const getContactInfos = async () => {
-  const response = await fetch(`${BASE_URL}/api/contactInfos`);
-  const json = await response.json();
-  return json;
-};
+const contactInfoService = createEntityService<IContactInfo>("contactInfos");
 
-export const getContactInfo = async (id: string) => {
-  const options = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ pageId: id }),
-  };
-  const response = await fetch(`${BASE_URL}/api/contactInfos/${id}`, options);
-  const json = await response.json();
-  return json;
-};
+export async function getContactInfo() {
+  return await contactInfoService.get();
+}
 
-export const addUpdateContactInfo = async (data: any) => {
-  try {
-    const options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    };
-    const response = await fetch(`${BASE_URL}/api/contactInfos`, options);
-    const json = await response.json();
-    return json;
-  } catch (error) {
-    console.log("Error: ", error);
-  }
-};
+export async function createUpdateContactInfo(
+  data: IContactInfo,
+  token: string
+) {
+  return await contactInfoService.post(data, token);
+}
 
 //  Team Members --------------------------------------------------!
 
-export const getTeamMembers = async () => {
-  const response = await fetch(`${BASE_URL}/api/teamMembers`);
-  const json = await response.json();
-  return json;
+const teamMemberService = createEntityService<ITeamMember>("teamMembers");
+
+export const getAllTeamMembers = async () => {
+  return await teamMemberService.getPaginated();
+};
+
+export const getTeamMembersPaginated = async (
+  currentPage: number,
+  limit: number
+) => {
+  return await teamMemberService.getPaginated(
+    `/paginated?page=${currentPage}&limit=${limit}`
+  );
 };
 
 export const getTeamMember = async (id: string) => {
-  const options = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ pageId: id }),
-  };
-  const response = await fetch(`${BASE_URL}/api/teamMembers/${id}`, options);
-  const json = await response.json();
-  return json;
+  return await teamMemberService.get(`/${id}`);
 };
 
-export const addUpdateTeamMember = async (data: any) => {
-  try {
-    const options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    };
-    const response = await fetch(`${BASE_URL}/api/teamMembers`, options);
-    const json = await response.json();
-    return json;
-  } catch (error) {
-    console.log("Error: ", error);
-  }
+export const addTeamMember = async (data: ITeamMember, token: string) => {
+  return await teamMemberService.post(data, token);
+};
+
+export const updateTeamMember = async (data: ITeamMember, token: string) => {
+  if (!data._id) return;
+  return await teamMemberService.update(data._id, data, token);
+};
+
+export const deleteTeamMember = async (data: ITeamMember, token: string) => {
+  if (!data._id) return;
+  return await teamMemberService.remove(data._id, data, token);
 };
 
 //  Founders --------------------------------------------------!
 
-export const getFounders = async () => {
-  const response = await fetch(`${BASE_URL}/api/founders`);
-  const json = await response.json();
-  return json;
+const founderService = createEntityService<IFounder>("founders");
+
+export const getAllFounders = async () => {
+  return await founderService.getPaginated();
+};
+
+export const getFoundersPaginated = async (
+  currentPage: number,
+  limit: number
+) => {
+  return await founderService.getPaginated(
+    `/paginated?page=${currentPage}&limit=${limit}`
+  );
 };
 
 export const getFounder = async (id: string) => {
-  const options = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ pageId: id }),
-  };
-  const response = await fetch(`${BASE_URL}/api/founders/${id}`, options);
-  const json = await response.json();
-  return json;
+  return await founderService.get(`/${id}`);
 };
 
-export const addUpdateFounder = async (data: any) => {
+export const addFounder = async (data: IFounder, token: string) => {
+  return await founderService.post(data, token);
+};
+
+export const updateFounder = async (data: IFounder, token: string) => {
+  if (!data._id) return;
+  return await founderService.update(data._id, data, token);
+};
+
+export const deleteFounder = async (data: IFounder, token: string) => {
+  if (!data._id) return;
+  return await founderService.remove(data._id, data, token);
+};
+
+//  Works --------------------------------------------------!
+
+export const getWorksPaginated = async (currentPage: number, limit: number) => {
+  return await get(`${BASE_URL}/api/works?page=${currentPage}&limit=${limit}`);
+};
+
+export const getWorksForGalleryPaginated = async (
+  currentPage: number,
+  limit: number
+) => {
+  return await get(
+    `${BASE_URL}/api/works/gallery?page=${currentPage}&limit=${limit}`
+  );
+};
+
+export const getWork = async (id: string) => {
+  if (!id || id === "add") return;
+  return await get(`${BASE_URL}/api/works/${id}`);
+};
+
+export const addWork = async (data: IWork, token: string) => {
   try {
-    const options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    };
-    const response = await fetch(`${BASE_URL}/api/founders`, options);
-    const json = await response.json();
-    return json;
+    return await post(`${BASE_URL}/api/works`, data, token);
   } catch (error) {
     console.log("Error: ", error);
   }
 };
 
-//  Works --------------------------------------------------!
-
-export const getWorks = async () => {
-  const response = await fetch(`${BASE_URL}/api/works`);
-  const json = await response.json();
-  return json;
-};
-
-export const getWork = async (id: string) => {
-  const options = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ pageId: id }),
-  };
-  const response = await fetch(`${BASE_URL}/api/works/${id}`, options);
-  const json = await response.json();
-  return json;
-};
-
-export const addUpdateWork = async (data: any) => {
+export const updateWork = async (data: IWork, token: string) => {
   try {
-    const options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    };
-    const response = await fetch(`${BASE_URL}/api/works`, options);
-    const json = await response.json();
-    return json;
+    return await post(`${BASE_URL}/api/works/${data._id}`, data, token);
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+};
+
+export const deleteWork = async (data: IWork, token: string) => {
+  try {
+    return await remove(`${BASE_URL}/api/works/${data._id}`, data, token);
   } catch (error) {
     console.log("Error: ", error);
   }
@@ -343,46 +278,9 @@ export const addUpdateWork = async (data: any) => {
 
 //  Auth --------------------------------------------------!
 
-export const signup = async (data: any) => {
+export const signUp = async (data: IUserCredentials) => {
   try {
-    const options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    };
-    const response = await fetch(`${BASE_URL}/api/signup`, options);
-    const json = await response.json();
-    return json;
-  } catch (error) {
-    console.log("Error: ", error);
-  }
-};
-
-export const login = async (data: any) => {
-  try {
-    const options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    };
-    const response = await fetch(`${BASE_URL}/api/login`, options);
-    const json = await response.json();
-    return json;
-  } catch (error) {
-    console.log("Error: ", error);
-  }
-};
-
-export const signout = async (data: any) => {
-  try {
-    const options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    };
-    const response = await fetch(`${BASE_URL}/api/signout`, options);
-    const json = await response.json();
-    return json;
+    return await post(`${BASE_URL}/api/signup`, data);
   } catch (error) {
     console.log("Error: ", error);
   }
@@ -390,62 +288,36 @@ export const signout = async (data: any) => {
 
 //  Contact --------------------------------------------------!
 
-// export const contact = async (data: any) => {
-//   try {
-//     const options = {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify(data),
-//     };
-//     const response = await fetch(`${BASE_URL}/api/contact`, options);
-//     const json = await response.json();
-//     return json;
-//   } catch (error) {
-//     console.log("Error: ", error);
-//   }
-// };
-
-export async function sendContactForm(data: any) {
-  try {
-    const options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    };
-    const response = await fetch(`${BASE_URL}/api/contact`, options);
-    const json = await response.json();
-    return json;
-  } catch (error) {
-    console.log("Error: ", error);
-  }
+export async function sendContactForm(data: ISendMessage) {
+  return await post(`${BASE_URL}/api/contact`, data);
 }
 
 //  Reviews --------------------------------------------------!
 
-export async function sendReviewForm(data: IReview) {
-  const options = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  };
-  const response = await fetch(`${BASE_URL}/api/reviews`, options);
-  const json = await response.json();
-  return json;
+const reviewService = createEntityService<IReview>("reviews");
+
+export async function getActiveReviewsPaginated(
+  currentPage: number,
+  limit: number
+) {
+  return await reviewService.get(`/active?page=${currentPage}&limit=${limit}`);
 }
 
-export async function getReviews() {
-  const response = await fetch(`${BASE_URL}/api/reviews`);
-  const json = await response.json();
-  return json;
+export async function getReviewsPaginated(currentPage: number, limit: number) {
+  return await reviewService.get(`?page=${currentPage}&limit=${limit}`);
 }
 
-export async function deleteReview(data: { id: string }) {
-  const options = {
-    method: "DELETE",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  };
-  const response = await fetch(`${BASE_URL}/api/reviews`, options);
-  const json = await response.json();
-  return json;
+export async function addReview(data: IReview, token: string) {
+  return await reviewService.post(data, token, true);
+}
+
+export async function updateReview(data: IReview, token: string) {
+  if (!data._id) return;
+  return await reviewService.update(data._id, data, token);
+}
+
+export async function deleteReview(data: IReview, token: string) {
+  console.log("data", data);
+  if (!data._id) return;
+  return await reviewService.remove(data._id, data, token);
 }

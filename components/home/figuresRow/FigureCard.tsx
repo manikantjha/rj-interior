@@ -1,24 +1,26 @@
+import Card from "@/components/common/Card";
+import { IRowTheme } from "@/types/row";
 import CountUp from "react-countup";
 
-interface IFigrueCardProps {
+interface IFigrueCard extends IRowTheme {
   objFigrue: {
     figure: string;
     description: string;
   };
 }
 
-export default function FigureCard(props: IFigrueCardProps) {
+export default function FigureCard(props: IFigrueCard) {
   return (
-    <div className="text-center">
-      <div className="block p-6 bg-white border border-gray-200 rounded-lg shadow-sm-light hover:bg-gray-100">
-        <p className="mb-2 text-3xl lg:text-4xl font-bold text-primary">
+    <Card theme={props.theme}>
+      <div className="text-center">
+        <p className="mb-2 text-5xl lg:text-5xl font-bold text-primary">
           <CountUp end={parseInt(props.objFigrue.figure)} scrollSpyOnce />
-          <sup>+</sup>
+          <sup className="text-3xl lg:text-3xl font-bold text-primary">+</sup>
         </p>
-        <p className="text-lg text-gray-700 mr-1">
+        <p className="font-medium text-black text-xl md:text-xl mr-4">
           {props.objFigrue.description}
         </p>
       </div>
-    </div>
+    </Card>
   );
 }

@@ -1,11 +1,14 @@
-interface IErrorProps {
-  text?: string;
+export interface IErrorProps {
+  errorText?: string;
   containerClassName?: string;
 }
 
-export default function Error(props: IErrorProps) {
+export default function Error({
+  errorText = "Something went wrong!",
+  containerClassName = "",
+}: IErrorProps) {
   return (
-    <div className={props.containerClassName || ""}>
+    <div className={containerClassName}>
       <div
         className="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
         role="alert"
@@ -21,8 +24,7 @@ export default function Error(props: IErrorProps) {
         </svg>
         <span className="sr-only">Info</span>
         <div className="text-lg">
-          <span className="font-medium">Oops!</span>{" "}
-          {props.text || "Something went wrong."}
+          <span className="font-medium">Oops!</span> {errorText}
         </div>
       </div>
     </div>

@@ -1,12 +1,12 @@
-import Heroes from "@/models/heroes";
+import Hero from "@/models/hero";
+import { revalidatePath } from "@/utils/server";
 import { NextApiRequest, NextApiResponse } from "next";
 
 // Get All Heroes
-
 export async function getHeroes(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const heroes = await Heroes.find({});
-    if (!heroes) return res.status(404).json({ error: "No Data Found" });
+    const heroes = await Hero.find({});
+    if (!heroes) return res.status(404).json({ error: "No data found!" });
     res.status(200).json({ heroes });
   } catch (error) {
     res.status(404).json({ error });
@@ -14,72 +14,48 @@ export async function getHeroes(req: NextApiRequest, res: NextApiResponse) {
 }
 
 // Get Hero
-
 export async function getHero(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const data = req.body;
-    if (data && data.pageId) {
-      const hero = await Heroes.findOne({ pageId: data.pageId });
-      if (!hero) return res.status(404).json({ error: "No Data Found" });
-      return res.status(200).json({ hero });
-    }
-    return res.status(404).json({ error: "No Data Provided" });
+    const data = req.query;
+    if (!data || !data.id) throw new Error("Page ID not provided!");
+    const hero = await Hero.findOne({ pageId: data.id });
+    if (!hero) return res.status(404).json({ error: "No data found!" });
+    return res.status(200).json({ hero });
   } catch (error) {
     res.status(404).json({ error });
   }
 }
 
 // Add Update Hero
-
 export async function addUpdateHero(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const data = req.body;
-    if (!data) return res.status(404).json({ error: "Form Data Not Provided" });
-    if (data.id) {
+    const { _id, ...data } = req.body;
+
+    if (!data) {
+      return res.status(404).json({ error: "Form data not provided!" });
+    }
+
+    if (_id) {
       // Update Case
-      const response = await Heroes.findByIdAndUpdate(data.id, data);
+      const response = await Hero.findByIdAndUpdate(_id, data);
+      let path = "";
+      if (data.pageId === "home") {
+        path = "/";
+      } else if (data.pageId === "about") {
+        path = "/about";
+      } else if (data.pageId === "/services") {
+        path = "/services";
+      }
+
+      revalidatePath(path);
+
       return res.status(200).json({ response });
     } else {
       // Add Case
-      const response = await Heroes.create(data);
+      const response = await Hero.create(data);
       return res.status(200).json({ response });
     }
   } catch (error) {
     res.status(500).json({ error });
   }
 }
-
-// export async function addHero(req: NextApiRequest, res: NextApiResponse) {
-//   try {
-//     const data = req.body;
-//     if (!data) return res.status(404).json({ error: "Form Data Not Provided" });
-//     const response = await Heroes.create(data);
-//     return res.status(200).json({ response });
-//   } catch (error) {
-//     res.status(500).json({ error });
-//   }
-// }
-
-// export async function updateHero(req: NextApiRequest, res: NextApiResponse) {
-//   try {
-//     const data = req.body;
-//     if (data && data.id) {
-//       const response = await Heroes.findOneAndUpdate({ id: data.id }, data);
-//       res.status(200).json({ response });
-//     }
-//   } catch (error) {
-//     res.status(500).json({ error });
-//   }
-// }
-
-// export async function deleteHero(req: NextApiRequest, res: NextApiResponse) {
-//   try {
-//     const data = req.body;
-//     if (data && data.id) {
-//       const response = await Heroes.findOneAndDelete({ id: data.id });
-//       res.status(200).json({ response });
-//     }
-//   } catch (error) {
-//     res.status(500).json({ error });
-//   }
-// }

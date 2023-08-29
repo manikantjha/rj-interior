@@ -1,22 +1,10 @@
-import { getPackage } from "@/controllers/packagesControllers";
-import connect from "@/database/connection";
-import type { NextApiRequest, NextApiResponse } from "next";
+import { createHandler } from "@/HOFs/handlersHOF";
+import { packageControllers } from "@/controllers/packagesControllers";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  connect().catch(() =>
-    res.status(405).json({ error: "Error in connection." })
-  );
+const handler = createHandler({
+  getFunction: packageControllers.getById,
+  postFunction: packageControllers.update,
+  deleteFunction: packageControllers.remove,
+});
 
-  switch (req.method) {
-    case "GET":
-      await getPackage(req, res);
-      break;
-    default:
-      res.setHeader("Allow", ["GET", "POST", "PUT", "DELETE"]);
-      res.status(405).end(`Method ${req.method} Not Allowed`);
-      break;
-  }
-}
+export default handler;

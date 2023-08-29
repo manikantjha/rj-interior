@@ -1,32 +1,9 @@
-import {
-  addUpdateFeatures,
-  deleteFeatures,
-  getFeatures,
-} from "@/controllers/featuresControllers";
-import connect from "@/database/connection";
-import type { NextApiRequest, NextApiResponse } from "next";
+import { createHandler } from "@/HOFs/handlersHOF";
+import featuresControllers from "@/controllers/featuresControllers";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  connect().catch(() =>
-    res.status(405).json({ error: "Error in connection." })
-  );
+const handler = createHandler({
+  getFunction: featuresControllers.getSingle,
+  postFunction: featuresControllers.createOrUpdate,
+});
 
-  switch (req.method) {
-    case "GET":
-      await getFeatures(req, res);
-      break;
-    case "POST":
-      await addUpdateFeatures(req, res);
-      break;
-    case "DELETE":
-      await deleteFeatures(req, res);
-      break;
-    default:
-      res.setHeader("Allow", ["GET", "POST", "PUT", "DELETE"]);
-      res.status(405).end(`Method ${req.method} Not Allowed`);
-      break;
-  }
-}
+export default handler;

@@ -1,25 +1,28 @@
 import Link from "next/link";
 
-interface INavbarMenuItem {
-  objMenuItem: {
-    name: string;
-    path: string;
-  };
-  isActive?: boolean;
+interface INavbarMenuItemProps {
+  name: string;
+  path: string;
   onClick: () => void;
+  isActive?: boolean;
 }
 
-export default function NavbarMenuItem(props: INavbarMenuItem) {
+export default function NavbarMenuItem({
+  name,
+  isActive,
+  onClick,
+  path = "",
+}: INavbarMenuItemProps) {
   return (
-    <li onClick={props.onClick}>
+    <li onClick={onClick}>
       <Link
-        href={props.objMenuItem.path}
+        href={path}
         className={`block py-2 pl-3 pr-4 rounded md:bg-transparen md:p-0 ${
-          props.isActive ? "text-primary" : "text-black"
+          isActive ? "text-primary" : "text-black"
         } md:hover:text-primary`}
         aria-current="page"
       >
-        {props.objMenuItem.name}
+        {name}
       </Link>
     </li>
   );

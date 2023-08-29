@@ -1,28 +1,34 @@
-import Error from "@/components/common/Error";
-import Loading from "@/components/common/Loading";
+import Error, { IErrorProps } from "@/components/common/Error";
+import Loading, { ILoadingProps } from "@/components/common/Loading";
 import { ReactNode } from "react";
 import { UseQueryResult } from "react-query";
 
-export default function RenderAppropriateComponent(props: {
+interface IRenderAppropriateComponentProps extends ILoadingProps, IErrorProps {
   queryResult: UseQueryResult<any, unknown>;
-  children: ReactNode;
-  loaderContainerHeightWidth?: string;
   loadingComponent?: ReactNode;
   errorComponent?: ReactNode;
-}) {
+  children: ReactNode;
+}
+
+export default function RenderAppropriateComponent(
+  props: IRenderAppropriateComponentProps
+) {
   if (props.queryResult.isLoading) {
     if (props.loadingComponent) {
       return <>{props.loadingComponent}</>;
     }
-    return (
-      <Loading loaderContainerHeightWidth={props.loaderContainerHeightWidth} />
-    );
+    return <Loading containerSize={props.containerSize} size={props.size} />;
   }
   if (props.queryResult.isError) {
     if (props.errorComponent) {
       return <>{props.errorComponent}</>;
     }
-    return <Error />;
+    return (
+      <Error
+        errorText={props.errorText}
+        containerClassName={props.containerClassName}
+      />
+    );
   }
   return <>{props.children}</>;
 }

@@ -1,22 +1,10 @@
-import { getFounder } from "@/controllers/founderControllers";
-import connect from "@/database/connection";
-import type { NextApiRequest, NextApiResponse } from "next";
+import { createHandler } from "@/HOFs/handlersHOF";
+import founderControllers from "@/controllers/founderControllers";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  connect().catch(() =>
-    res.status(405).json({ error: "Error in connection." })
-  );
+const handler = createHandler({
+  getFunction: founderControllers.getById,
+  postFunction: founderControllers.update,
+  deleteFunction: founderControllers.remove,
+});
 
-  switch (req.method) {
-    case "GET":
-      await getFounder(req, res);
-      break;
-    default:
-      res.setHeader("Allow", ["GET", "POST", "PUT", "DELETE"]);
-      res.status(405).end(`Method ${req.method} Not Allowed`);
-      break;
-  }
-}
+export default handler;

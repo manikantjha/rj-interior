@@ -1,10 +1,8 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
 
-interface IServicesListFormProps {
-  parentIndex: number;
-}
+interface IServicesListForm {}
 
-export default function ServicesListForm(props: IServicesListFormProps) {
+export default function ServicesListForm(props: IServicesListForm) {
   const {
     control,
     register,
@@ -14,15 +12,13 @@ export default function ServicesListForm(props: IServicesListFormProps) {
 
   const { fields, remove, append } = useFieldArray({
     control,
-    name: `services[${props.parentIndex}].list`,
+    name: `list`,
   });
 
   return (
     <div>
       {fields.map((item, index) => {
-        const fieldState = getFieldState(
-          `services[${props.parentIndex}].list[${index}]`
-        );
+        const fieldState = getFieldState(`list[${index}]`);
         return (
           <>
             <div key={item.id} className="mb-4">
@@ -36,13 +32,13 @@ export default function ServicesListForm(props: IServicesListFormProps) {
                 <input
                   id={`listItem${index}`}
                   type="text"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-accentDark focus:border-accentDark block w-full p-2.5"
                   placeholder="Service List Item"
-                  {...register(`services[${props.parentIndex}].list[${index}]`)}
+                  {...register(`list[${index}]`)}
                 />
                 <button
                   type="button"
-                  className="bg-gray-50 border border-primary hover:bg-white active:bg-gray-200 p-1 text-primary font-semibold rounded-full flex items-center justify-center ml-4"
+                  className="bg-gray-50 border border-accentDark hover:bg-white active:bg-gray-200 p-1 text-accentDark font-semibold rounded-full flex items-center justify-center ml-4"
                   onClick={() => remove(index)}
                 >
                   <svg
@@ -61,19 +57,19 @@ export default function ServicesListForm(props: IServicesListFormProps) {
                   </svg>
                 </button>
               </div>
+              {fieldState.error && (
+                <p className="text-red-700 mt-2 text-sm">
+                  * {fieldState.error.message}
+                </p>
+              )}
             </div>
-            {fieldState.error && (
-              <p className="text-red-700 mt-2 text-sm">
-                * {fieldState.error.message}
-              </p>
-            )}
           </>
         );
       })}
       <div className="w-full flex items-center space-x-4 mt-8">
         <button
           type="button"
-          className="bg-gray-50 border border-primary hover:bg-white active:bg-gray-200 px-3 py-1 text-primary font-semibold rounded-full"
+          className="bg-gray-50 border border-accentDark hover:bg-white active:bg-gray-200 px-3 py-1 text-accentDark font-semibold rounded-full"
           onClick={() => append("")}
         >
           Add List Item

@@ -1,28 +1,54 @@
-import ContainerWrapper from "@/components/common/ContainerWrapper";
-import Title from "@/components/common/Title";
-import { checkForData } from "@/utils/utils";
-import { UseQueryResult } from "react-query";
+import RowWrapper from "@/components/common/RowWrapper";
+import { GetIcon } from "@/components/common/icons/icons";
+import { IFeature } from "@/types/features";
+import { IRowTheme } from "@/types/row";
 import FeatureCard from "./FeatureCard";
 
-interface IFeaturesRowProps {
-  features: UseQueryResult<any, unknown>;
+interface IFeaturesRowProps extends IRowTheme {
+  features: IFeature[];
 }
 
 export default function FeaturesRow(props: IFeaturesRowProps) {
-  const data = checkForData("features", props.features);
-  if (!data) return null;
-
+  const data = props.features || [];
+  const icons = [
+    <GetIcon
+      name="puzzle"
+      key="puzzle"
+      className="text-primary mb-4"
+      size="w-14 h-14"
+    />,
+    <GetIcon
+      name="team"
+      key="team"
+      className="text-primary mb-4"
+      size="w-14 h-14"
+    />,
+    <GetIcon
+      name="sheild"
+      key="sheild"
+      className="text-primary mb-4"
+      size="w-14 h-14"
+    />,
+    <GetIcon
+      name="smile"
+      key="smile"
+      className="text-primary mb-4"
+      size="w-14 h-14"
+    />,
+  ];
   return (
-    <ContainerWrapper containerClassName="bg-gray-50">
-      <Title
-        title="Features"
-        description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, error?"
-      />
+    <RowWrapper title="Features" theme={props.theme}>
       <div className="grid xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {data?.map((item: any) => (
-          <FeatureCard key={item.id} objFeature={item} />
+        {data.map((item, index) => (
+          <FeatureCard
+            key={index}
+            description={item.description}
+            icon={icons[index]}
+            title={item.title}
+            theme={props.theme}
+          />
         ))}
       </div>
-    </ContainerWrapper>
+    </RowWrapper>
   );
 }

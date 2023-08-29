@@ -1,32 +1,9 @@
-import {
-  addUpdateTeamMember,
-  deleteTeamMember,
-  getTeamMembers,
-} from "@/controllers/teamMembersControllers";
-import connect from "@/database/connection";
-import type { NextApiRequest, NextApiResponse } from "next";
+import { createHandler } from "@/HOFs/handlersHOF";
+import teamMemberControllers from "@/controllers/teamMemberControllers";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  connect().catch(() =>
-    res.status(405).json({ error: "Error in connection." })
-  );
+const handler = createHandler({
+  getFunction: teamMemberControllers.getAll,
+  postFunction: teamMemberControllers.create,
+});
 
-  switch (req.method) {
-    case "GET":
-      await getTeamMembers(req, res);
-      break;
-    case "POST":
-      await addUpdateTeamMember(req, res);
-      break;
-    case "DELETE":
-      await deleteTeamMember(req, res);
-      break;
-    default:
-      res.setHeader("Allow", ["GET", "POST", "PUT", "DELETE"]);
-      res.status(405).end(`Method ${req.method} Not Allowed`);
-      break;
-  }
-}
+export default handler;

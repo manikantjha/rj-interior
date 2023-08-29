@@ -1,8 +1,8 @@
 interface IPackageListItemProps {
-  objPackageListItem: string;
+  item: string;
 }
 
-export default function PackageListItem(props: IPackageListItemProps) {
+export default function PackageListItem({ item }: IPackageListItemProps) {
   return (
     <li className="flex space-x-3">
       <svg
@@ -20,7 +20,7 @@ export default function PackageListItem(props: IPackageListItemProps) {
         ></path>
       </svg>
       <span className="text-base font-normal leading-tight text-gray-500">
-        {props.objPackageListItem}
+        {item}
       </span>
     </li>
   );

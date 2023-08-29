@@ -1,31 +1,18 @@
-import { sendReviewForm } from "@/services/apiServices";
+import { reviewSchema } from "@/schemas/reviewSchema";
+import { addReview } from "@/services/apiServices";
+import { IReview } from "@/types/review";
 import { IRowTheme } from "@/types/row";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useMutation } from "react-query";
-import * as yup from "yup";
+import { InferType } from "yup";
 import Card from "../common/Card";
 import Modal from "../common/Modal";
 import RowWrapper from "../common/RowWrapper";
 import ContactModalContent from "../contact/ContactModalContent";
 
-const schema = yup.object({
-  email: yup
-    .string()
-    .required("Email is required")
-    .email("Invalid email address"),
-  rating: yup.number().required("Rating is required").min(1).max(5),
-  name: yup.string().required("Name is required"),
-  message: yup.string().required("Message is required"),
-});
-
-type ReviewFormData = {
-  email: string;
-  name: string;
-  rating: number;
-  message: string;
-};
+type TForm = InferType<typeof reviewSchema>;
 
 interface IReviewFormProps extends IRowTheme {}
 
@@ -39,17 +26,18 @@ const ReviewForm = (props: IReviewFormProps) => {
     formState: { errors },
     reset,
     register,
-  } = useForm<ReviewFormData>({
-    resolver: yupResolver(schema),
+  } = useForm<TForm>({
+    resolver: yupResolver(reviewSchema),
   });
 
-  const reviewMutation = useMutation(sendReviewForm, {
-    onSuccess(data, variables, context) {
+  const reviewMutation = useMutation({
+    mutationFn: (data: IReview) => addReview(data, ""),
+    onSuccess() {
       setIsSuccess(true);
       setIsOpen(true);
       reset();
     },
-    onError(error, variables, context) {
+    onError() {
       setIsSuccess(false);
       setIsOpen(true);
       reset();
@@ -60,19 +48,18 @@ const ReviewForm = (props: IReviewFormProps) => {
     setIsOpen(false);
   }
 
-  const onSubmit = (data: ReviewFormData) => {
-    reviewMutation.mutate(data);
+  const onSubmit = (data: IReview) => {
+    reviewMutation.mutate({ ...data, isActive: false });
   };
 
   return (
     <RowWrapper
       title="Add A Review"
-      // description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, error?"
       theme={props.theme}
-      containerWrapperClassName="border-secondaryDark bg-primaryLighter"
+      containerWrapperClassName="border-t-4 border-secondaryDark bg-primaryLighter"
     >
       <Card
-        className="max-w-7xl mx-auto !text-left p-6 bg-white border border-gray-200 rounded-lg shadow-sm-light"
+        className="max-w-7xl mx-auto bg-bgLight !text-left"
         theme={props.theme}
       >
         <form onSubmit={handleSubmit(onSubmit)} className="">
@@ -94,7 +81,7 @@ const ReviewForm = (props: IReviewFormProps) => {
                         key={value}
                         type="button"
                         onClick={() => field.onChange(value)}
-                        className="text-5xl text-orange-600"
+                        className="text-4xl text-orange-600"
                       >
                         {value <= field.value ? "★" : "☆"}
                       </button>
@@ -115,9 +102,10 @@ const ReviewForm = (props: IReviewFormProps) => {
               </label>
 
               <input
+                id="name"
                 type="text"
                 {...register("name")}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5 placeholder-gray-400"
+                className="w-full px-4 py-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-primary focus:border-primary"
               />
               {errors.email && (
                 <p className="text-red-500">{errors.name?.message}</p>
@@ -131,9 +119,10 @@ const ReviewForm = (props: IReviewFormProps) => {
                 Email:
               </label>
               <input
+                id="email"
                 type="email"
                 {...register("email")}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5 placeholder-gray-400"
+                className="w-full px-4 py-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-primary focus:border-primary"
               />
               {errors.email && (
                 <p className="text-red-500">{errors.email.message}</p>
@@ -146,24 +135,21 @@ const ReviewForm = (props: IReviewFormProps) => {
               >
                 Message:
               </label>
-              <Controller
-                name="message"
-                control={control}
-                render={({ field }) => (
-                  <textarea
-                    {...field}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5 placeholder-gray-400"
-                    rows={4}
-                  />
-                )}
+
+              <textarea
+                id="message"
+                className="w-full px-4 py-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-primary focus:border-primary"
+                rows={4}
+                {...register("message")}
               />
+
               {errors.message && (
                 <p className="text-red-500">{errors.message.message}</p>
               )}
             </div>
             <button
               type="submit"
-              className="w-full text-white bg-primary hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-full text-md px-5 py-2 text-center"
+              className="w-full text-accentLighter bg-primary hover:bg-orange-700 !text-white focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-full text-md px-5 py-2 text-center flex items-center justify-center"
             >
               Submit
             </button>

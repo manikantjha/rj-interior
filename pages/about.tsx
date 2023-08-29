@@ -1,103 +1,78 @@
 import StoryRow from "@/components/about/StoryRow";
 import FounderRow from "@/components/about/founderRow/FounderRow";
 import TeamRow from "@/components/about/teamRow/TeamRow";
-import RenderAppropriateComponent from "@/components/admin/common/RenderAppropriateComponent";
-import Error from "@/components/common/Error";
 import Hero from "@/components/common/Hero";
 import LinkBtn from "@/components/common/LinkBtn";
 import FiguresRow from "@/components/home/figuresRow/FiguresRow";
-import FiguresRowSkeleton from "@/components/skeletons/FiguresRowSkeleton";
-import HeroSkeleton from "@/components/skeletons/HeroSkeleton";
-import OurTeamRowSkeleton from "@/components/skeletons/OurTeamRowSkeleton";
 import Layout from "@/layout/Layout";
-import {
-  getFigures,
-  getFounders,
-  getHero,
-  getTeamMembers,
-} from "@/services/apiServices";
+import { getAll, getHero, getSingle } from "@/lib/common";
+import Figures from "@/models/figures";
+import Founder from "@/models/founders";
+import TeamMember from "@/models/teamMember";
+import { IFigure } from "@/types/figures";
+import { IFounder } from "@/types/founder";
+import { IHero } from "@/types/hero";
+import { ITeamMember } from "@/types/teamMember";
 import Head from "next/head";
-import { useQuery } from "react-query";
 
-export default function About() {
-  const hero = useQuery("aboutHero", () => getHero("about"));
-  const figures = useQuery("figures", () => getFigures());
-  const teamMembers = useQuery("teamMembers", () => getTeamMembers());
-  const founders = useQuery("founders", () => getFounders());
+export async function getStaticProps() {
+  const hero = JSON.parse(await getHero("about"));
+  const figures = JSON.parse(await getSingle(Figures));
+  const teamMembers = JSON.parse(await getAll(TeamMember));
+  const founders = JSON.parse(await getAll(Founder));
 
+  return {
+    props: {
+      hero: hero,
+      figures: figures.figures,
+      teamMembers: teamMembers,
+      founders,
+    },
+  };
+}
+
+export default function AboutPage({
+  hero,
+  figures,
+  teamMembers,
+  founders,
+}: {
+  hero: IHero;
+  figures: IFigure[];
+  teamMembers: ITeamMember[];
+  founders: IFounder[];
+}) {
   return (
     <>
       <Head>
         <title>About</title>
-        <meta name="description" content="About RJ Inerior" />
+        <meta name="description" content="Bigining about page" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <main>
-          <RenderAppropriateComponent
-            queryResult={hero}
-            loadingComponent={<HeroSkeleton />}
-            errorComponent={
-              <Error
-                containerClassName="h-[70vh] bg-gray-200 w-full overflow-hidden flex justify-center items-center"
-                text="Failed to load image :("
-              />
-            }
-          >
-            <Hero
-              imgSrc={hero?.data?.hero?.imageURL}
-              imgAlt="about image"
-              title={hero?.data?.hero?.title}
-              description="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates, consectetur?"
-              hasContent={true}
-              renderButton={() =>
-                hero?.data?.hero?.hasContactButton ? (
-                  <div className="mt-12">
-                    <LinkBtn href="/contact" text="Get In Touch" />
-                  </div>
-                ) : null
-              }
-            />
-          </RenderAppropriateComponent>
-          <StoryRow />
-          <RenderAppropriateComponent
-            queryResult={founders}
-            loadingComponent={<OurTeamRowSkeleton />}
-            errorComponent={
-              <Error
-                containerClassName="h-[300px] w-full overflow-hidden flex justify-center items-center"
-                text="Failed to load figures :("
-              />
-            }
-          >
-            <FounderRow founders={founders} />
-          </RenderAppropriateComponent>
-          <RenderAppropriateComponent
-            queryResult={figures}
-            loadingComponent={<FiguresRowSkeleton />}
-            errorComponent={
-              <Error
-                containerClassName="h-[300px] w-full overflow-hidden flex justify-center items-center"
-                text="Failed to load figures :("
-              />
-            }
-          >
-            <FiguresRow figures={figures} />
-          </RenderAppropriateComponent>
-          <RenderAppropriateComponent
-            queryResult={teamMembers}
-            loadingComponent={<OurTeamRowSkeleton />}
-            errorComponent={
-              <Error
-                containerClassName="h-[300px] bg-gray-50 w-full overflow-hidden flex justify-center items-center"
-                text="Failed to load team members :("
-              />
-            }
-          >
-            <TeamRow teamMembers={teamMembers} />
-          </RenderAppropriateComponent>
-        </main>
+        <Hero
+          imgSrc={hero?.image?.original?.url}
+          imgAlt="about image"
+          title={hero?.title}
+          description={hero?.description}
+          hasContent={true}
+          renderButton={() =>
+            hero?.hasContactButton ? (
+              <div className="mt-12">
+                <LinkBtn
+                  href="/contact"
+                  text="Get In Touch"
+                  className="!bg-secondaryDark hover:!bg-secondaryLight text-textLight hover:text-textLight"
+                />
+              </div>
+            ) : null
+          }
+        />
+        <StoryRow />
+        <FounderRow founders={founders} theme="dark" />
+        <FiguresRow figures={figures} theme="light" />
+        <TeamRow teamMembers={teamMembers} theme="dark" />
       </Layout>
     </>
   );

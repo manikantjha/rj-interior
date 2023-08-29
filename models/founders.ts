@@ -1,17 +1,16 @@
 import { Schema, model, models } from "mongoose";
+import { imageSchema } from "./image";
 
 const founderSchema = new Schema(
   {
     name: { type: String, required: true },
     designation: { type: String, required: true },
     description: { type: String, required: true },
-    imageURL: { type: String, required: true },
+    image: { type: imageSchema, required: true },
   },
   { timestamps: true }
 );
 
-const foundersSchema = new Schema({ founders: [founderSchema] });
+const Founder = models.founders || model("founders", founderSchema);
 
-const Founders = models.founders || model("founders", foundersSchema);
-
-export default Founders;
+export default Founder;

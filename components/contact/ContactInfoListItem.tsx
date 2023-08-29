@@ -1,15 +1,23 @@
-interface IContactInfoListItemProps {
-  objContactInfo: {
-    icon: JSX.Element;
-    info: string;
-  };
+import { GetIcon, IIconProps } from "../common/icons/icons";
+
+interface IContactInfoListItem {
+  icon: IIconProps["name"];
+  info: string;
 }
 
-export default function ContactInfoListItem(props: IContactInfoListItemProps) {
+export default function ContactInfoListItem({
+  icon,
+  info,
+}: IContactInfoListItem) {
   return (
     <p className="flex items-center">
-      <span>{props.objContactInfo.icon}</span>
-      {props.objContactInfo.info}
+      <GetIcon
+        fill="currentColor"
+        strokeWidth={0}
+        name={icon}
+        size="w-5 h-5 mr-1"
+      />
+      {info}
     </p>
   );
 }

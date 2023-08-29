@@ -1,25 +1,21 @@
-import ContainerWrapper from "@/components/common/ContainerWrapper";
-import Title from "@/components/common/Title";
-import { checkForData } from "@/utils/utils";
-import { UseQueryResult } from "react-query";
+import RowWrapper from "@/components/common/RowWrapper";
+import { IFigure } from "@/types/figures";
+import { IRowTheme } from "@/types/row";
 import FigureCard from "./FigureCard";
 
-interface IFiguresRowProps {
-  figures: UseQueryResult<any, unknown>;
+interface IFiguresRowProps extends IRowTheme {
+  figures: IFigure[];
 }
 
 export default function FiguresRow(props: IFiguresRowProps) {
-  const data = checkForData("figures", props.figures);
-  if (!data) return null;
-
+  const data = props.figures || [];
   return (
-    <ContainerWrapper>
-      <Title title="Let our numbers do the talking!" />
-      <div className="grid xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {data?.map((item: any) => (
-          <FigureCard key={item.id} objFigrue={item} />
+    <RowWrapper title="Our Journey So Far" theme={props.theme}>
+      <div className="grid xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mx-auto">
+        {data.map((item: any, index: number) => (
+          <FigureCard key={index} objFigrue={item} theme={props.theme} />
         ))}
       </div>
-    </ContainerWrapper>
+    </RowWrapper>
   );
 }

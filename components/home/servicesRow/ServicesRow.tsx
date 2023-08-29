@@ -1,36 +1,37 @@
-import ContainerWrapper from "@/components/common/ContainerWrapper";
 import LinkBtn from "@/components/common/LinkBtn";
-import Title from "@/components/common/Title";
-import { checkForData } from "@/utils/utils";
-import { UseQueryResult } from "react-query";
+import { IRowTheme } from "@/types/row";
+import { IService } from "@/types/service";
 import ServiceCard from "./ServiceCard";
+import CommonLinkButton from "@/components/admin/common/CommonLinkButton";
 
-interface IServicesRowProps {
+interface IServicesRow extends IRowTheme {
   containerClassName?: string;
   showButton?: boolean;
-  services?: UseQueryResult<any, unknown>;
+  services: IService[];
 }
 
-export default function ServicesRow(props: IServicesRowProps) {
-  const data = checkForData("services", props.services);
-  if (!data) return null;
+export default function ServicesRow(props: IServicesRow) {
+  const services: IService[] = props.services || [];
+
+  if (!services.length) return null;
+
   return (
-    <ContainerWrapper
-      containerClassName={`${
-        props.containerClassName ? props.containerClassName : "bg-gray-50"
-      }`}
-    >
-      <Title title="Our Services" />
+    <>
       <div className="grid xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {data?.map((item: any) => (
-          <ServiceCard key={item.id} objService={item} />
+        {services.map((item: any, index: number) => (
+          <ServiceCard key={index} objService={item} theme={props.theme} />
         ))}
       </div>
       {props.showButton && (
         <div className="mt-16">
-          <LinkBtn text="See All Services" href="/services" />
+          <CommonLinkButton
+            href="/services/1"
+            className="w-fit font-bold mx-auto px-8 py-3"
+          >
+            See All Services
+          </CommonLinkButton>
         </div>
       )}
-    </ContainerWrapper>
+    </>
   );
 }

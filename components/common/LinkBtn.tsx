@@ -1,17 +1,28 @@
+import { IRowTheme } from "@/types/row";
 import Link from "next/link";
 
-interface ILinkBtnProps {
+interface ISeeAllBtn extends IRowTheme {
   href: string;
   text?: string;
+  className?: string;
 }
 
-export default function LinkBtn(props: ILinkBtnProps) {
+export default function LinkBtn({
+  href,
+  text = "See All",
+  theme,
+  className = "",
+}: ISeeAllBtn) {
   return (
     <Link
-      href={props.href}
-      className="block mx-auto text-center p-3 font-bold bg-primary text-white rounded-full !w-[200px] hover:bg-orange-800 hover:shadow-sm"
+      href={href}
+      className={`block mx-auto text-center p-3 font-bold ${
+        theme === "dark"
+          ? "bg-primary hover:bg-primary-light text-white"
+          : "bg-neutral-dark hover:bg-neutral-darker text-white"
+      } rounded-full !w-[200px] hover:shadow-sm ${className}`}
     >
-      {props.text || "See All"}
+      {text}
     </Link>
   );
 }

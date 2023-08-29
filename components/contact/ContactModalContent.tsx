@@ -2,13 +2,13 @@
 
 import { ReactNode } from "react";
 
-interface IContactModalContentProps {
+interface IContactModalContent {
   isSuccess: boolean;
   handleClose: () => void;
   message?: ReactNode;
 }
 
-function SuccessCase(props: IContactModalContentProps) {
+function SuccessCase(props: IContactModalContent) {
   return (
     <div className="grid grid-rows-[auto_auto_auto] gap-4 place-items-center">
       <div className="text-center mb-8">
@@ -16,7 +16,7 @@ function SuccessCase(props: IContactModalContentProps) {
         {props.message ? (
           props.message
         ) : (
-          <p className="text-md md:text-lg text-gray-500 text-center">
+          <p className="text-md md:text-lg text-black text-center">
             Thank you for reaching out to us.
             <br /> We will reply you soon!
           </p>
@@ -31,7 +31,7 @@ function SuccessCase(props: IContactModalContentProps) {
   );
 }
 
-function FailureCase(props: IContactModalContentProps) {
+function FailureCase(props: IContactModalContent) {
   return (
     <div className="grid grid-rows-[auto_auto_auto] gap-4 place-items-center">
       <div className="text-center mb-8">
@@ -39,7 +39,7 @@ function FailureCase(props: IContactModalContentProps) {
         {props.message ? (
           props.message
         ) : (
-          <p className="text-md md:text-lg text-gray-500 text-center">
+          <p className="text-md md:text-lg text-black text-center">
             Something went wrong, while sending message.
             <br /> Try again later.
           </p>
@@ -54,7 +54,7 @@ function FailureCase(props: IContactModalContentProps) {
   );
 }
 
-export default function ContactModalContent(props: IContactModalContentProps) {
+export default function ContactModalContent(props: IContactModalContent) {
   return (
     <div className="p-6 space-y-6">
       {props.isSuccess ? (

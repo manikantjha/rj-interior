@@ -1,92 +1,59 @@
 /* eslint-disable @next/next/no-img-element */
-import { useCallback, useState } from "react";
-import { UseQueryResult } from "react-query";
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
-import ImageViewer from "react-simple-image-viewer";
-import YoutubeEmbed from "../common/YoutubeEmbed";
+import { IImageSize } from "@/types/image";
+import { IWork } from "@/types/work";
+import { useRouter } from "next/router";
+import CommonMasonryGallery from "../common/CommonMasonryGallery";
+import NoData from "../common/NoData";
 
-interface IWorkGalleryProps {
-  works?: UseQueryResult<any, unknown>;
+interface IWorksGalleryProps {
+  works: IWork[];
 }
 
-export default function WorkGallery(props: IWorkGalleryProps) {
-  const works =
-    (props?.works?.data?.works &&
-      props?.works?.data?.works[0] &&
-      props?.works?.data?.works[0]?.works) ||
-    [];
-  console.log("works", works);
-  const worksImages = works.map((work: any) => {
-    return {
-      imageURL: work.imageURL,
-      isVideo: work.isVideo,
-      embedId: work.embedId,
-    };
+export default function WorksGallery(props: IWorksGalleryProps) {
+  const router = useRouter();
+
+  if (!props.works || !props.works?.length) {
+    return <NoData />;
+  }
+
+  const works = props.works || [];
+
+  const worksImagesLarge: IImageSize[] = works.map((work) => {
+    if (work.images && Array.isArray(work.images) && work.images.length) {
+      return { ...work.images[0]?.original, _id: work._id };
+    }
+    return {} as IImageSize;
   });
-  const [currentImage, setCurrentImage] = useState(0);
-  const [isViewerOpen, setIsViewerOpen] = useState(false);
 
-  const openImageViewer = useCallback((index: number) => {
-    setCurrentImage(index);
-    setIsViewerOpen(true);
-  }, []);
-
-  const closeImageViewer = () => {
-    setCurrentImage(0);
-    setIsViewerOpen(false);
-  };
+  const worksImagesMedium: IImageSize[] = works.map((work) => {
+    if (work.images && Array.isArray(work.images) && work.images.length) {
+      return { ...work.images[0].medium, _id: work._id };
+    }
+    return {} as IImageSize;
+  });
 
   return (
-    <div className="p-1 lg:p-2">
-      <ResponsiveMasonry columnsCountBreakPoints={{ 350: 2, 750: 3, 900: 4 }}>
-        <Masonry>
-          {worksImages.map(
-            (
-              objImage: { isVideo: boolean; imageURL: string; embedId: string },
-              index: number
-            ) => {
-              if (objImage.isVideo && objImage.embedId) {
-                return (
-                  <div
-                    key={index}
-                    className="cursor-pointer overflow-hidden rounded"
-                  >
-                    <div className="cursor-pointer w-full h-auto overflow-hidden p-1 md:p-2 rounded">
-                      <YoutubeEmbed embedId={`${objImage.embedId}`} />
-                    </div>
-                  </div>
-                );
-              } else {
-                return (
-                  <div key={index} className="cursor-pointer overflow-hidden">
-                    <div className="cursor-pointer w-full h-auto overflow-hidden p-1 md:p-2">
-                      <img
-                        src={objImage.imageURL}
-                        className="w-full h-full rounded lg:rounded-xl"
-                        alt=""
-                        onClick={() => openImageViewer(index)}
-                      />
-                    </div>
-                  </div>
-                );
-              }
-            }
-          )}
-        </Masonry>
-      </ResponsiveMasonry>
-      {isViewerOpen && (
-        <ImageViewer
-          src={worksImages}
-          currentIndex={currentImage}
-          onClose={closeImageViewer}
-          disableScroll={false}
-          backgroundStyle={{
-            backgroundColor: "rgba(0,0,0,0.9)",
-            zIndex: 1000,
-          }}
-          closeOnClickOutside={true}
-        />
-      )}
+    <div className="">
+      {/* Smaller Screen */}
+      <CommonMasonryGallery
+        containerClassName="block md:hidden"
+        images={worksImagesMedium}
+        onImageClick={(image) => {
+          if (image._id) {
+            router.push(`/works/workDetails/${image._id}`);
+          }
+        }}
+      />
+      {/* Larger Screen */}
+      <CommonMasonryGallery
+        containerClassName="hidden md:block"
+        images={worksImagesLarge}
+        onImageClick={(image) => {
+          if (image._id) {
+            router.push(`/works/workDetails/${image._id}`);
+          }
+        }}
+      />
     </div>
   );
 }

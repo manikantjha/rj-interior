@@ -1,59 +1,65 @@
-import Works from "@/models/works";
-import { ObjectId } from "mongodb";
+import Work from "@/models/work";
+import { workSchema } from "@/schemas/workSchema";
+import { IWork } from "@/types/work";
+import { revalidatePath, sendError, sendResponse } from "@/utils/server";
 import { NextApiRequest, NextApiResponse } from "next";
+import { createGenericController } from "../HOFs/controllersHOF";
 
-export async function getWorks(req: NextApiRequest, res: NextApiResponse) {
-  try {
-    const works = await Works.find({});
-    if (!works) return res.status(404).json({ error: "No Data Found" });
-    return res.status(200).json({ works: works });
-  } catch (error) {
-    res.status(404).json({ error });
-  }
-}
+const workControllers = createGenericController<IWork>({
+  Model: Work,
+  schema: workSchema,
+  imageKey: "images",
+  revalidate: async (data) => {
+    revalidatePath("/");
 
-export async function getWork(req: NextApiRequest, res: NextApiResponse) {
-  try {
-    const data = req.query;
-    if (!data || !data.id) {
-      return res.status(404).json({ error: "Form Datat Not Provided" });
-    }
-    const { id }: { id?: string } = data;
-    const works = await Works.findById(new ObjectId(id));
-    if (!works) return res.status(404).json({ error: "No Data Found" });
-    return res.status(200).json({ works });
-  } catch (error) {
-    res.status(404).json({ error });
-  }
-}
+    const limit = 10;
+    const totalItems = await Work.count();
+    const totalPages = Math.ceil(totalItems / limit);
 
-export async function addUpdateWork(req: NextApiRequest, res: NextApiResponse) {
-  try {
-    const { id, ...data } = req.body;
-    if (!data) {
-      return res.status(404).json({ error: "Form Datat Not Provided" });
+    for (let i = 0; i < totalPages; i++) {
+      revalidatePath(`/works/${i + 1}`);
     }
-    if (id) {
-      const response = await Works.findByIdAndUpdate(id, data);
-      return res.status(200).json({ response });
-    } else {
-      const response = await Works.create(data);
-      return res.status(200).json({ response });
-    }
-  } catch (error) {
-    res.status(500).json({ error });
-  }
-}
 
-export async function deleteWork(req: NextApiRequest, res: NextApiResponse) {
-  try {
-    const { id } = req.body;
-    if (!id) {
-      return res.status(404).json({ error: "Id Not Provided" });
+    if (data && data._id) {
+      revalidatePath(`/works/workDetails/${data._id}`);
     }
-    const response = await Works.findByIdAndDelete(id);
-    return res.status(200).json({ response });
+  },
+});
+
+export default workControllers;
+
+export const getWorksForGalleryPaginated = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
+  try {
+    // Define the pagination parameters
+    const { page = 1, limit = 10 } = req.query;
+    const parsedPageNumber = parseInt(page as string);
+    const parsedLimit = parseInt(limit as string);
+
+    // Calculate the number of documents to skip
+    const skip = (parsedPageNumber - 1) * parsedLimit;
+
+    // Get the total number of documents
+    const totalWorks = await Work.countDocuments();
+
+    // Fetch paginated works from the database
+    const works = await Work.find(
+      {},
+      { _id: 1, name: 1, images: { $slice: 1 } }
+    )
+      .skip(skip)
+      .limit(parsedLimit)
+      .lean();
+    if (!works) sendError(res, 404, "No works found!");
+    sendResponse(res, 200, {
+      totalWorks,
+      currentPage: parsedPageNumber,
+      works,
+    });
   } catch (error) {
-    res.status(404).json({ error });
+    console.error("Error fetching paginated works for gallery:", error);
+    sendError(res, 500, "Internal server error!");
   }
-}
+};

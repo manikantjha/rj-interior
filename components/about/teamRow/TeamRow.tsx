@@ -1,22 +1,30 @@
-import ContainerWrapper from "@/components/common/ContainerWrapper";
-import Title from "@/components/common/Title";
-import { UseQueryResult } from "react-query";
+import RowWrapper from "@/components/common/RowWrapper";
+import { IRowTheme } from "@/types/row";
+import { ITeamMember } from "@/types/teamMember";
 import TeamMemberCard from "./TeamMemberCard";
 
-interface IFeaturesRowProps {
-  teamMembers: UseQueryResult<any, unknown>;
+interface IFeaturesRowProps extends IRowTheme {
+  teamMembers: ITeamMember[];
 }
 
 export default function TeamRow(props: IFeaturesRowProps) {
+  const data = props.teamMembers || [];
+
+  if (data.length === 0) {
+    return null;
+  }
+
   return (
-    <ContainerWrapper containerClassName="bg-gray-50">
-      <Title title="Meet Our Team" />
+    <RowWrapper title="Meet Our Team" theme={props.theme}>
       <div className="grid xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-        {props.teamMembers?.data?.teamMembers &&
-          props.teamMembers?.data?.teamMembers[0]?.teamMembers?.map(
-            (item: any) => <TeamMemberCard key={item.id} objTeamMember={item} />
-          )}
+        {data.map((item: ITeamMember) => (
+          <TeamMemberCard
+            key={item._id}
+            objTeamMember={item}
+            theme={props.theme}
+          />
+        ))}
       </div>
-    </ContainerWrapper>
+    </RowWrapper>
   );
 }

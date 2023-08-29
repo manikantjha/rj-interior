@@ -1,14 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
-import ContainerWrapper from "@/components/common/ContainerWrapper";
+import CommonLinkButton from "@/components/admin/common/CommonLinkButton";
 import LinkBtn from "@/components/common/LinkBtn";
-import Title from "@/components/common/Title";
-import YoutubeEmbed from "@/components/common/YoutubeEmbed";
-import { checkForData } from "@/utils/utils";
-import { UseQueryResult } from "react-query";
+import RowWrapper from "@/components/common/RowWrapper";
+import { IRowTheme } from "@/types/row";
+import { IWork } from "@/types/work";
 import Slider, { CustomArrowProps } from "react-slick";
 
-interface IRecentWorkRowProps {
-  works?: UseQueryResult<any, unknown>;
+interface IWorkGalleryProps extends IRowTheme {
+  works: IWork[];
 }
 
 function SampleNextArrow(props: CustomArrowProps) {
@@ -42,7 +41,7 @@ function SamplePrevArrow(props: CustomArrowProps) {
   return (
     <button
       onClick={onClick}
-      className="absolute top-[50%] left-[-10px] cursor-pointer bg-black/50 rounded-full p-2 text-white z-10"
+      className="absolute top-[50%] left-[-10px] translate-y-[-50%] cursor-pointer bg-black/50 rounded-full p-2 text-white z-10"
       title="previous slide"
     >
       <svg
@@ -63,82 +62,86 @@ function SamplePrevArrow(props: CustomArrowProps) {
   );
 }
 
-const settings = {
-  dots: false,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 4,
-  slidesToScroll: 4,
-  initialSlide: 0,
-  autoplay: true,
-  nextArrow: <SampleNextArrow />,
-  prevArrow: <SamplePrevArrow />,
-  responsive: [
-    {
-      breakpoint: 1024,
-      settings: {
-        slidesToShow: 3,
-        slidesToScroll: 3,
-        infinite: true,
-        dots: true,
-      },
-    },
-    {
-      breakpoint: 600,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2,
-        initialSlide: 2,
-      },
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      },
-    },
-  ],
-};
+export default function RecentWorkRow(props: IWorkGalleryProps) {
+  const works: IWork[] = props.works || [];
 
-export default function RecentWorkRow(props: IRecentWorkRowProps) {
-  const data = checkForData("works", props.works);
+  if (!works.length) return null;
 
-  if (!data) return null;
-
-  const worksImages = data.map((work: any) => {
-    return {
-      imageURL: work.imageURL,
-      isVideo: work.isVideo,
-      embedId: work.embedId,
-    };
+  const worksImages = works.map((work) => {
+    if (work.images && Array.isArray(work.images) && work.images[0]) {
+      return work.images[0].original;
+    }
   });
 
+  if (!worksImages.length) return null;
+
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: worksImages.length > 4 ? 4 : worksImages.length,
+    slidesToScroll: worksImages.length > 4 ? 4 : worksImages.length,
+    initialSlide: 0,
+    autoplay: true,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: worksImages.length > 3 ? 3 : worksImages.length,
+          slidesToScroll: worksImages.length > 3 ? 3 : worksImages.length,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: worksImages.length > 2 ? 2 : worksImages.length,
+          slidesToScroll: worksImages.length > 2 ? 2 : worksImages.length,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
   return (
-    <ContainerWrapper containerClassName="bg-gray-100 overflow-x-hidden">
-      <Title title="Recent Work" />
+    <RowWrapper
+      title="Recent Work"
+      containerWrapperClassName="!overflow-x-hidden"
+      theme={props.theme}
+    >
       <div>
         <Slider {...settings}>
-          {worksImages.map((item: any, index: number) => {
-            if (item.isVideo) {
-              return <YoutubeEmbed key={index} embedId={item.embedId} />;
-            } else {
-              return (
-                <div key={index} className="px-2">
-                  <img
-                    className="h-auto max-w-full rounded-lg"
-                    src={item.imageURL}
-                    alt="interior image"
-                  />
-                </div>
-              );
-            }
-          })}
+          {worksImages.map((item, index: number) => (
+            <div key={index} className="px-2">
+              <div className="w-full h-[400px] md:h-[400px] overflow-hidden border border-gray-100 rounded-lg shadow-sm shadow-gray-100">
+                <img
+                  className="h-full w-full object-cover"
+                  src={item?.url}
+                  alt="interior image"
+                />
+              </div>
+            </div>
+          ))}
         </Slider>
       </div>
       <div className="mt-12">
-        <LinkBtn href="/work" text="Sell All Work" />
+        <CommonLinkButton
+          href="/works/1"
+          className="w-fit font-bold mx-auto px-8 py-3"
+        >
+          See All Work
+        </CommonLinkButton>
       </div>
-    </ContainerWrapper>
+    </RowWrapper>
   );
 }

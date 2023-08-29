@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 
 interface IAccordion {
   objAccordion: {
-    id: number;
+    _id: string;
     question: string;
     answer: string;
   };
@@ -19,15 +19,13 @@ export default function Accordion(props: IAccordion) {
       <h2>
         <button
           type="button"
-          className={`flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border ${
+          className={`flex items-center justify-between w-full p-5 font-medium text-left text-primary border ${
             props.index !== props.listLength - 1 ? "border-b-0" : "border-b"
-          } border-gray-200 ${
-            props.index === 0 ? "rounded-t-xl" : "rounded-t-none"
-          } ${
+          } ${props.index === 0 ? "rounded-t-xl" : "rounded-t-none"} ${
             props.index === props.listLength - 1 && !isExpanded
               ? "rounded-b-xl"
               : "rounded-b-none"
-          } focus:ring-4 focus:ring-gray-200 hover:bg-gray-100`}
+          } focus:bg-gray-50 hover:bg-gray-50`}
           onClick={() => props.setExpanded(props.index)}
         >
           <span className="flex items-center">
@@ -69,9 +67,9 @@ export default function Accordion(props: IAccordion) {
             props.index === props.listLength - 1
               ? "rounded-b-xl"
               : "rounded-b-none"
-          } font-light border-gray-200`}
+          } font-normal`}
         >
-          <p className="mb-2 text-gray-500">{props.objAccordion.answer}</p>
+          <p className="mb-2 text-black">{props.objAccordion.answer}</p>
         </div>
       </div>
     </div>

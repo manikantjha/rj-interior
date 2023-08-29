@@ -1,50 +1,31 @@
-import { signup } from "@/services/apiServices";
+import { signUpSchema } from "@/schemas/signUpSchema";
+import { signUp } from "@/services/apiServices";
+import { ISignupForm, IUserCredentials } from "@/types/auth";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { ToastOptions, toast } from "react-toastify";
-import * as yup from "yup";
 import Toast from "../admin/common/Toast";
 import Logo from "../common/Logo";
-
-type SignupForm = {
-  email: string;
-  password: string;
-  confirmPassword: string;
-};
-
-const schema = yup
-  .object({
-    email: yup.string().required("Email is required"),
-    password: yup
-      .string()
-      .min(6, "Password must be atleast 6 characters")
-      .required("Password is required"),
-    confirmPassword: yup
-      .string()
-      .oneOf([yup.ref(`password`), undefined], "Passwords don't match")
-      .required("Re-enter your password"),
-  })
-  .required();
 
 export default function Signup() {
   const {
     register,
-    control,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignupForm>({
-    resolver: yupResolver(schema),
+  } = useForm<ISignupForm>({
+    resolver: yupResolver(signUpSchema),
   });
+
   const router = useRouter();
 
   const notify = (text: string, options: ToastOptions) => toast(text, options);
 
-  const signupMutation = useMutation(signup);
+  const signupMutation = useMutation(signUp);
 
-  const onSubmit = async (data: SignupForm) => {
+  const onSubmit = async (data: IUserCredentials) => {
     try {
       const response = await signupMutation.mutateAsync({
         email: data.email,
@@ -52,13 +33,14 @@ export default function Signup() {
       });
       if (response.token) {
         notify("Successfully signed up!", { type: "success" });
-        localStorage.setItem("token", response.token);
         router.push("/admin");
       }
       if (response.error) {
         notify(response.error, { type: "error" });
       }
-    } catch (error) {
+    } catch (error: any) {
+      const message = error.message || "Something went wrong!";
+      notify(message, { type: "error" });
       console.log(error);
     }
   };

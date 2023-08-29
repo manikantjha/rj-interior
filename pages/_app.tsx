@@ -5,8 +5,18 @@ import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import "react-toastify/dist/ReactToastify.css";
 import { QueryClientProvider, QueryClient } from "react-query";
+import { queryClientStaleTime } from "@/utils/utils";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false, // default: true
+      refetchOnReconnect: false,
+      retry: 3,
+      staleTime: queryClientStaleTime,
+    },
+  },
+});
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

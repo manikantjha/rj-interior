@@ -102,7 +102,7 @@ export const lstAdminNavBarMenu = [
       </svg>
     ),
     name: "Work",
-    path: "/admin/work",
+    path: "/admin/works",
   },
   {
     id: 8,

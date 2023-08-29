@@ -13,7 +13,7 @@ export default function LeftColumn(props: ILeftCoumn) {
     return <>{props.renderLeftColumn()} </>;
   }
   return (
-    <div className="w-full h-[300px] md:h-[500px] rounded-xl overflow-hidden">
+    <div className="w-full h-[300px] md:h-[500px] rounded-xl overflow-hidden border border-gray-100 shadow-sm shadow-gray-100">
       <Image
         src={props.imgSrc || ""}
         alt={props.imgAlt || "row image"}

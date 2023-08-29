@@ -1,275 +1,126 @@
-import { addUpdateWork } from "@/services/apiServices";
-import { storage } from "@/services/firebaseServices";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { deleteObject, ref } from "firebase/storage";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
-import { UseQueryResult, useMutation } from "react-query";
-import { ToastOptions, toast } from "react-toastify";
+import { GetIcon } from "@/components/common/icons/icons";
+import useFormLogic from "@/customHooks/useFormLogic";
+import { workSchema } from "@/schemas/workSchema";
+import { addWork, updateWork } from "@/services/apiServices";
+import { Controller, useFieldArray } from "react-hook-form";
+import { UseQueryResult } from "react-query";
 import * as yup from "yup";
-import AddMoreButton from "../common/AddMoreButton";
+import CommonButton from "../common/CommonButton";
 import FormSectionContainer from "../common/FormSectionContainer";
-import ImageUploader from "../common/ImageUploader";
-import SubmitButton from "../common/SubmitButton";
-import Toast from "../common/Toast";
+import SubmitButton from "../common/form/SubmitButton";
+import TextArea from "../common/form/TextArea";
+import TextInput from "../common/form/TextInput";
+import ImageUploaderNew from "../common/imageUploaderNew/ImageUploaderNew";
 
-type WorksForm = {
-  works: {
-    imageURL?: string;
-    embedId?: string;
-    isVideo?: boolean;
-    name: string;
-    description: string;
-  }[];
-};
+type TForm = yup.InferType<typeof workSchema>;
 
-interface IWorksFormProps {
-  works?: UseQueryResult<any, unknown>;
+interface IWorkFormProps {
+  work?: UseQueryResult<any, unknown>;
+  caseOfAdd: boolean;
 }
 
-const schema = yup.object({
-  works: yup.array().of(
-    yup.object().shape(
-      {
-        imageURL: yup.string().when("embedId", (embedId, stringSchema) => {
-          console.log("embedId", embedId);
-          if (!embedId || embedId.length === 0 || !embedId[0])
-            return stringSchema.required(
-              "Either provide an image or an embed id!"
-            );
-          return stringSchema;
-        }),
-        embedId: yup.string().when("imageURL", (imageURL, stringSchema) => {
-          if (!imageURL || imageURL.length === 0 || !imageURL[0])
-            return stringSchema.required(
-              "Either provide an image or an embed id!"
-            );
-          return stringSchema;
-        }),
-        name: yup.string(),
-        description: yup.string(),
-        isVideo: yup.boolean(),
-      },
-      [["imageURL", "embedId"]]
-    )
-  ),
-});
+export default function WorkForm(props: IWorkFormProps) {
+  const defaultValues = props.work?.data ? props.work?.data : {};
 
-export default function WorksForm(props: IWorksFormProps) {
+  const { onSubmit, methods, isLoading } = useFormLogic<TForm>({
+    defaultValues,
+    schema: workSchema,
+    mutationFn: props.caseOfAdd ? addWork : updateWork,
+    entity: "work",
+    entityPlural: "works",
+  });
+
   const {
-    register,
     control,
-    handleSubmit,
     formState: { errors },
     getValues,
-    watch,
-  } = useForm<WorksForm>({
-    resolver: yupResolver(schema),
-    defaultValues: {
-      works: props.works?.data?.works
-        ? props.works?.data?.works[0]?.works
-        : [{ name: "", description: "", imageURL: "" }],
-    },
-  });
+    handleSubmit,
+    register,
+    getFieldState,
+  } = methods;
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "works",
+    name: "images",
   });
 
-  watch("works");
-
-  const addUpdateWorkMutation = useMutation(addUpdateWork, {
-    onSuccess: () => {},
-  });
-
-  function deleteFile(index: number) {
-    if (
-      !(
-        props.works?.data?.works &&
-        props.works?.data?.works[0]?.works[index]?.imageURL
-      )
-    ) {
-      return;
-    }
-    const imageRef = ref(
-      storage,
-      (props.works?.data?.works &&
-        props.works?.data?.works[0]?.works[index]?.imageURL) ||
-        ""
-    );
-
-    deleteObject(imageRef)
-      .then(() => {
-        console.log("Deleted successfuly!");
-        notify("Image removed", { type: "success" });
-      })
-      .catch((error) => {
-        console.log("Error: ", error);
-      });
-  }
-
-  const notify = (text: string, options: ToastOptions) => toast(text, options);
-
-  function onSubmit(data: any) {
-    const id = props.works?.data?.works ? props.works?.data?.works[0]?._id : "";
-    addUpdateWorkMutation.mutate(
-      {
-        ...data,
-        id: id,
-      },
-      {
-        onSuccess: () => {
-          notify("Submitted succesfully!", { type: "success" });
-        },
-        onError: () => {
-          notify("Failed to submit!", { type: "error" });
-        },
-      }
-    );
-  }
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <FormSectionContainer>
-          <div className="grid gap-6 mb-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {fields.map((item, index) => (
-              <div key={item.id}>
-                <FormSectionContainer>
-                  <div className="w-full flex justify-end">
-                    <button
-                      type="button"
-                      className="bg-primary text-white border hover:bg-orange-800 active:bg-orange-800 p-1 font-semibold rounded-full flex"
-                      onClick={() => {
-                        deleteFile(index);
-                        remove(index);
-                      }}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-5 h-5"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M6 18L18 6M6 6l12 12"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                  {getValues(`works.${index}.isVideo`) ? (
-                    <div className="mb-4">
-                      <p className="block mb-2 text-sm font-medium text-gray-900">
-                        YouTube Embed ID
-                      </p>
-                      <input
-                        type="text"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
-                        placeholder="YouTube Embed ID"
-                        {...register(`works.${index}.embedId`)}
-                      />
-                    </div>
-                  ) : (
-                    <div className="mb-4">
-                      <Controller
-                        control={control}
-                        name={`works.${index}.imageURL`}
-                        render={({
-                          field: { onChange, onBlur, value, ref },
-                        }) => (
-                          <ImageUploader
-                            label="Work Image"
-                            onChange={onChange}
-                            index={index}
-                            id={`works.${index}.imageURL`}
-                            imageURL={
-                              (props.works?.data?.works &&
-                                props.works?.data?.works[0]?.works[index]
-                                  ?.imageURL) ||
-                              ""
-                            }
-                          />
-                        )}
-                      />
-                      {errors.works && errors.works[index]?.imageURL && (
-                        <p className="text-red-700 text-sm">
-                          * {errors.works[index]?.imageURL?.message}
-                        </p>
-                      )}
-                    </div>
-                  )}
-                  <div className="flex items-center mb-4">
-                    <Controller
-                      control={control}
-                      name={`works.${index}.isVideo`}
-                      render={({ field: { onChange, onBlur, value, ref } }) => (
-                        <>
-                          <input
-                            id={`works.${index}.isVideo`}
-                            type="checkbox"
-                            className="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary dark:focus:ring-primary focus:ring-2"
-                            onChange={onChange}
-                            checked={value}
-                          />
-                          <label
-                            htmlFor={`works.${index}.isVideo`}
-                            className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                          >
-                            Is Video
-                          </label>
-                        </>
-                      )}
+    <FormSectionContainer>
+      <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+        {/* Name Field */}
+        <TextInput
+          label="Work Name"
+          name="name"
+          register={register}
+          error={errors.name}
+          placeholder="Work Name"
+        />
+        {/* Description Field */}
+        <TextArea
+          label="Work Description"
+          name="description"
+          register={register}
+          error={errors.description}
+          placeholder="Work Description"
+        />
+        {/* Images Fields */}
+        <div>
+          <label
+            htmlFor="images"
+            className="block mb-2 text-sm font-medium text-gray-900"
+          >
+            Images (Multiple)
+          </label>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {fields.map((field, index) => (
+              <div key={field.id}>
+                <Controller
+                  control={control}
+                  name={`images.${index}`}
+                  render={({ field: { onChange, onBlur, value, ref } }) => (
+                    <ImageUploaderNew
+                      label={`Image ${index + 1}`}
+                      index={index}
+                      onRemove={remove}
+                      onChange={onChange}
+                      image={field}
+                      fileName={getValues("name")}
+                      folderName="works"
                     />
-                  </div>
-                  <div>
-                    <div>
-                      <p className="block mb-2 text-sm font-medium text-gray-900">
-                        Work Name
-                      </p>
-                      <input
-                        type="text"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
-                        placeholder="Work Name"
-                        {...register(`works.${index}.name`)}
-                      />
-                    </div>
-                    <div>
-                      <p className="block mb-2 text-sm font-medium text-gray-900 mt-2">
-                        Work Short Description
-                      </p>
-                      <input
-                        type="text"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
-                        placeholder="Work Short Description"
-                        {...register(`works.${index}.description`)}
-                      />
-                    </div>
-                  </div>
-                </FormSectionContainer>
+                  )}
+                />
+                {getFieldState(`images.${index}.medium.url`).error && (
+                  <p className="text-red-500">Plese select an image!</p>
+                )}
               </div>
             ))}
           </div>
-
-          <div className="w-full flex items-center space-x-4 mt-8">
-            <AddMoreButton
-              onClick={() =>
-                append({
-                  name: "",
-                  description: "",
-                  imageURL: "",
-                  isVideo: false,
-                })
-              }
-              text="Add Work"
-            />
-            <SubmitButton isLoading={addUpdateWorkMutation.isLoading} />
-          </div>
-        </FormSectionContainer>
+          {getFieldState(`images`).error && (
+            <p className="text-red-500">
+              {getFieldState(`images`).error?.message}
+            </p>
+          )}
+        </div>
+        {/* Submit Button */}
+        <div className="flex !mt-8 space-x-4">
+          <CommonButton
+            type="button"
+            variant="outlined"
+            color="accent"
+            onClick={() =>
+              append({
+                original: { url: "", width: 0, height: 0, path: "" },
+                medium: { url: "", width: 0, height: 0, path: "" },
+                small: { url: "", width: 0, height: 0, path: "" },
+              })
+            }
+            icon={<GetIcon name="add" size="w-5 h-5" />}
+          >
+            Add Image
+          </CommonButton>
+          <SubmitButton loading={isLoading} />
+        </div>
       </form>
-      <Toast />
-    </>
+    </FormSectionContainer>
   );
 }

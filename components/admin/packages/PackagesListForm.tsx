@@ -1,23 +1,19 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
 
-interface IPackagesListFormProps {
-  parentIndex: number;
-}
+interface IPackagesListFormProps {}
 
 export default function PackagesListForm(props: IPackagesListFormProps) {
   const { register, control, getFieldState } = useFormContext();
   const { fields, remove, append } = useFieldArray({
     control,
-    name: `packages[${props.parentIndex}].list`,
+    name: `list`,
   });
 
   return (
     <div>
       <div>
         {fields.map((item, index) => {
-          const fieldState = getFieldState(
-            `packages.${props.parentIndex}.list.${index}`
-          );
+          const fieldState = getFieldState(`list.${index}`);
           return (
             <>
               <div key={item.id} className="mb-4">
@@ -33,9 +29,7 @@ export default function PackagesListForm(props: IPackagesListFormProps) {
                     id="first_name"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5"
                     placeholder="Package list item"
-                    {...register(
-                      `packages[${props.parentIndex}].list[${index}]`
-                    )}
+                    {...register(`list[${index}]`)}
                   />
                   <button
                     type="button"

@@ -1,4 +1,5 @@
 import Card from "@/components/common/Card";
+import { GetIcon } from "@/components/common/icons/icons";
 import { IRowTheme } from "@/types/row";
 
 interface Review {
@@ -8,17 +9,17 @@ interface Review {
   message: string;
 }
 
-interface IReviewCardProps extends IRowTheme {
+interface ReviewProps extends IRowTheme {
   review: Review;
 }
 
-const ReviewCard = ({ review, ...other }: IReviewCardProps) => {
+const ReviewCard = ({ review, ...other }: ReviewProps) => {
   return (
     <Card
-      className="p-6 bg-white border border-gray-200 rounded-lg shadow-sm-light text-center"
+      className="text-black grid grid-rows-[auto_1fr] gap-2"
       theme={other.theme}
     >
-      <img src={`./assets/avatar_male.svg`} alt="" className="h-16 mx-auto" />
+      <GetIcon name="user" className="mx-auto text-primary" size="h-14 h-14" />
       <div className="grid grid-rows-[auto_auto_auto] gap-0.5">
         <h2 className="text-lg font-semibold">{review.name}</h2>
         <div className="flex text-2xl justify-center">

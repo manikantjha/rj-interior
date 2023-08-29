@@ -2,10 +2,14 @@
 import Image from "next/image";
 import logo from "../../public/assets/logo.svg";
 import logoWhite from "../../public/assets/logo_white.svg";
+import { companyName } from "@/data/data";
 
 interface ILogoProps {
-  isWhite?: boolean;
   isVertical?: boolean;
+  containerClassName?: string;
+  imageClassName?: string;
+  hideText?: boolean;
+  isWhite?: boolean;
 }
 
 export default function Logo(props: ILogoProps) {
@@ -13,22 +17,22 @@ export default function Logo(props: ILogoProps) {
     <div
       className={`flex ${
         props?.isVertical ? "flex-col" : "flex-row"
-      } items-center w-full`}
+      } items-center w-full ${props.containerClassName || ""}`}
     >
       <Image
-        src={props?.isWhite ? logoWhite : logo}
-        className="md:h-12 mr-3 h-10 w-fit"
+        src={props.isWhite ? logoWhite : logo}
+        className={`md:h-12 mr-3 h-10 w-fit ${props.imageClassName || ""}`}
         alt="RJ Interior Logo"
       />
-      <h1
-        className={`${
-          props?.isVertical ? "text-2xl" : "text-xl"
-        } font-bold mt-2 flex-shrink-0 ${
-          props.isWhite ? "text-white" : "text-black"
-        }`}
-      >
-        RJ Interior
-      </h1>
+      {!props.hideText && (
+        <h1
+          className={`text-2xl font-semibold ${
+            props.isWhite ? "text-white" : "text-black"
+          }`}
+        >
+          {companyName}
+        </h1>
+      )}
     </div>
   );
 }
