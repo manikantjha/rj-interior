@@ -47,7 +47,9 @@ export async function addUpdateHero(req: NextApiRequest, res: NextApiResponse) {
         path = "/services";
       }
 
-      revalidatePath(path);
+      console.log("path", path);
+
+      await revalidatePath(path);
 
       return res.status(200).json({ response });
     } else {
@@ -56,6 +58,7 @@ export async function addUpdateHero(req: NextApiRequest, res: NextApiResponse) {
       return res.status(200).json({ response });
     }
   } catch (error) {
+    console.log("error", error);
     res.status(500).json({ error });
   }
 }

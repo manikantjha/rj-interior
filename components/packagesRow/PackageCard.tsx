@@ -10,7 +10,7 @@ export default function PackageCard({ list, price, title }: IPackageCardProps) {
   return (
     <div className="w-full bg-gray-50 border border-gray-200 rounded-lg shadow-sm-light overflow-hidden">
       <div className="bg-white text-center">
-        <div className="p-4 lg:p-6 bg-gradient-to-tl from-orange-900 to-orange-700">
+        <div className="p-4 lg:p-6 bg-gradient-to-tl from-primary-dark via-primary to-primary-light">
           <p className="text-2xl font-semibold text-white">{title}</p>
         </div>
         <hr />

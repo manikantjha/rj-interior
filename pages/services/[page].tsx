@@ -1,5 +1,5 @@
-import Hero from "@/components/common/Hero";
-import LinkBtn from "@/components/common/LinkBtn";
+import Hero from "@/components/common/hero/Hero";
+import HeroButton from "@/components/common/hero/HeroButton";
 import Loading from "@/components/common/Loading";
 import PaginationNew from "@/components/common/PaginationNew";
 import RowWrapper from "@/components/common/RowWrapper";
@@ -95,16 +95,8 @@ export default function ServicesPage({
             title={hero?.title}
             description={hero?.description}
             hasContent={true}
-            renderButton={() =>
-              hero?.hasContactButton ? (
-                <div className="mt-12">
-                  <LinkBtn
-                    href="/contact"
-                    text="Get In Touch"
-                    className="!bg-secondaryDark hover:!bg-secondaryLight text-textLight hover:text-textLight"
-                  />
-                </div>
-              ) : null
+            renderButton={
+              <HeroButton hasContactButton={hero.hasContactButton} />
             }
           />
           <RowWrapper title="Our Services" theme="dark">

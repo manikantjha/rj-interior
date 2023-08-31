@@ -1,5 +1,4 @@
-import Hero from "@/components/common/Hero";
-import LinkBtn from "@/components/common/LinkBtn";
+import Hero from "@/components/common/hero/Hero";
 import Logo from "@/components/common/Logo";
 import RowWrapper from "@/components/common/RowWrapper";
 import ContactMain from "@/components/contact/ContactMain";
@@ -77,8 +76,8 @@ export default function HomePage({
   return (
     <>
       <Head>
-        <title>Bigining</title>
-        <meta name="description" content="Bigining home page" />
+        <title>RJ Interior</title>
+        <meta name="description" content="RJ Interior Home Page" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -104,13 +103,6 @@ export default function HomePage({
               </div>
             </>
           )}
-          renderButton={() =>
-            hero?.hasContactButton ? (
-              <div className="mt-12">
-                <LinkBtn href="/contact" text="Get In Touch" />
-              </div>
-            ) : null
-          }
         />
         <RecentWorkRow works={works} theme="light" />
         <FeaturesRow features={features} theme="dark" />

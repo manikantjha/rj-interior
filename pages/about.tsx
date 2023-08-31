@@ -1,8 +1,8 @@
 import StoryRow from "@/components/about/StoryRow";
 import FounderRow from "@/components/about/founderRow/FounderRow";
 import TeamRow from "@/components/about/teamRow/TeamRow";
-import Hero from "@/components/common/Hero";
-import LinkBtn from "@/components/common/LinkBtn";
+import Hero from "@/components/common/hero/Hero";
+import HeroButton from "@/components/common/hero/HeroButton";
 import FiguresRow from "@/components/home/figuresRow/FiguresRow";
 import Layout from "@/layout/Layout";
 import { getAll, getHero, getSingle } from "@/lib/common";
@@ -53,21 +53,11 @@ export default function AboutPage({
       <Layout>
         <Hero
           imgSrc={hero?.image?.original?.url}
-          imgAlt="about image"
+          imgAlt="about hero image"
           title={hero?.title}
           description={hero?.description}
           hasContent={true}
-          renderButton={() =>
-            hero?.hasContactButton ? (
-              <div className="mt-12">
-                <LinkBtn
-                  href="/contact"
-                  text="Get In Touch"
-                  className="!bg-secondaryDark hover:!bg-secondaryLight text-textLight hover:text-textLight"
-                />
-              </div>
-            ) : null
-          }
+          renderButton={<HeroButton hasContactButton={hero.hasContactButton} />}
         />
         <StoryRow />
         <FounderRow founders={founders} theme="dark" />
