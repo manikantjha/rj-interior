@@ -25,9 +25,9 @@ const MoveToTopButton: React.FC = () => {
 
   return (
     <button
-      className={`fixed bottom-8 right-8 p-3 bg-accentDark text-white rounded-full shadow-lg transition-opacity ${
+      className={`fixed bottom-24 right-8 p-3 bg-primary text-white rounded-full shadow-lg transition-opacity ${
         isVisible ? "opacity-100" : "opacity-0"
-      }`}
+      } !z-[1100]`}
       onClick={scrollToTop}
       aria-label="Move to Top"
     >

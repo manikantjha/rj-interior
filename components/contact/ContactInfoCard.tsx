@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { UseQueryResult } from "react-query";
 import ContactInfoListItem from "./ContactInfoListItem";
 
@@ -23,7 +24,7 @@ export default function ContactInfoCard(props: IContactInfoCardProps) {
           </p>
         )}
       </div>
-      <div className="text-base text-white font-medium">
+      <div className="text-base text-white font-medium space-y-1">
         <ContactInfoListItem icon="email" info={contactInfo.email} />
         <ContactInfoListItem icon="phone" info={`+91 ${contactInfo.phone1}`} />
         {contactInfo.phone2 && (
@@ -34,6 +35,16 @@ export default function ContactInfoCard(props: IContactInfoCardProps) {
         )}
         <ContactInfoListItem icon="location" info={contactInfo.address} />
       </div>
+      <Link
+        aria-label="Chat on WhatsApp"
+        className="mt-2"
+        href="https://wa.me/919328277388"
+      >
+        <img
+          alt="Chat on WhatsApp"
+          src="/assets/WhatsAppButtonGreenMedium.svg"
+        />
+      </Link>
     </>
   );
 }
