@@ -41,52 +41,49 @@ export default function FoundersForm(props: ITeamMembersFormProps) {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormSectionContainer>
-          <div className="grid gap-6 mb-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <div>
-              <FormSectionContainer>
-                <div className="w-full flex justify-end"></div>
-                <div className="mb-4">
-                  <Controller
-                    control={control}
-                    name={`image`}
-                    render={({ field: { onChange, onBlur, value, ref } }) => (
-                      <ImageUploaderNew
-                        label="Founder Image"
-                        onChange={onChange}
-                        image={value}
-                        folderName="founders"
-                        fileName={getValues("name")}
-                        error={errors.image}
-                      />
-                    )}
-                  />
-                </div>
-                <div>
-                  <TextInput
-                    label="Founder Name"
-                    name="name"
-                    register={register}
-                    error={errors.name}
-                    placeholder="Founder Name"
-                  />
-                  <TextInput
-                    label="Founder Designation"
-                    name="designation"
-                    register={register}
-                    error={errors.designation}
-                    placeholder="Founder Designation"
-                  />
-                  <TextArea
-                    label="Founder Short Description"
-                    name="description"
-                    register={register}
-                    error={errors.description}
-                    placeholder="Founder Short Description"
-                  />
-                </div>
-              </FormSectionContainer>
+          <FormSectionContainer>
+            <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
+              <div className="grid grid-rows-[auto_auto_auto] gap-2">
+                <TextInput
+                  label="Founder Name"
+                  name="name"
+                  register={register}
+                  error={errors.name}
+                  placeholder="Founder Name"
+                />
+                <TextInput
+                  label="Founder Designation"
+                  name="designation"
+                  register={register}
+                  error={errors.designation}
+                  placeholder="Founder Designation"
+                />
+                <TextArea
+                  label="Founder Short Description"
+                  name="description"
+                  register={register}
+                  error={errors.description}
+                  placeholder="Founder Short Description"
+                />
+              </div>
+              <div className="">
+                <Controller
+                  control={control}
+                  name={`image`}
+                  render={({ field: { onChange, onBlur, value, ref } }) => (
+                    <ImageUploaderNew
+                      label="Founder Image"
+                      onChange={onChange}
+                      image={value}
+                      folderName="founders"
+                      fileName={getValues("name")}
+                      error={errors.image}
+                    />
+                  )}
+                />
+              </div>
             </div>
-          </div>
+          </FormSectionContainer>
 
           <div className="w-full flex items-center space-x-4 mt-8">
             <SubmitButton loading={isLoading} />

@@ -7,7 +7,10 @@ interface IPackageListItemProps {
 export default function PackageListItem({ item }: IPackageListItemProps) {
   return (
     <li className="flex space-x-3">
-      <GetIcon name="check-circle" className="fill-primary text-white" />
+      <GetIcon
+        name="check-circle"
+        className="fill-primary text-white flex-shrink-0"
+      />
       <span className="text-base font-normal leading-tight text-gray-500">
         {item}
       </span>

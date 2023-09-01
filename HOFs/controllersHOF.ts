@@ -208,7 +208,8 @@ export const createGenericController = <T>({
 
       existingItem.set(req.body);
 
-      await existingItem.save();
+      await Model.findByIdAndUpdate(id, req.body);
+      // await existingItem.save(); // This caused error on immediate re-updatation.
 
       if (revalidate) {
         revalidate(req.body);

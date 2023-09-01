@@ -19,7 +19,7 @@ export default function FounderRow(props: IFounderRowProps) {
   return (
     <ContainerWrapper containerClassName="bg-gray-50">
       <Title title="Meet Our Founders" />
-      <div className="flex flex-col space-y-4 space-x-0 lg:flex-row lg:space-x-4 lg:space-y-0 items-center justify-center">
+      <div className="flex flex-col space-y-4 space-x-0 lg:flex-row lg:space-x-4 lg:space-y-0 items-center justify-center h-full">
         {data?.map((founder, index) => (
           <FounderCard
             key={index}

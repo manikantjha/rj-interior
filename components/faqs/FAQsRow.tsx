@@ -11,7 +11,7 @@ interface IFAQsRowProps {
 export default function FAQsRow(props: IFAQsRowProps) {
   const data = props.faqs || [];
   const [expanded, setExpanded] = useState(1);
-  if (!data.length) return <NoData />;
+  if (!data.length) return <NoData containerClassName="!h-auto" />;
 
   return (
     <RowWrapper

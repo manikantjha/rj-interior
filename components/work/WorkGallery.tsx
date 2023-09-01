@@ -13,7 +13,7 @@ export default function WorksGallery(props: IWorksGalleryProps) {
   const router = useRouter();
 
   if (!props.works || !props.works?.length) {
-    return <NoData />;
+    return <NoData containerClassName="!h-auto" />;
   }
 
   const works = props.works || [];

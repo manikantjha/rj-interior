@@ -10,7 +10,10 @@ export default function Founders() {
 
   return (
     <AdminLayout>
-      <FormSectionTitle title={caseOfAdd ? "Add Founder" : "Edit Founder"} />
+      <FormSectionTitle
+        title={caseOfAdd ? "Add Founder" : "Edit Founder"}
+        hasBackButton
+      />
       <RenderAppropriateComponent queryResult={data}>
         <FoundersForm founders={data} caseOfAdd={caseOfAdd} />
       </RenderAppropriateComponent>

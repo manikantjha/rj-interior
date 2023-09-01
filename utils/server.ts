@@ -140,10 +140,10 @@ export const revalidatePath = async (path: string) => {
     "process.env.NEXT_PUBLIC_BASE_PATH",
     process.env.NEXT_PUBLIC_BASE_PATH
   );
-  // await fetch(
-  //   `${process.env.NEXT_PUBLIC_DEV_BASE_PATH}/api/revalidate?secret=${process.env.NEXT_PUBLIC_REVALIDATION_TOKEN}&path=${path}`
-  // );
   await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_PATH}/api/revalidate?secret=${process.env.NEXT_PUBLIC_REVALIDATION_TOKEN}&path=${path}`
+    `${process.env.NEXT_PUBLIC_DEV_BASE_PATH}/api/revalidate?secret=${process.env.NEXT_PUBLIC_REVALIDATION_TOKEN}&path=${path}`
   );
+  // await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_PATH}/api/revalidate?secret=${process.env.NEXT_PUBLIC_REVALIDATION_TOKEN}&path=${path}`
+  // );
 };
