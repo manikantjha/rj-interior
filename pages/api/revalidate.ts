@@ -11,7 +11,7 @@ export default async function handler(
     return sendError(res, 401, "Invalid token!");
   }
 
-  console.log("path", path, secret);
+  console.log("Revalidating path: ", path, secret);
 
   try {
     // this should be the actual path not a rewritten path
@@ -21,6 +21,7 @@ export default async function handler(
   } catch (err) {
     // If there was an error, Next.js will continue
     // to show the last successfully generated page
+    console.log("Error: ", err);
     return res.status(500).send("Error revalidating");
   }
 }
