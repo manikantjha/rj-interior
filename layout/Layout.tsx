@@ -11,6 +11,7 @@ export default function Layout(props: IMainLayout) {
     <>
       <Navbar />
       <>{props.children}</>
+      <WhatsAppButton />
       <Footer />
     </>
   );
