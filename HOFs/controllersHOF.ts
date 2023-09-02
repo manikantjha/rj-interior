@@ -24,7 +24,7 @@ interface IGenericControllerProps<T> {
   Model: ModelType;
   schema: ObjectSchema<AnyObject>;
   imageKey?: "image" | "images";
-  revalidate: (data?: T) => void;
+  revalidate: (data?: T) => Promise<void>;
 }
 
 export const createGenericController = <T>({
@@ -136,7 +136,7 @@ export const createGenericController = <T>({
       const response = await newItem.save();
 
       if (revalidate) {
-        revalidate(response as any);
+        await revalidate(response as any);
       }
 
       sendResponse(res, 201, newItem);
@@ -212,7 +212,7 @@ export const createGenericController = <T>({
       // await existingItem.save(); // This caused error on immediate re-updatation.
 
       if (revalidate) {
-        revalidate(req.body);
+        await revalidate(req.body);
       }
 
       sendResponse(res, 200, existingItem);
@@ -228,9 +228,6 @@ export const createGenericController = <T>({
 
       if (existingItems.length === 0) {
         await create(req, res);
-        if (revalidate) {
-          revalidate();
-        }
         return;
       }
 
@@ -238,16 +235,10 @@ export const createGenericController = <T>({
         if (existingItems[0]._id.toString() === req.body._id) {
           req.query.id = req.body._id;
           await update(req, res);
-          if (revalidate) {
-            revalidate();
-          }
           return;
         } else {
           await Model.deleteMany({ _id: { $ne: req.body._id } });
           await create(req, res);
-          if (revalidate) {
-            revalidate();
-          }
           return;
         }
       }
@@ -255,10 +246,6 @@ export const createGenericController = <T>({
       await Model.deleteMany({ _id: { $ne: req.body._id } });
 
       await create(req, res);
-
-      if (revalidate) {
-        revalidate();
-      }
     } catch (error) {
       console.error(
         `Error creating/updating ${Model.modelName.toLowerCase()}:`,
@@ -293,7 +280,7 @@ export const createGenericController = <T>({
       }
 
       if (revalidate) {
-        revalidate();
+        await revalidate();
       }
 
       sendResponse(res, 200, {
